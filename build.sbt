@@ -1,6 +1,6 @@
 import sbt.Keys._
 
-name := """PlayStartApp"""
+name := """LearnLab"""
 
 version := "1.0-SNAPSHOT"
 
@@ -12,13 +12,15 @@ libraryDependencies ++= Seq(
   cache,
   "org.mindrot" % "jbcrypt" % "0.3m",
   "com.typesafe" %% "play-plugins-mailer" % "2.2.0",
+  "com.typesafe" %% "play-plugins-redis" % "2.1.1",
   filters
 )
 
 resolvers ++= Seq(
     "Apache" at "http://repo1.maven.org/maven2/",
     "jBCrypt Repository" at "http://repo1.maven.org/maven2/org/",
-    "Sonatype OSS Snasphots" at "http://oss.sonatype.org/content/repositories/snapshots"
+    "Sonatype OSS Snasphots" at "http://oss.sonatype.org/content/repositories/snapshots",
+    "org.sedis" at "http://pk11-scratch.googlecode.com/svn/trunk"
 )
 
 

@@ -1,2 +1,3 @@
 1500:com.typesafe.plugin.CommonsMailerPlugin
+550:com.typesafe.plugin.RedisPlugin
 
