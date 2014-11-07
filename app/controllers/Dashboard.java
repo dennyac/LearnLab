@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Event;
 import models.User;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -16,13 +17,14 @@ public class Dashboard extends Controller {
 //    public static Result START_CHAT = redirect(
 //            routes.Chat.chatRoom()
 //    );
-
+//public static Result index() {
+//    User currUser = User.findByEmail(request().username());
+//    System.out.println("User email id is " + currUser.email);
+//    return ok(chatRoom.render(currUser));
+//}
     public static Result index() {
-        User currUser = User.findByEmail(request().username());
-        System.out.println("User email id is " + currUser.email);
-        return ok(chatRoom.render(currUser));
+        return ok(index.render((User.findByEmail(request().username())), Event.findEvent()));
     }
-
 //        public static Result index() {
 //        return START_CHAT;
 //    }

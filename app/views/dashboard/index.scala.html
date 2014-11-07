@@ -1,7 +1,52 @@
-@(user: User)
+@(user: User, event: Event)
 
 @main(user) {
-
-    DASHBOARD Example
-
-}
+<div id="wrapper">
+    <div class="col-md-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">@user.fullname 's Profile</h3>
+            </div>
+            <div class="panel-body">
+                <ol class="nav">
+                    <li>Student ID: @user.id</li>
+                    <br>
+                    <li>Quizzes Attempted: @user.noOfQuizesParticipated</li>
+                    <br>
+                    <li>Aggregated Score: @user.aggregatedScore</li>
+                    <br>
+                    <li>Badges: @user.badge</li>
+                    <br>
+                    <li>HashTag Contribution: @user.hashTagContributions</li>
+                    <br>
+                </ol>
+                <div class="panel-body">
+                    <div class="text-left">
+                        <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="col-md-9">
+        <table class="table table-striped">
+            <tr>
+                <th>Event Name</th>
+                <th>Script</th>
+                <th>Participants</th>
+                <th>JoinIn</th>
+            </tr>
+            <tr>
+                <td>@event.eventName</td>
+                <td><div class="well">@event.script</div></td>
+                <td>1</td>
+                <td>
+                    <form  method="POST" name="joinEvent" action="@routes.EventController.eventStage1Render()">
+                        <input type="submit" name="Join" value= "Join" class="btn btn-success">
+                    </form>
+            </tr>
+        </table>
+    </div>
+    <!--/span-->
+    }

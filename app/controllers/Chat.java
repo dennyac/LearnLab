@@ -26,8 +26,10 @@ public class Chat extends Controller {
 //            flash("error", "Please choose a valid username.");
 //            return redirect(routes.Application.index());
 //        }
-
-        return ok(chatRoom.render(User.findByEmail(request().username())));
+        User currUser = User.findByEmail(request().username());
+//        System.out.println("Request().username:"+ currUser.fullname);
+//        System.out.println("User email id is " + currUser.email);
+        return ok(chatRoom.render(currUser));
     }
 
     public static Result chatRoomJs(String username) {

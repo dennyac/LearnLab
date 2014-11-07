@@ -29,7 +29,7 @@ public class User extends Model {
     @Constraints.Required
     @Formats.NonEmpty
     @Column(unique = true)
-    public String fullname;
+    public String fullname = "";
 
     public String confirmationToken;
 
@@ -42,6 +42,21 @@ public class User extends Model {
 
     @Formats.NonEmpty
     public Boolean validated = false;
+
+    @Formats.NonEmpty
+    public Boolean isInstructor = false;
+
+    @Formats.NonEmpty
+    public int noOfQuizesParticipated = 0;
+
+    @Formats.NonEmpty
+    public long aggregatedScore = 0;
+
+    @Formats.NonEmpty
+    public String badge = "Beginner";
+
+    @Formats.NonEmpty
+    public int hashTagContributions = 0;
 
     // -- Queries (long id, user.class)
     public static Model.Finder<Long, User> find = new Model.Finder<Long, User>(Long.class, User.class);
