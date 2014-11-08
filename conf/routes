@@ -5,6 +5,7 @@
 # Home page
 GET     /                           controllers.Application.index()
 GET     /dashboard                  controllers.Dashboard.index()
+GET     /dashboard/createEvent      controllers.Dashboard.createEvent()
 
 POST    /eventStage1                controllers.EventController.eventStage1Render()
 POST    /eventStage3                controllers.EventController.eventStage3Render()

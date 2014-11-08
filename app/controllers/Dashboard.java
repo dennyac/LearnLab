@@ -7,6 +7,7 @@ import play.mvc.Result;
 import play.mvc.Security;
 import views.html.dashboard.index;
 import views.html.dashboard.instructorDashboard;
+import views.html.dashboard.createEvent;
 import views.html.chatRoom;
 /**
  * User: yesnault
@@ -32,6 +33,12 @@ public class Dashboard extends Controller {
             //is a student
             return ok(index.render((User.findByEmail(request().username())), Event.findEvent()));
         }
+
+    public static Result createEvent()
+    {
+        return ok(createEvent.render((User.findByEmail(request().username())), Event.findEvent()));
+
+    }
 }
 //        public static Result index() {
 //        return START_CHAT;
