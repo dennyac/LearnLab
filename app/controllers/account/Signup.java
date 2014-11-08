@@ -73,7 +73,7 @@ public class Signup extends Controller {
             user.fullname = register.fullname;
             user.passwordHash = Hash.createPassword(register.inputPassword);
             user.confirmationToken = UUID.randomUUID().toString();
-
+            user.isInstructor = register.isInstructor;
             user.save();
             sendMailAskForConfirmation(user);
 

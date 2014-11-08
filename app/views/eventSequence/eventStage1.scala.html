@@ -1,0 +1,60 @@
+@(user: User, event: Event)
+
+@main(user) {
+<div id="wrapper">
+    <div class="col-md-3">
+        <div class="well sidebar-nav">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">@event.eventName</h3>
+                </div>
+                <div class="panel-body">
+                    <ol class="nav">
+                        <li><font color="blue">Sample HashTags:</font>
+                            <ul>
+                                <li><font color="DodgerBlue">#Concept</font></li>
+                                <li><font color="DodgerBlue">#Justification</font></li>
+                                <li><font color="DodgerBlue">#Example</font></li>
+                            </ul>
+                        </li>
+                        <br>
+                        <li><font color="blue">Event Members:</font>
+                            <ul>
+                                <li><font color="DodgerBlue">Anil</font></li>
+                                <li><font color="DodgerBlue">Denny</font></li>
+                                <li><font color="DodgerBlue">Dhanyatha</font></li>
+                                <li><font color="DodgerBlue">Shruthi</font></li>
+                                <li><font color="DodgerBlue">Supriya</font></li>
+                            </ul>
+                        </li>
+                        <br>
+                        <li>
+                            <div class="text-left">
+                                <a href="#">Event Script<i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+                <!--/.well -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="well">
+    <ul class="answers">
+        <p class="question"><b>A WHERE clause can be added to a SELECT statement to add conditions to the rows being returned.<br> <br>
+            SELECT * FROM products WHERE ordernumber >= 1000 <br><br> What rows will this select statement return? <br> </b></p>
+        <input type="radio" name="q2" value="a" id="q2a"><label for="q2a">  What rows will this select statement return?</label><br/>
+        <input type="radio" name="q2" value="b" id="q2b"><label for="q2b">  All rows in the products table whose order number is greater than or equal to 1000.</label><br/>
+        <input type="radio" name="q2" value="c" id="q2c"><label for="q2c">  All rows in the products table whose order number is less than or equal to 1000 </label><br/>
+        <input type="radio" name="q2" value="d" id="q2d"><label for="q2d">  All rows in the products table whose order number is greater than 1000.</label><br/>
+        <form  method="GET" name="" action="@routes.EventController.chatRoom()">
+            <input type="submit" name="Join" value= "Join" class="btn btn-success">
+        </form>
+    </ul>
+</div>
+
+}
+
+
+

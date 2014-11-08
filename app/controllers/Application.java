@@ -10,6 +10,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
 
+import javax.validation.Constraint;
+
 import static play.data.Form.form;
 
 /**
@@ -90,6 +92,9 @@ public class Application extends Controller {
 
         @Constraints.Required
         public String inputPassword;
+
+        @Constraints.Required
+        public boolean isInstructor;
 
         /**
          * Validate the authentication.

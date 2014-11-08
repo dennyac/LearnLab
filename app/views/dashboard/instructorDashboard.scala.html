@@ -30,24 +30,5 @@
         </div>
     </div>
 </div>
-    <div class="col-md-9">
-        <table class="table table-striped">
-            <tr>
-                <th>Event Name</th>
-                <th>Script</th>
-                <th>Participants</th>
-                <th>JoinIn</th>
-            </tr>
-            <tr>
-                <td>@event.eventName</td>
-                <td><div class="well">@event.script</div></td>
-                <td>1</td>
-                <td>
-                    <form  method="POST" name="joinEvent" action="@routes.EventController.eventStage1Render()">
-                        <input type="submit" name="Join" value= "Join" class="btn btn-success">
-                    </form>
-            </tr>
-        </table>
-    </div>
-    <!--/span-->
-    }
+<!--/span-->
+}

@@ -6,6 +6,9 @@
 GET     /                           controllers.Application.index()
 GET     /dashboard                  controllers.Dashboard.index()
 
+POST    /eventStage1                controllers.EventController.eventStage1Render()
+POST    /eventStage3                controllers.EventController.eventStage3Render()
+
 POST    /login                      controllers.Application.authenticate()
 GET     /logout                     controllers.Application.logout()
 
@@ -14,6 +17,7 @@ GET     /settings/password          controllers.account.settings.Password.index(
 POST    /settings/password          controllers.account.settings.Password.runPassword()
 GET     /settings/email             controllers.account.settings.Email.index()
 POST    /settings/email             controllers.account.settings.Email.runEmail()
+
 
 # Registers the user, sending an email to confirm the account.
 GET     /signup                     controllers.account.Signup.create()
@@ -33,7 +37,7 @@ POST    /reset/:token               controllers.account.Reset.runReset(token:Str
 GET     /email/:token               controllers.account.settings.Email.validateEmail(token:String)
 
 #Chat related resources
-GET     /room                            controllers.Chat.chatRoom()
+GET     /room                            controllers.EventController.chatRoom()
 GET     /room/chat                       controllers.Chat.chat(username)
 GET     /assets/javascripts/chatroom.js  controllers.Chat.chatRoomJs(username)
 
