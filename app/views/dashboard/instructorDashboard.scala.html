@@ -1,6 +1,7 @@
 @(user: User, event: Event)
 
 @main(user) {
+
 <div id="wrapper">
     <div class="col-md-3">
         <div class="panel panel-primary">
@@ -8,22 +9,19 @@
                 <h3 class="panel-title">@user.fullname 's Profile</h3>
             </div>
             <div class="panel-body">
-                <ol class="nav">
-                    <li>Student ID: @user.id</li>
-                    <br>
-                    <li>Quizzes Attempted: @user.noOfQuizesParticipated</li>
-                    <br>
-                    <li>Aggregated Score: @user.aggregatedScore</li>
-                    <br>
-                    <li>Badges: @user.badge</li>
-                    <br>
-                    <li>HashTag Contribution: @user.hashTagContributions</li>
-                    <li>Is instructor: @user.isInstructor</li>
-                    <br>
-                </ol>
                 <div class="panel-body">
                     <div class="text-left">
-                        <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="#">Create Event <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="text-left">
+                        <a href="#">Group Statistics <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="text-left">
+                        <a href="#">Individual Statistics <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
