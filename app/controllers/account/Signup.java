@@ -68,14 +68,7 @@ public class Signup extends Controller {
         }
 
         try {
-            User user = new User();
-            user.email = register.email;
-            user.fullname = register.fullname;
-            user.passwordHash = Hash.createPassword(register.inputPassword);
-            user.confirmationToken = UUID.randomUUID().toString();
-            user.isInstructor = register.isInstructor;
-            user.save();
-            sendMailAskForConfirmation(user);
+            initUser(register);
 
             return ok(created.render());
         } catch (EmailException e) {
@@ -86,6 +79,18 @@ public class Signup extends Controller {
             flash("error", Messages.get("error.technical"));
         }
         return badRequest(create.render(registerForm));
+    }
+
+    private static void initUser(Application.Register register) throws AppException,EmailException, MalformedURLException
+    {
+        User user = new User();
+        user.email = register.email;
+        user.fullname = register.fullname;
+        user.passwordHash = Hash.createPassword(register.inputPassword);
+        user.confirmationToken = UUID.randomUUID().toString();
+        user.isInstructor = register.isInstructor;
+        user.save();
+        sendMailAskForConfirmation(user);
     }
 
     /**
