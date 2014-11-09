@@ -35,7 +35,7 @@
             <li><a href="#tabs-3">Update Event</a></li>
         </ul>
         <div id="tabs-1">
-            <form  method="POST" name="createEvent" action="@routes.Dashboard.createEventConfirmation()">
+            <form  method="POST" name="createEvent" action="@routes.Dashboard.createEvent()">
                 <table class="table">
                     <tr>
                         <td>Event Name</td>
@@ -64,7 +64,7 @@
             </form>
         </div>
         <div id="tabs-2">
-            <form  method="POST" name="deleteEvent" action="#">
+            <form  method="POST" name="deleteEvent" action="@routes.Dashboard.deleteEvent()">
                 <table class="table">
                     <tr>
                         <td>Event ID</td>
