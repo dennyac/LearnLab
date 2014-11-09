@@ -1,0 +1,112 @@
+@(user: User, event: Event)
+
+@main(user) {
+<div id="wrapper">
+    <div class="col-md-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">@user.fullname 's Profile</h3>
+            </div>
+            <div class="panel-body">
+                <div class="panel-body">
+                    <div class="text-left">
+                        <a href="@routes.Dashboard.manageEvents()">Manage Events<i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="text-left">
+                        <a href="#">Group Statistics <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="text-left">
+                        <a href="#">Individual Statistics <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-9">
+    <div id="tabs">
+        <ul>
+            <li><a href="#tabs-1">Create Event</a></li>
+            <li><a href="#tabs-2">Delete Event</a></li>
+            <li><a href="#tabs-3">Update Event</a></li>
+        </ul>
+        <div id="tabs-1">
+            <form  method="POST" name="createEvent" action="@routes.Dashboard.createEvent()">
+                <table class="table">
+                    <tr>
+                        <td>Event Name</td>
+                        <td><input type="text" class="form-control" name="dummyText"></td>
+                    </tr>
+                    <tr>
+                        <td>Event ID</td>
+                        <td><input type="text" class="form-control" name="dummyText"></td>
+                    </tr>
+                    <tr>
+                        <td>Participants</td>
+                        <td><textarea name="participants" class="form-control" rows="3"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>Event Script</td>
+                        <td><textarea name="eventScript" class="form-control" rows="3"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>Questions</td>
+                        <td><textarea name="eventQuestion" class="form-control" rows="3"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" name="Create" value= "Create" class="btn btn-success"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div id="tabs-2">
+            <form  method="POST" name="deleteEvent" action="#">
+                <table class="table">
+                    <tr>
+                        <td>Event ID</td>
+                        <td><input type="text" class="form-control" name="dummyText"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" name="Delete" value= "Delete" class="btn btn-success"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div id="tabs-3">
+            <form  method="POST" name="updateEvent" action="#">
+                <table class="table">
+                    Please enter the Event ID you wish to update
+                    <tr>
+                        <td>Event Name</td>
+                        <td><input type="text" class="form-control" name="dummyText"></td>
+                    </tr>
+                    <tr>
+                        <td>Event ID</td>
+                        <td><input type="text" class="form-control" name="dummyText"></td>
+                    </tr>
+                    <tr>
+                        <td>Participants</td>
+                        <td><textarea name="participants" class="form-control" rows="3"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>Event Script</td>
+                        <td><textarea name="eventScript" class="form-control" rows="3"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>Questions</td>
+                        <td><textarea name="eventQuestion" class="form-control" rows="3"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" name="Update" value= "Update" class="btn btn-success"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+<!--/span-->
+}
