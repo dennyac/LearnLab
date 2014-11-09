@@ -1,13 +1,18 @@
 package controllers;
 
+import akka.actor.ActorRef;
 import com.fasterxml.jackson.databind.JsonNode;
-import models.ChatRoom;
+import models.ChatRoomManager;
+import models.Instructor;
+import models.InstructorManager;
 import models.User;
+import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.WebSocket;
 import views.html.chatRoom;
 import views.html.index;
+import akka.actor.*;
 
 public class Chat extends Controller {
 
@@ -47,12 +52,36 @@ public class Chat extends Controller {
                 
                 // Join the chat room.
                 try { 
-                    ChatRoom.join(username, in, out);
+                    ChatRoomManager.joinChatRoom(username, in, out);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
         };
     }
+
+    public static WebSocket<JsonNode> instructor(final String username) {
+        return new WebSocket<JsonNode>() {
+
+            // Called when the Websocket Handshake is done.
+            public void onReady(WebSocket.In<JsonNode> in, WebSocket.Out<JsonNode> out){
+
+                // Join the chat room.
+                try {
+                    InstructorManager.createInstructor(username, in, out);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        };
+    }
+
+//    public static WebSocket<String> socket() {
+//        return WebSocket.withActor(new F.Function<ActorRef, Props>() {
+//            public Props apply(ActorRef out) throws Throwable {
+//                return Instructor.props(out);
+//            }
+//        });
+//    }
   
 }
