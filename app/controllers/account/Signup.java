@@ -67,14 +67,16 @@ public class Signup extends Controller {
             return resultError;
         }
 
-        try {
+        try
+        {
             initUser(register);
 
             return ok(created.render());
         } catch (EmailException e) {
             Logger.debug("Signup.save Cannot send email", e);
             flash("error", Messages.get("error.sending.email"));
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             Logger.error("Signup.save error", e);
             flash("error", Messages.get("error.technical"));
         }

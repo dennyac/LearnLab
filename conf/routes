@@ -3,9 +3,11 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
-GET     /dashboard                  controllers.Dashboard.index()
-GET     /dashboard/createEvent      controllers.Dashboard.createEvent()
+GET     /                                       controllers.Application.index()
+GET     /dashboard                              controllers.Dashboard.index()
+GET     /dashboard/manageEvents                 controllers.Dashboard.manageEvents()
+POST    /dashboard/createEvent                  controllers.Dashboard.createEvent()
+POST    /dashboard/deleteEvent                  controllers.Dashboard.deleteEvent()
 
 POST    /eventStage1                controllers.EventController.eventStage1Render()
 POST    /eventStage3                controllers.EventController.eventStage3Render()

@@ -7,7 +7,9 @@ import play.mvc.Result;
 import play.mvc.Security;
 import views.html.dashboard.index;
 import views.html.dashboard.instructorDashboard;
-import views.html.dashboard.createEvent;
+import views.html.dashboard.manageEvents;
+import views.html.dashboard.createEventConfirmation;
+import views.html.dashboard.deleteEventConfirmation;
 import views.html.chatRoom;
 /**
  * User: yesnault
@@ -34,9 +36,21 @@ public class Dashboard extends Controller {
             return ok(index.render((User.findByEmail(request().username())), Event.findEvent()));
         }
 
+    public static Result manageEvents()
+    {
+        return ok(manageEvents.render((User.findByEmail(request().username())), Event.findEvent()));
+
+    }
+
     public static Result createEvent()
     {
-        return ok(createEvent.render((User.findByEmail(request().username())), Event.findEvent()));
+        return ok(createEventConfirmation.render((User.findByEmail(request().username())), Event.findEvent()));
+
+    }
+
+    public static Result deleteEvent()
+    {
+        return ok(deleteEventConfirmation.render((User.findByEmail(request().username())), Event.findEvent()));
 
     }
 }
