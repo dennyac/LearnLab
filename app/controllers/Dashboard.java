@@ -8,6 +8,7 @@ import play.mvc.Security;
 import views.html.dashboard.index;
 import views.html.dashboard.instructorDashboard;
 import views.html.dashboard.createEvent;
+import views.html.dashboard.createEventConfirmation;
 import views.html.chatRoom;
 /**
  * User: yesnault
@@ -37,6 +38,12 @@ public class Dashboard extends Controller {
     public static Result createEvent()
     {
         return ok(createEvent.render((User.findByEmail(request().username())), Event.findEvent()));
+
+    }
+
+    public static Result createEventConfirmation()
+    {
+        return ok(createEventConfirmation.render((User.findByEmail(request().username())), Event.findEvent()));
 
     }
 }
