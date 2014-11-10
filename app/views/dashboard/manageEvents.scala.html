@@ -10,7 +10,7 @@
             <div class="panel-body">
                 <div class="panel-body">
                     <div class="text-left">
-                        <a href="@routes.Dashboard.manageEvents()">Manage Events<i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="@routes.Dashboard.manageEvents()">Manage Events <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="panel-body">
@@ -23,88 +23,195 @@
                         <a href="#">Individual Statistics <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
+                <div class="panel-body">
+                    <div class="text-left">
+                    <a href="">Live Feed <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="text-left">
+                    <a href="">Past Events <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="col-md-9">
-    <div id="tabs">
-        <ul>
-            <li><a href="#tabs-1">Create Event</a></li>
-            <li><a href="#tabs-2">Delete Event</a></li>
-            <li><a href="#tabs-3">Update Event</a></li>
+    </div>
+
+    <div class="col-md-9">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist" id="myTab">
+            <li role="presentation" class="active"><a href="#createEvent" role="tab" data-toggle="tab">Create</a></li>
+            <li role="presentation"><a href="#deleteEvent" role="delete" data-toggle="tab">Delete</a></li>
+            <li role="presentation"><a href="#updateEvent" role="delete" data-toggle="tab">Update</a></li>
         </ul>
-        <div id="tabs-1">
-            <form  method="POST" name="createEvent" action="@routes.Dashboard.createEvent()">
-                <table class="table">
-                    <tr>
-                        <td>Event Name</td>
-                        <td><input type="text" class="form-control" name="dummyText"></td>
-                    </tr>
-                    <tr>
-                        <td>Event ID</td>
-                        <td><input type="text" class="form-control" name="dummyText"></td>
-                    </tr>
-                    <tr>
-                        <td>Participants</td>
-                        <td><textarea name="participants" class="form-control" rows="3"></textarea></td>
-                    </tr>
-                    <tr>
-                        <td>Event Script</td>
-                        <td><textarea name="eventScript" class="form-control" rows="3"></textarea></td>
-                    </tr>
-                    <tr>
-                        <td>Questions</td>
-                        <td><textarea name="eventQuestion" class="form-control" rows="3"></textarea></td>
-                    </tr>
-                    <tr>
-                        <td><input type="submit" name="Create" value= "Create" class="btn btn-success"></td>
-                    </tr>
-                </table>
-            </form>
-        </div>
-        <div id="tabs-2">
-            <form  method="POST" name="deleteEvent" action="@routes.Dashboard.deleteEvent()">
-                <table class="table">
-                    <tr>
-                        <td>Event ID</td>
-                        <td><input type="text" class="form-control" name="dummyText"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="submit" name="Delete" value= "Delete" class="btn btn-success"></td>
-                    </tr>
-                </table>
-            </form>
-        </div>
-        <div id="tabs-3">
-            <form  method="POST" name="updateEvent" action="#">
-                <table class="table">
-                    Please enter the Event ID you wish to update
-                    <tr>
-                        <td>Event Name</td>
-                        <td><input type="text" class="form-control" name="dummyText"></td>
-                    </tr>
-                    <tr>
-                        <td>Event ID</td>
-                        <td><input type="text" class="form-control" name="dummyText"></td>
-                    </tr>
-                    <tr>
-                        <td>Participants</td>
-                        <td><textarea name="participants" class="form-control" rows="3"></textarea></td>
-                    </tr>
-                    <tr>
-                        <td>Event Script</td>
-                        <td><textarea name="eventScript" class="form-control" rows="3"></textarea></td>
-                    </tr>
-                    <tr>
-                        <td>Questions</td>
-                        <td><textarea name="eventQuestion" class="form-control" rows="3"></textarea></td>
-                    </tr>
-                    <tr>
-                        <td><input type="submit" name="Update" value= "Update" class="btn btn-success"></td>
-                    </tr>
-                </table>
-            </form>
+
+        <div class="tab-content">
+            <br>
+            <div role="tabpanel" class="tab-pane active" id="createEvent">
+                <form method="POST" class="form-horizontal" role="form" action="@routes.Dashboard.createEvent()">
+                    <div class="form-group">
+                        <label for="eventID" class="col-sm-2 control-label">Event ID</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" id="eventID" placeholder="Event ID">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventName" class="col-sm-2 control-label">Event Name</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" id="eventName" placeholder="Event Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Script1" class="col-sm-2 control-label">Phase 1 Script</label>
+                        <div class="col-sm-7">
+                            <textarea type="text" class="form-control" id="Script1" rows="2" placeholder="Script Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Script2" class="col-sm-2 control-label">Phase 2 Script</label>
+                        <div class="col-sm-7">
+                            <textarea type="text" class="form-control" id="Script2" rows="2" placeholder="Script Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Script3" class="col-sm-2 control-label">Phase 3 Script</label>
+                        <div class="col-sm-7">
+                            <textarea type="text" class="form-control" id="Script3" rows="2" placeholder="Script Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDescription" class="col-sm-2 control-label">Event Description</label>
+                        <div class="col-sm-7">
+                            <textarea type="text" class="form-control" id="eventDescription" rows="2" placeholder="Event Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group dropdown">
+                        <label for="dropdownMenu1" class="col-sm-2 control-label">Participants</label>
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                            Participants<nbsp>   </nbsp>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">User1</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">User2</a></li>
+                        </ul>
+                    </div>
+                    <div class="form-group">
+                        <label for="datetimepicker1" class="col-sm-2 control-label">Start Date and Time</label>
+                        <div class='col-sm-5'>
+                            <div class='input-group date' id='datetimepicker1'>
+                                <input type='text' class="form-control" />
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="datetimepicker2" class="col-sm-2 control-label">End Date and Time</label>
+                        <div class='col-sm-5'>
+                            <div class='input-group date' id='datetimepicker2'>
+                                <input type='text' class="form-control" />
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Create</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="deleteEvent">
+                <br>
+                <form method="POST" class="form-horizontal" role="form" action="@routes.Dashboard.deleteEvent()">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Event ID</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" name="dummyText" id="inputEmail3" placeholder="Event ID">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Delete</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="updateEvent">
+                <br>
+                <form method="POST" class="form-horizontal" role="form" action="@routes.Dashboard.createEvent()">
+                    <div class="form-group">
+                        <label for="updateEventID" class="col-sm-2 control-label">Event ID</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" id="updateEventID" placeholder="Event ID">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateEventName" class="col-sm-2 control-label">Event Name</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" id="updateEventName" placeholder="Event Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateScript1" class="col-sm-2 control-label">Phase 1 Script</label>
+                        <div class="col-sm-7">
+                            <textarea type="text" class="form-control" id="updateScript1" rows="2" placeholder="Script Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateScript2" class="col-sm-2 control-label">Phase 2 Script</label>
+                        <div class="col-sm-7">
+                            <textarea type="text" class="form-control" id="updateScript2" rows="2" placeholder="Script Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateScript3" class="col-sm-2 control-label">Phase 3 Script</label>
+                        <div class="col-sm-7">
+                            <textarea type="text" class="form-control" id="updateScript3" rows="2" placeholder="Script Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateEventDescription" class="col-sm-2 control-label">Event Description</label>
+                        <div class="col-sm-7">
+                            <textarea type="text" class="form-control" id="updateEventDescription" rows="2" placeholder="Event Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group dropdown">
+                        <label for="updatedropdownMenu1" class="col-sm-2 control-label">Participants</label>
+                        <button class="btn btn-default dropdown-toggle" type="button" id="updatedropdownMenu1" data-toggle="dropdown">
+                            Participants<nbsp>   </nbsp>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="updatedropdownMenu1">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">User1</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">User2</a></li>
+                        </ul>
+                    </div>
+                    <div class="form-group">
+                        <label for="updatedatetimepicker1" class="col-sm-2 control-label">Start Date and Time</label>
+                        <div class='col-sm-5'>
+                            <div class='input-group date' id='updatedatetimepicker1'>
+                                <input type='text' class="form-control" />
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="updatedatetimepicker2" class="col-sm-2 control-label">End Date and Time</label>
+                        <div class='col-sm-5'>
+                            <div class='input-group date' id='updatedatetimepicker2'>
+                                <input type='text' class="form-control" />
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
