@@ -1,34 +1,31 @@
 package models;
 
-import akka.actor.ActorRef;
 import akka.actor.Props;
 import akka.actor.UntypedActor;
 import akka.japi.Creator;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.typesafe.plugin.RedisPlugin;
 import play.libs.Akka;
-import play.libs.F.Callback;
-import play.libs.F.Callback0;
 import play.libs.Json;
 import play.mvc.WebSocket;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
-import scala.concurrent.Await;
 import scala.concurrent.duration.Duration;
 
+
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 import java.util.concurrent.TimeUnit;
 
 import static akka.pattern.Patterns.ask;
-import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * A chat room is an Actor.
  */
+
 public class Instructor extends UntypedActor {
 
     // Default room.
