@@ -1,6 +1,6 @@
 @(user: User, event: Event)
 
-@main(user) {
+@mainStudent(user) {
 <div id="wrapper">
     <div class="col-md-3">
         <div class="well sidebar-nav">
@@ -40,60 +40,43 @@
         </div>
     </div>
 </div>
-<div class="well">
-    <ul class="answers">
-        <p class="question"><b>A WHERE clause can be added to a SELECT statement to add conditions to the rows being returned.<br> <br>
-            SELECT * FROM products WHERE ordernumber >= 1000 <br><br> What rows will this select statement return? <br> </b></p>
-        <input type="radio" name="q2" value="a" id="q2a"><label for="q2a">  What rows will this select statement return?</label><br/>
-        <input type="radio" name="q2" value="b" id="q2b"><label for="q2b">  All rows in the products table whose order number is greater than or equal to 1000.</label><br/>
-        <input type="radio" name="q2" value="c" id="q2c"><label for="q2c">  All rows in the products table whose order number is less than or equal to 1000 </label><br/>
-        <input type="radio" name="q2" value="d" id="q2d"><label for="q2d">  All rows in the products table whose order number is greater than 1000.</label><br/>
-    </ul>
-</div>
-<div class="well">
-    <ul class="answers">
-        Follow Up Question:
-        <p class="question"><b>A WHERE clause can be added to a SELECT statement to add conditions to the rows being returned.<br> <br>
-            SELECT * FROM products WHERE ordernumber >= 1000 <br><br> What rows will this select statement return? <br> </b></p>
-        <input type="radio" name="q2" value="a" id="q2a"><label for="q2a">  What rows will this select statement return?</label><br/>
-        <input type="radio" name="q2" value="b" id="q2b"><label for="q2b">  All rows in the products table whose order number is greater than or equal to 1000.</label><br/>
-        <input type="radio" name="q2" value="c" id="q2c"><label for="q2c">  All rows in the products table whose order number is less than or equal to 1000 </label><br/>
-        <input type="radio" name="q2" value="d" id="q2d"><label for="q2d">  All rows in the products table whose order number is greater than 1000.</label><br/>
-        <br>
-        Who helped you arrive at the answer?
-        <br>
-        <div class="radio">
-            <label>
-                <input type="checkbox" id="inlineCheckbox1" value="Anil"> Anil
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <input type="checkbox" id="inlineCheckbox2" value="Denny"> Denny
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <input type="checkbox" id="inlineCheckbox3" value="Dhanyatha"> Dhanyatha
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <input type="checkbox" id="inlineCheckbox4" value="Shruthi"> Shruthi
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <input type="checkbox" id="inlineCheckbox5" value="Supriya"> Supriya
-            </label>
-        </div>
-        <br>
-        <form action = "#stage1">
-            <input type="submit" name="Submit" value= "Submit" class="btn btn-success">
-        </form>
-    </ul>
-</div>
 
+<div class="col-md-9">
+
+    <div class="progress progress-striped">
+        <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+            Stage 3
+            <span class="sr-only">bootstrap.min.css + bootstrap-theme.min.css (master branch</span>
+        </div>
+    </div>
+
+    <div class="well">
+        <ul class="answers">
+            <p>@event.script</p>
+        </ul>
+    </div>
+
+    <div class="well">
+        <ul class="answers">
+            <form>
+                <fieldset>
+                    <p class="question"><b>A WHERE clause can be added to a SELECT statement to add conditions to the rows being returned.<br> <br>
+                        SELECT * FROM products WHERE ordernumber >= 1000 <br><br> What rows will this select statement return? <br> </b></p>
+                    <input type="radio" name="q2" value="a" id="q2a"><label for="q2a">  What rows will this select statement return?</label><br/>
+                    <input type="radio" name="q2" value="b" id="q2b"><label for="q2b">  All rows in the products table whose order number is greater than or equal to 1000.</label><br/>
+                    <input type="radio" name="q2" value="c" id="q2c"><label for="q2c">  All rows in the products table whose order number is less than or equal to 1000 </label><br/>
+                    <input type="radio" name="q2" value="d" id="q2d"><label for="q2d">  All rows in the products table whose order number is greater than 1000.</label><br/>
+                    <br>
+                    <br>
+                    <input class="input" type="text" placeholder="Justify" size="85">
+                    <br>
+                    <br>
+                    <input type="submit" name="Submit" value= "Submit" class="btn btn-success">
+                </fieldset>
+            </form>
+        </ul>
+    </div>
+</div>
 }
 
 
