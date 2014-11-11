@@ -40,7 +40,7 @@ public class Question {
 
     @Constraints.Required
     @Formats.NonEmpty
-    public String Answer = Option3;
+    public String Answer = "Option3";
 
     public static models.Question getQuestionByEventId(){
         models.Question q = new models.Question();
