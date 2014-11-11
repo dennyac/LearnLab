@@ -1,29 +1,19 @@
 @(user: User)
 
-@main(user) {
+@mainStudent(user) {
 
 
 
 <div id="wrapper">
-    <div class="page-header">
-        <h1>Welcome to the discussion room<small>You are chatting as @user.fullname</small></h1>
-    </div>
-
-    <div id="onError" class="alert-message error">
-        <p>
-            <strong>Oops!</strong> <span></span>
-        </p>
-    </div>
 
     <div class="col-md-3">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h4 class="panel-title">@user.fullname 's Profile</h4>
-            </div>
-            <div class="panel-body">
+        <div class="well sidebar-nav">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title"></h3>
+                </div>
                 <div class="panel-body">
-                    <div class="text-left">
-                        <ol class="nav">
+                    <ol class="nav">
                         <li><font color="blue">Sample HashTags:</font>
                             <ul>
                                 <li><font color="DodgerBlue">#Concept</font></li>
@@ -41,20 +31,32 @@
                                 <li><font color="DodgerBlue">Supriya</font></li>
                             </ul>
                         </li>
-                        </ol>
-                        <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
+                        <br>
+                        <li>
+                            <div class="text-left">
+                                <a href="#">Event Script<i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </li>
+                    </ol>
                 </div>
+                <!--/.well -->
             </div>
         </div>
     </div>
+</div>
 
     <div class="col-md-6">
+        <div class="progress progress-striped">
+            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                Stage 2
+                <span class="sr-only">bootstrap.min.css + bootstrap-theme.min.css (master branch</span>
+            </div>
+        </div>
             <div id="onChat" class="row">
                 <div class="span10" id="main">
                     <div id="messages">
                     </div>
-                    <textarea id="talk"></textarea>
+                    <textarea id="talk" size="35"></textarea>
                     <form  method="POST" name="" action="@routes.EventController.eventStage3Render()">
                         <input type="submit" name="Submit" value= "Submit" class="btn btn-success">
                     </form>

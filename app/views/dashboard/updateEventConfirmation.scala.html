@@ -1,43 +1,9 @@
 @(user: User, event: Event)
 
-@main(user){
+@mainInstructor(user){
 <div id="wrapper">
-    <div class="col-md-3">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">@user.fullname 's Profile</h3>
-            </div>
-            <div class="panel-body">
-                <div class="panel-body">
-                    <div class="text-left">
-                        <a href="@routes.Dashboard.manageEvents()">Manage Events <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <div class="text-left">
-                        <a href="#">Group Statistics <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <div class="text-left">
-                        <a href="#">Individual Statistics <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <div class="text-left">
-                        <a href="#">Ongoing Events <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <div class="text-left">
-                        <a href="#">Past Events <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="col-md-9">
+        <h5> Updation of the event was successful</h5>
     </div>
-</div>
-<div class="col-md-9">
-    <h5> Updation of the event was successful</h5>
 </div>
 }
