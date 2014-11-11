@@ -35,14 +35,11 @@ public class Event extends Model{
 
     @Constraints.Required
     @Formats.NonEmpty
-<<<<<<< HEAD
-    public String script = "The event contains 3 stages Stage 1: Answer the question that is being displayed. Stage 2: Collaborate with you event-mates and brainstorm about the answer options.Use Hashtags to anything that might be relevant. Stage 3: Having discussed, conclude the right answer and submit it. Give a short justification as to why you pick the answer. Also let us know who helped you better to arrive at the answer";
-=======
+
     public String script = "The event contains 3 stages. Stage 1: Answer the question that is being displayed. Stage 2: Collaborate with you event-mates and brainstorm about the answer options.Use Hashtags to anything that might be relevant. Stage 3: Having discussed, conclude the right answer and submit it. Give a short justification as to why you pick the answer. Also let us know who helped you better to arrive at the answer";
     public String scriptPhase1;
     public String scriptPhase2;
     public String scriptPhase3;
->>>>>>> origin/master
 
     @Constraints.Required
     @Formats.NonEmpty
