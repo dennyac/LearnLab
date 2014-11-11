@@ -18,6 +18,7 @@ import redis.clients.jedis.JedisPubSub;
 import scala.concurrent.Await;
 import scala.concurrent.duration.Duration;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -32,7 +33,7 @@ public class Instructor extends UntypedActor {
 
     // Default room.
     private final String CHANNEL;
-    private final WebSocket.Out<JsonNode> out;
+    private final ArrayList<WebSocket.Out<JsonNode>> sockets = new ArrayList<WebSocket.Out<JsonNode>>() ;
 
     public static Props props(final String instructor, final WebSocket.Out<JsonNode> out) {
         return Props.create(new Creator<Instructor>() {
@@ -45,9 +46,10 @@ public class Instructor extends UntypedActor {
         });
     }
 
-    public Instructor(final String instructor, final WebSocket.Out<JsonNode> out){
+    public Instructor(final String instructor, final WebSocket.Out<JsonNode> socket){
         CHANNEL = instructor + ".event.*";
-        this.out = out;
+        System.out.println(CHANNEL);
+        sockets.add(socket);
         //add the robot
 
 
@@ -57,7 +59,7 @@ public class Instructor extends UntypedActor {
                 new Runnable() {
                     public void run() {
                         Jedis j = play.Play.application().plugin(RedisPlugin.class).jedisPool().getResource();
-                        j.subscribe(new MyListener(), CHANNEL);
+                        j.psubscribe(new MyListener(), CHANNEL);
                     }
                 },
                 Akka.system().dispatcher()
@@ -88,9 +90,18 @@ public class Instructor extends UntypedActor {
         if(message instanceof ChatRoom.Talk)  {
                 // Received a ChatRoom.Talk message
                 ChatRoom.Talk talk = (ChatRoom.Talk)message;
-                out.write(Json.toJson(talk));
+               System.out.println("Before Writing to websocket" + talk.eventId);
+                for(WebSocket.Out<JsonNode> socket: sockets)
+                socket.write(Json.toJson(talk));
+            System.out.println("After Writing to websocket" + talk.eventId);
 
-            } else {
+            }else if(message instanceof ChatRoom.Quit)  {
+            // Received a Quit message
+            ChatRoom.Quit quit = (ChatRoom.Quit)message;
+            //Remove the member from this node and the global roster
+            sockets.remove(quit.out);
+
+        } else {
                 unhandled(message);
             }
         } 
@@ -99,8 +110,16 @@ public class Instructor extends UntypedActor {
     public class MyListener extends JedisPubSub {
         @Override
         public void onMessage(String channel, String messageBody) {
+        }
+
+        @Override
+        public void onPMessage(String arg0, String arg1, String arg2) {
+            System.out.println("Recieved Message");
+            System.out.println("arg0 - " + arg0);
+            System.out.println("arg1 - " + arg1);
+            System.out.println("arg2 - " + arg2);
             //Process messages from the pub/sub channel
-            JsonNode parsedMessage = Json.parse(messageBody);
+            JsonNode parsedMessage = Json.parse(arg2);
             Object message = null;
             String messageType = parsedMessage.get("type").asText();
             if("talk".equals(messageType)) {
@@ -109,12 +128,9 @@ public class Instructor extends UntypedActor {
                         parsedMessage.get("eventId").asText(),
                         parsedMessage.get("text").asText()
                 );
+                remoteMessage(message);
             }
-            remoteMessage(message);
-        }
 
-        @Override
-        public void onPMessage(String arg0, String arg1, String arg2) {
         }
         @Override
         public void onPSubscribe(String arg0, int arg1) {

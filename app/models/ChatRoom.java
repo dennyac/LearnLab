@@ -48,6 +48,7 @@ public class ChatRoom extends UntypedActor {
 
     public ChatRoom(final String eventId, final String instructor){
         CHANNEL = instructor + ".event." + eventId;
+        System.out.println(CHANNEL);
         MEMBERS = "members." + eventId;
         //add the robot
         //new Robot(getSelf());

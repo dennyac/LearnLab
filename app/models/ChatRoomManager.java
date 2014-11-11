@@ -31,7 +31,7 @@ public class ChatRoomManager {
     public static void joinChatRoom(final String username, final WebSocket.In<JsonNode> in, final WebSocket.Out<JsonNode> out) throws Exception {
         User u = findByEmail(username);
         final String eventId = username.substring(0,2);
-        final String instructor = "instructor1";
+        final String instructor = "ins@gmail.com";
         if(!chatRooms.containsKey(eventId))
             chatRooms.put(eventId, Akka.system().actorOf(ChatRoom.props(eventId,instructor), eventId));
 
