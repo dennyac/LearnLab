@@ -6,9 +6,8 @@ import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -32,6 +31,9 @@ public class User extends Model {
     public String fullname = "";
 
     public String confirmationToken;
+
+    @ManyToMany(mappedBy = "participants")
+    public ArrayList<Event> EventsParticipated;
 
     @Constraints.Required
     @Formats.NonEmpty
@@ -57,6 +59,16 @@ public class User extends Model {
 
     @Formats.NonEmpty
     public int hashTagContributions = 0;
+
+    @Constraints.Required
+    @Formats.NonEmpty
+    public String bio;
+
+    @OneToOne
+    public UserStats stats;
+
+    @OneToMany(mappedBy = "user")
+    public EventActions actions;
 
     // -- Queries (long id, user.class)
     public static Model.Finder<Long, User> find = new Model.Finder<Long, User>(Long.class, User.class);
