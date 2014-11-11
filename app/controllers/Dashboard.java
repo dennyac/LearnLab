@@ -10,6 +10,7 @@ import views.html.dashboard.instructorDashboard;
 import views.html.dashboard.manageEvents;
 import views.html.dashboard.createEventConfirmation;
 import views.html.dashboard.deleteEventConfirmation;
+import views.html.dashboard.updateEventConfirmation;
 import views.html.chatRoom;
 /**
  * User: yesnault
@@ -51,6 +52,12 @@ public class Dashboard extends Controller {
     public static Result deleteEvent()
     {
         return ok(deleteEventConfirmation.render((User.findByEmail(request().username())), Event.findEvent()));
+
+    }
+
+    public static Result updateEvent()
+    {
+        return ok(updateEventConfirmation.render((User.findByEmail(request().username())), Event.findEvent()));
 
     }
 }
