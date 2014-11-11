@@ -1,6 +1,6 @@
 @(user: User, event: Event)
 
-@main(user) {
+@main(user){
 <div id="wrapper">
     <div class="col-md-3">
         <div class="panel panel-primary">
@@ -25,7 +25,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="text-left">
-                        <a href="@routes.Dashboard.instructorView()">Instructor Feed <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="#">Ongoing Events <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="panel-body">
@@ -36,9 +36,8 @@
             </div>
         </div>
     </div>
-    <div class="col-md-9">
-    <h3> Welcome Instructor @user.fullname! This is your dashboard.</h3>
-    </div>
 </div>
-<!--/span-->
+<div class="col-md-9">
+    <h5> Updation of the event was successful</h5>
+</div>
 }

@@ -8,6 +8,7 @@ GET     /dashboard                              controllers.Dashboard.index()
 GET     /dashboard/manageEvents                 controllers.Dashboard.manageEvents()
 POST    /dashboard/createEvent                  controllers.Dashboard.createEvent()
 POST    /dashboard/deleteEvent                  controllers.Dashboard.deleteEvent()
+POST    /dashboard/updateEvent                  controllers.Dashboard.updateEvent()
 
 POST    /eventStage1                controllers.EventController.eventStage1Render()
 POST    /eventStage3                controllers.EventController.eventStage3Render()
@@ -43,6 +44,11 @@ GET     /email/:token               controllers.account.settings.Email.validateE
 GET     /room                            controllers.EventController.chatRoom()
 GET     /room/chat                       controllers.Chat.chat(username)
 GET     /assets/javascripts/chatroom.js  controllers.Chat.chatRoomJs(username)
+
+#Instructor Feed related resources
+GET     /feed                            controllers.Dashboard.instructorView()
+GET     /feed/chat                       controllers.Chat.instructor(username)
+GET     /assets/javascripts/instructorview.js  controllers.Chat.instructorJs(username)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

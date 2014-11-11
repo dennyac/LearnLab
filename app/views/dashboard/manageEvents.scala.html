@@ -85,6 +85,12 @@
                             <textarea type="text" class="form-control" id="eventDescription" rows="2" placeholder="Event Description"></textarea>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="Question" class="col-sm-2 control-label">Questions</label>
+                        <div class="col-sm-7">
+                            <textarea type="text" class="form-control" id="Question" rows="2" placeholder="Question"></textarea>
+                        </div>
+                    </div>
                     <div class="form-group dropdown">
                         <label for="dropdownMenu1" class="col-sm-2 control-label">Participants</label>
                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
@@ -97,21 +103,21 @@
                         </ul>
                     </div>
                     <div class="form-group">
-                        <label for="datetimepicker1" class="col-sm-2 control-label">Start Date and Time</label>
+                        <label for="createdatepicker" class="col-sm-2 control-label">Date</label>
                         <div class='col-sm-5'>
-                            <div class='input-group date' id='datetimepicker1'>
-                                <input type='text' class="form-control" />
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                            </div>
+                            <input type="text" class="form-control" id="createdatepicker" size="30">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="datetimepicker2" class="col-sm-2 control-label">End Date and Time</label>
+                        <label for="startTimeCreateForm" class="col-sm-2 control-label">Start Time</label>
                         <div class='col-sm-5'>
-                            <div class='input-group date' id='datetimepicker2'>
-                                <input type='text' class="form-control" />
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                            </div>
+                            <input type="text" class="time start form-control" id="startTimeCreateForm"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="endTimeCreateForm" class="col-sm-2 control-label">End Time</label>
+                        <div class='col-sm-5'>
+                            <input type="text" class="time start form-control" id="endTimeCreateForm"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -139,7 +145,7 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="updateEvent">
                 <br>
-                <form method="POST" class="form-horizontal" role="form" action="@routes.Dashboard.createEvent()">
+                <form method="POST" class="form-horizontal" role="form" action="@routes.Dashboard.updateEvent()">
                     <div class="form-group">
                         <label for="updateEventID" class="col-sm-2 control-label">Event ID</label>
                         <div class="col-sm-7">
@@ -176,6 +182,12 @@
                             <textarea type="text" class="form-control" id="updateEventDescription" rows="2" placeholder="Event Description"></textarea>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="updateQuestions" class="col-sm-2 control-label">Questions</label>
+                        <div class="col-sm-7">
+                            <textarea type="text" class="form-control" id="updateQuestions" rows="2" placeholder="Questions"></textarea>
+                        </div>
+                    </div>
                     <div class="form-group dropdown">
                         <label for="updatedropdownMenu1" class="col-sm-2 control-label">Participants</label>
                         <button class="btn btn-default dropdown-toggle" type="button" id="updatedropdownMenu1" data-toggle="dropdown">
@@ -188,21 +200,21 @@
                         </ul>
                     </div>
                     <div class="form-group">
-                        <label for="updatedatetimepicker1" class="col-sm-2 control-label">Start Date and Time</label>
+                        <label for="datepicker" class="col-sm-2 control-label">Date</label>
                         <div class='col-sm-5'>
-                            <div class='input-group date' id='updatedatetimepicker1'>
-                                <input type='text' class="form-control" />
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                            </div>
+                            <input type="text" class="form-control" id="datepicker" size="30">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="updatedatetimepicker2" class="col-sm-2 control-label">End Date and Time</label>
+                        <label for="startTimeUpdateForm" class="col-sm-2 control-label">Start Time</label>
                         <div class='col-sm-5'>
-                            <div class='input-group date' id='updatedatetimepicker2'>
-                                <input type='text' class="form-control" />
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                            </div>
+                            <input type="text" class="time start form-control" id="startTimeUpdateForm"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="endTimeUpdateForm" class="col-sm-2 control-label">End Time</label>
+                        <div class='col-sm-5'>
+                            <input type="text" class="time start form-control" id="endTimeUpdateForm"/>
                         </div>
                     </div>
                     <div class="form-group">

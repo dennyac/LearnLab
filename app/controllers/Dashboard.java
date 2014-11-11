@@ -10,7 +10,9 @@ import views.html.dashboard.instructorDashboard;
 import views.html.dashboard.manageEvents;
 import views.html.dashboard.createEventConfirmation;
 import views.html.dashboard.deleteEventConfirmation;
+import views.html.dashboard.updateEventConfirmation;
 import views.html.chatRoom;
+import views.html.instructorView;
 /**
  * User: yesnault
  * Date: 22/01/12
@@ -53,6 +55,24 @@ public class Dashboard extends Controller {
         return ok(deleteEventConfirmation.render((User.findByEmail(request().username())), Event.findEvent()));
 
     }
+
+    public static Result updateEvent()
+    {
+        return ok(updateEventConfirmation.render((User.findByEmail(request().username())), Event.findEvent()));
+
+    }
+
+    public static Result instructorView() {
+//        if(username == null || username.trim().equals("")) {
+//            flash("error", "Please choose a valid username.");
+//            return redirect(routes.Application.index());
+//        }
+        User currUser = User.findByEmail(request().username());
+        System.out.println("Request().username:"+ currUser.fullname);
+        System.out.println("User email id is " + currUser.email);
+        return ok(instructorView.render(currUser));
+    }
+
 }
 //        public static Result index() {
 //        return START_CHAT;
