@@ -29,7 +29,7 @@ public class InstructorManager {
     //public static ActorSystem system = ActorSystem.create("LearnLab");
 
     private static HashMap<String, ActorRef> instructors = new HashMap<String,ActorRef>();
-    public static void createInstructor(final String username, WebSocket.In<JsonNode> in, WebSocket.Out<JsonNode> out) throws Exception {
+    public static void createInstructor(final String username, final WebSocket.In<JsonNode> in, final WebSocket.Out<JsonNode> out) throws Exception {
         User u = findByEmail(username);
         if(!instructors.containsKey(username))
             instructors.put(username, Akka.system().actorOf(Instructor.props(username, out), username));
@@ -38,12 +38,14 @@ public class InstructorManager {
             in.onMessage(new F.Callback<JsonNode>() {
                 public void invoke(JsonNode event) {
 
-                    ChatRoom.Talk talk = new ChatRoom.Talk(username, event.get("eventId").asText(), event.get("text").asText());
+                   // ChatRoom.Talk talk = new ChatRoom.Talk(username, event.get("eventId").asText(), event.get("text").asText());
+                    ChatRoom.Talk talk = new ChatRoom.Talk(username, "te", event.get("text").asText());
 
                     Jedis j = play.Play.application().plugin(RedisPlugin.class).jedisPool().getResource();
                     try {
                         //All messages are pushed through the pub/sub channel
-                        j.publish(username + ".event." + event.get("eventId").asText(), Json.stringify(Json.toJson(talk)));
+                        j.publish(username + ".event." + "te", Json.stringify(Json.toJson(talk)));
+                        System.out.println(username + ".event." + "te");
                     } finally {
                         play.Play.application().plugin(RedisPlugin.class).jedisPool().returnResource(j);
                     }
@@ -52,14 +54,14 @@ public class InstructorManager {
             });
 
 //            // When the socket is closed.
-//            in.onClose(new F.Callback0() {
-//                public void invoke() {
-//
-//                    // Send a Quit message to the room.
-//                    instructors.get(eventId).tell(new ChatRoom.Quit(username), null);
-//
-//                }
-//            });
+            in.onClose(new F.Callback0() {
+                public void invoke() {
+
+                    System.out.println("Websocket closed");
+                    instructors.get(username).tell(new ChatRoom.Quit(username, out), null);
+
+                }
+            });
 
     }
 }

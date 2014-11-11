@@ -28,14 +28,15 @@ public class Event extends Model{
     @Constraints.Required
     @Formats.NonEmpty
     @Column(unique = true)
-    public String eventName;
+    public String eventName = "DB Normalization";
 
     @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
     public Date EventStartTime;
 
     @Constraints.Required
     @Formats.NonEmpty
-    public String scriptPhase1 ; // = "The event contains 3 stages. Stage 1: Answer the question that is being displayed. Stage 2: Collaborate with you event-mates and brainstorm about the answer options.Use Hashtags to anything that might be relevant. Stage 3: Having discussed, conclude the right answer and submit it. Give a short justification as to why you pick the answer. Also let us know who helped you better to arrive at the answer";
+    public String script = "The event contains 3 stages. Stage 1: Answer the question that is being displayed. Stage 2: Collaborate with you event-mates and brainstorm about the answer options.Use Hashtags to anything that might be relevant. Stage 3: Having discussed, conclude the right answer and submit it. Give a short justification as to why you pick the answer. Also let us know who helped you better to arrive at the answer";
+    public String scriptPhase1;
     public String scriptPhase2;
     public String scriptPhase3;
 
@@ -110,12 +111,12 @@ public class Event extends Model{
         List<Question> list = findByName(EventName).Questions;
         return list.get(1).Answer;
     }
-//    public static Event findEvent(){
-//        Event e = new Event();
-//        HashSet<String> tags = new HashSet<String>();
-//        tags.add("#Concept");
-//        tags.add("#Justification");
-//        tags.add("#Examples");
-//        return e;
-//    }
+    public static Event findEvent(){
+        Event e = new Event();
+        HashSet<String> tags = new HashSet<String>();
+        tags.add("#Concept");
+        tags.add("#Justification");
+        tags.add("#Examples");
+        return e;
+    }
 }

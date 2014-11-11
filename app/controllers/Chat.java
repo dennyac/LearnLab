@@ -41,6 +41,11 @@ public class Chat extends Controller {
         return ok(views.js.chatRoom.render(username));
     }
 
+    public static Result instructorJs(String username) {
+        return ok(views.js.instructorView.render(username));
+    }
+
+
     /**
      * Handle the chat websocket.
      */

@@ -79,6 +79,7 @@ public class User extends Model {
      * @param email email to search
      * @return a user
      */
+
     public static User findByEmail(String email) {
         return find.where().eq("email", email).findUnique();
     }

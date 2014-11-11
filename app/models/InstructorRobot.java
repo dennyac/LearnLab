@@ -8,11 +8,14 @@ import play.libs.Json;
 import play.mvc.WebSocket;
 import scala.concurrent.duration.Duration;
 
+import javax.persistence.Entity;
+
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * Created by dennyac on 11/8/14.
  */
+
 
 public class InstructorRobot {
 

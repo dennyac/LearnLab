@@ -22,7 +22,7 @@ public class UserStats {
     @OneToOne(mappedBy = "stats")
     public User user;
 
-    public ArrayList<Badge> BadgesAcquired;
+    //public ArrayList<Badge> BadgesAcquired;
 
     public int NoOfPosts;
 
