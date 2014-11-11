@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Event;
 import models.User;
 import models.utils.AppException;
 import play.Logger;
@@ -9,6 +10,9 @@ import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
+import views.html.user.userProfile;
+import views.html.user.pastEventDiscussion;
+import views.html.user.leaderBoard;
 
 import javax.validation.Constraint;
 
@@ -149,6 +153,18 @@ public class Application extends Controller {
         session().clear();
         flash("success", Messages.get("youve.been.logged.out"));
         return GO_HOME;
+    }
+
+    public static Result profile(){
+        return ok(userProfile.render((User.findByEmail(request().username())), Event.findEvent()));
+    }
+
+    public static Result pastEventDiscussion(){
+        return ok(pastEventDiscussion.render((User.findByEmail(request().username())), Event.findEvent()));
+    }
+
+    public static Result leaderBoard(){
+        return ok(leaderBoard.render((User.findByEmail(request().username())), Event.findEvent()));
     }
 
 }

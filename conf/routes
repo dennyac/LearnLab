@@ -10,8 +10,15 @@ POST    /dashboard/createEvent                  controllers.Dashboard.createEven
 POST    /dashboard/deleteEvent                  controllers.Dashboard.deleteEvent()
 POST    /dashboard/updateEvent                  controllers.Dashboard.updateEvent()
 
-POST    /eventStage1                controllers.EventController.eventStage1Render()
-POST    /eventStage3                controllers.EventController.eventStage3Render()
+#Student Home Page Specific
+GET     /leaderBoard                controllers.Application.leaderBoard()
+GET     /profile                    controllers.Application.profile()
+GET     /pastEventDiscussion        controllers.Application.pastEventDiscussion()
+
+POST    /eventStage1                controllers.EventController.eventStage1()
+POST    /eventStage3                controllers.EventController.eventStage3()
+POST    /eventStage4                controllers.EventController.eventStage4()
+POST    /eventResult                controllers.EventController.eventResult()
 
 POST    /login                      controllers.Application.authenticate()
 GET     /logout                     controllers.Application.logout()
