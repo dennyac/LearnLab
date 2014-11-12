@@ -218,8 +218,8 @@ $(function() {
     {
         vis.selectAll("rect")
             .data(newData)
-//            .transition()
-//            .duration(1000)
+            .transition()
+            .duration(1000)
 //            .attr('width', xRange.rangeBand())
 //            .attr("x", function(d,i){ return xRange(i)})
             .attr("y", function(d) { return yRange(d.y); })
