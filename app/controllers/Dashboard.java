@@ -13,6 +13,8 @@ import views.html.dashboard.deleteEventConfirmation;
 import views.html.dashboard.updateEventConfirmation;
 import views.html.chatRoom;
 import views.html.instructorView;
+import java.util.*;
+
 /**
  * User: yesnault
  * Date: 22/01/12
@@ -44,8 +46,41 @@ public class Dashboard extends Controller {
 
     }
 
-    public static Result createEvent()
+    public static Result createEvent(String arg)
     {
+        System.out.println("argument is "+ arg);
+        Event eventObj=new Event();
+        String[] createFormData=arg.split("\\|");
+
+        //Need to make sure User is in the db already
+        //Participant
+        System.out.println("This is the first element"+createFormData[0]+ "second"+createFormData[1]);
+
+        User u=User.findByFullname(createFormData[1]);
+        System.out.println("user "+ u.fullname);
+
+        if(u==null)
+            System.out.println("User is null");
+
+        if(eventObj.participants==null)
+            eventObj.participants=new ArrayList<User>();
+        else
+            eventObj.participants.add(u);
+
+        //event name
+        eventObj.eventName=createFormData[2];
+        System.out.println("argument is "+ eventObj.eventName);
+
+        if(eventObj.hashTags==null)
+            eventObj.hashTags=new HashSet<String>();
+        else
+            eventObj.hashTags.add(createFormData[3]);
+
+
+
+
+
+
         return ok(createEventConfirmation.render((User.findByEmail(request().username())), Event.findEvent()));
 
     }
