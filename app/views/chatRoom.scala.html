@@ -1,8 +1,6 @@
-@(user: User)
+@(user: User, event: Event)
 
 @mainStudent(user) {
-
-
 
 <div id="wrapper">
 
@@ -57,7 +55,7 @@
                     <div id="messages">
                     </div>
                     <textarea id="talk" size="35"></textarea>
-                    <form  method="POST" name="" action="@routes.EventController.eventStage3()">
+                    <form  method="POST" name="" action="@routes.EventController.eventStage3(event.eventId)">
                         <input type="submit" name="Submit" value= "Submit" class="btn btn-success">
                     </form>
                 </div>
@@ -74,6 +72,4 @@
 </div>
 
 <script type="text/javascript" charset="utf-8" src="@routes.Chat.chatRoomJs(user.email)"></script>
-
-
 }
