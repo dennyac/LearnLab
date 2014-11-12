@@ -27,15 +27,39 @@ $(function() {
         }
 
         // Create the message element
-        if(data.user != 'Robot'){
-            var el = $('<div class="message"><span></span><p></p></div>')
-            $("span", el).text(data.user)
-            $("p", el).text(data.message)
-            $(el).addClass(data.kind)
-            $(el).id
-            if(data.user == '@username') $(el).addClass('me')
-            $('#messages').append(el)
+        var $object1 = $('.message.me');
+        var $object2 = $('.message.Sparky');
+        console.log($object1.length)
+        console.log($object2.length)
+        if(data.user == 'Sparky') {
+            //Sparky speaks for the first time!!
+            if(!$object2.length == 0){
+                console.log("Sparky speaks for the first time")
+                var el = $('<div class="message"><span></span><p></p></div>')
+                $("span", el).text(data.user)
+                $("p", el).text(data.message)
+                $(el).addClass(data.kind)
+                if(data.user == '@username') $(el).addClass('me')
+                $('#messages').append(el)
+            }
+            else if(!$object1.length < 2){
+                var el = $('<div class="message"><span></span><p></p></div>')
+                $("span", el).text(data.user)
+                $("p", el).text(data.message)
+                $(el).addClass(data.kind)
+                if(data.user == '@username') $(el).addClass('me')
+                $('#messages').append(el)
+            }
         }
+        else {
+                var el = $('<div class="message"><span></span><p></p></div>')
+                $("span", el).text(data.user)
+                $("p", el).text(data.message)
+                $(el).addClass(data.kind)
+                if(data.user == '@username') $(el).addClass('me')
+                $('#messages').append(el)
+            }
+
 
 
 

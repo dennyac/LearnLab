@@ -2,10 +2,6 @@
 
 @mainInstructor(user) {
 <style>
-    .col-md-4 {
-        border: 2px solid;
-        border-radius: 25px;
-    }
     .chart rect {
         fill: steelblue;
         stroke: white;
@@ -62,17 +58,54 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="home">
+            <div class="row" id="id1">
+                <div class="col-md-4">
+                    <div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
+
+
+
+
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+
+
+
+
+
+                    </div>
+                </div>
+
+                <!--<script>-->
+                    <!--for(var i=0;i<eventlist.length;i++)-->
+                    <!--{-->
+                        <!--var el = $('<div></div>');-->
+                        <!--$(el).text(eventlist[i]);-->
+                        <!--$(el).addClass("col-md-4");-->
+                        <!--console.log($(el));-->
+                        <!--$('#id1').append($(el));-->
+                    <!--}-->
+                <!--</script>-->
+            </div>
             <div id="onChat" class="row">
                 <div class="span5" id="main">
                     <div id="messages" style="height:400px">
                     </div>
                     <textarea cols="60" id="talk"></textarea>
                 </div>
-                <div class="span4">
-                    <h2>Pinned Messages</h2>
-                    <ul id="members">
-                    </ul>
-                </div>
+                <!--<div class="row">-->
+                    <!--<textarea cols="60" id="talk"></textarea>-->
+                <!--</div>-->
+                <!--<div class="row">-->
+                    <select class="form-control" id="eventSelect" style="width:150px">
+                        <option>Select Event </option>
+                        <option>Event 1</option>
+                        <option>Event 2</option>
+                    </select>
+
+                <!--</div>-->
             </div>
 
         </div>

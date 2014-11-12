@@ -14,6 +14,7 @@ libraryDependencies ++= Seq(
   "com.typesafe" %% "play-plugins-mailer" % "2.2.0",
   "mysql" % "mysql-connector-java" % "5.1.34",
   "com.typesafe" %% "play-plugins-redis" % "2.1.1",
+  "postgresql" % "postgresql" % "9.1-901-1.jdbc4",
   filters
 )
 

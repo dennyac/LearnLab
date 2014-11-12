@@ -35,9 +35,8 @@ public class ChatRoomManager {
     public static void joinChatRoom(final String username, final WebSocket.In<JsonNode> in, final WebSocket.Out<JsonNode> out) throws Exception {
 
         final User u = findByEmail(username);
-        final Event currEvent = Event.findById(new Long(1l));
-        if(currEvent == null) System.out.println("It is null");
-        else System.out.println("It is not null");
+        //final Event currEvent = Event.findById(new Long(1l));
+        final Event currEvent = u.EventsParticipated.get(0);
         final User instructor = currEvent.instructor;
         if(!chatRooms.containsKey(currEvent.eventId))
             chatRooms.put(currEvent.eventId, Akka.system().actorOf(ChatRoom.props(currEvent.eventId,instructor.email), currEvent.eventId.toString()));
@@ -63,6 +62,7 @@ public class ChatRoomManager {
                     Jedis j = play.Play.application().plugin(RedisPlugin.class).jedisPool().getResource();
                     try {
                         //All messages are pushed through the pub/sub channel
+                        System.out.println(instructor.email + ".event." + currEvent.eventId);
                         j.publish(instructor.email + ".event." + currEvent.eventId, Json.stringify(Json.toJson(talk)));
                     } finally {
                         play.Play.application().plugin(RedisPlugin.class).jedisPool().returnResource(j);

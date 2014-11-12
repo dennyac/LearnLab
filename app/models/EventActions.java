@@ -61,9 +61,9 @@ public class EventActions extends Model{
     public static Future<String> asyncSave(final EventActions ea) { /* should the params be ServerMessageModel? */
         return future(new Callable<String>() {
             public String call() {
-                System.out.println("Entered Async call");
+//                System.out.println("Entered Async call");
                 ea.save();
-                System.out.println("Completed save");
+//                System.out.println("Completed save");
                 return "Success";
             }
         }, Akka.system().dispatcher());

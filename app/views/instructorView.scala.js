@@ -14,8 +14,10 @@ $(function() {
     var chatSocket = new WS("@routes.Chat.instructor(username).webSocketURL(request)")
 
     var sendMessage = function() {
+        var e = document.getElementById("eventSelect");
+        var strUser = e.options[e.selectedIndex].value;
         chatSocket.send(JSON.stringify(
-            {text: $("#talk").val()}
+            {text: $("#talk").val(), eventid: strUser}
         ))
         $("#talk").val('')
     }
@@ -24,7 +26,10 @@ $(function() {
         console.log("Received event")
 
         var data = JSON.parse(event.data)
-        console.log(data.text)
+        //username
+        //eventid
+        //text
+        console.log("data.text-" +data.text+"-data.username-"+data.username+"data.eventid" +data.eventId )
 
         // Handle errors
         if(data.error) {
@@ -36,15 +41,39 @@ $(function() {
             $("#onChat").show()
         }
 
-        // Create the message element
-        if(data.username != '@username'){
-            var el = $('<div class="message"><span></span><p></p></div>')
-            $("span", el).text(data.username)
-            $("p", el).text(data.text)
-            $(el).addClass("talk")
-            if(data.user == '@username') $(el).addClass('me')
-            $('#messages').prepend(el)
+        if(data.text.match(/(^|\s)(#[a-z\d-]+)/ig) != null){
+            var hashtag = data.text.match(/(^|\s)(#[a-z\d-]+)/ig)[0].substr(1)
+            console.log('Matched Hashtag')
+            var $object = $('#h' +data.eventId+ hashtag);
+            if(!$object.length) {
+                var dl = $('<div class="panel panel-default"><div class="panel-heading" role="tab" >               <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" aria-expanded="true" >                           </a></h4></div><div                  class="panel-collapse collapse in" role="tabpanel" >                            <div class="panel-body"><ul class="list-group"></ul></div></div></div>')
+                //  <div class="panel panel-default"><div class="panel-heading" role="tab" id="headingOne"><h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne"></a></h4></div><div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne"><div class="panel-body">                            </div></div></div>
+                $('.panel-heading',dl).attr('id',"heading" + hashtag)
+                $('a',dl).attr('href','#collapse' + hashtag)
+                $('a',dl).attr('aria-controls','collapse' + hashtag)
+                $('a', dl).text(hashtag)
+                $('.panel-collapse',dl).attr('aria-labelledby',"heading" + hashtag)
+                $('.panel-collapse',dl).attr('id',"collapse" + hashtag)
+                $("ul",dl).attr('id',"ul" + hashtag)
+                $(dl).attr('id',"h" +data.eventId + hashtag)
+                $('#accordion' + data.eventId).append(dl)
+            }
+
+            var li = document.createElement('li');
+            $(li).addClass("list-group-item")
+            $(li).text(data.text)
+            $('#accordion' + data.eventId, "#ul" + hashtag).append(li);
         }
+//
+//        // Create the message element
+//        if(data.username != 'Robot'){
+//            var el = $('<div class="message"><span></span><p></p></div>')
+//            $("span", el).text(data.username)
+//            $("p", el).text(data.text)
+//            $(el).addClass("talk")
+//            if(data.user == '@username') $(el).addClass('me')
+//            $('#messages').prepend(el)
+//        }
 
 
 

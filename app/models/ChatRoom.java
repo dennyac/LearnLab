@@ -48,7 +48,7 @@ public class ChatRoom extends UntypedActor {
 
     public ChatRoom(final Long eventId, final String instructor){
         CHANNEL = instructor + ".event." + eventId;
-        System.out.println(CHANNEL);
+//        System.out.println(CHANNEL);
         MEMBERS = "members." + eventId;
         //add the robot
         //new Robot(getSelf());
@@ -99,9 +99,9 @@ public class ChatRoom extends UntypedActor {
                     //    getSender().tell("This username is already used", getSelf());
                     //} else {
                         //Add the member to this node and the global roster
-                        System.out.println("join.channel - " + join.channel);
-                        System.out.println("join.channel.toString() - " + join.channel.toString());
-                        System.out.println("join.channel.hashCode() - " + join.channel.hashCode());
+//                        System.out.println("join.channel - " + join.channel);
+//                        System.out.println("join.channel.toString() - " + join.channel.toString());
+//                        System.out.println("join.channel.hashCode() - " + join.channel.hashCode());
                      //= members.containsKey(join.username)? members.get(join.getUsername()):new ArrayList<WebSocket.Out<JsonNode>>();
 
                     if(members.containsKey(join.username)){
@@ -117,7 +117,7 @@ public class ChatRoom extends UntypedActor {
                         j.sadd(MEMBERS, join.username);
 
                         //Publish the join notification to all nodes
-                        System.out.println("From on receive join.message is " + join.message);
+//                        System.out.println("From on receive join.message is " + join.message);
                         RosterNotification rosterNotify = new RosterNotification(join.username, "join", join.message);
                         j.publish(CHANNEL, Json.stringify(Json.toJson(rosterNotify)));
                         getSender().tell("OK", getSelf());
@@ -137,7 +137,7 @@ public class ChatRoom extends UntypedActor {
                     //Received a roster notification
                     RosterNotification rosterNotify = (RosterNotification) message;
 
-                    System.out.println("From onReceive rosterNotify.message" + rosterNotify.message);
+//                    System.out.println("From onReceive rosterNotify.message" + rosterNotify.message);
                     if("join".equals(rosterNotify.direction)) {
                         notifyAll("join", rosterNotify.username, rosterNotify.message);
                     } else if("quit".equals(rosterNotify.direction)) {
@@ -294,7 +294,7 @@ public class ChatRoom extends UntypedActor {
 	    				parsedMessage.get("text").asText()
 	    				);
 	    	} else if("rosterNotify".equals(messageType)) {
-                System.out.println("From MyListener parsed message is " + parsedMessage.get("message").asText());
+//                System.out.println("From MyListener parsed message is " + parsedMessage.get("message").asText());
 	    		message = new RosterNotification(
 	    				parsedMessage.get("username").asText(),
 	    				parsedMessage.get("direction").asText(),
