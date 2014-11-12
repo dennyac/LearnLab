@@ -126,4 +126,13 @@ public class Event extends Model{
         List<Question> list = findByName(EventName).Questions;
         return list.get(1).Answer;
     }
+
+    public static Event findEvent(){
+        Event e = new Event();
+        HashSet<String> tags = new HashSet<String>();
+        tags.add("#Concept");
+        tags.add("#Justification");
+        tags.add("#Examples");
+        return e;
+    }
 }

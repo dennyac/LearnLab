@@ -19,6 +19,8 @@ public class EventStats extends Model {
 
     public int TotalMessages;
 
+
+
     public double percentOfSuccess; //% of who got it right
 
     //collaboration index
