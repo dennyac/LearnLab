@@ -3,20 +3,23 @@ package models;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import java.util.List;
 
 /**
  * Created by Supriya on 14/10/2014.
  */
+@Entity
 public class Question {
     @Id
     @Constraints.Required
     @Formats.NonEmpty
     public Long questionNumber;
 
-    @Constraints.Required
-    @Formats.NonEmpty
-    public Long eventId;
+    @ManyToMany(mappedBy = "Questions")
+    public List<Event> EventsUsingQuestion;
 
     @Constraints.Required
     @Formats.NonEmpty
@@ -40,7 +43,7 @@ public class Question {
 
     @Constraints.Required
     @Formats.NonEmpty
-    public String Answer = Option3;
+    public String Answer = "Option3";
 
     public static models.Question getQuestionByEventId(){
         models.Question q = new models.Question();

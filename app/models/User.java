@@ -6,10 +6,9 @@ import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * User: yesnault
@@ -26,12 +25,19 @@ public class User extends Model {
     @Column(unique = true)
     public String email;
 
+
+    @OneToMany(mappedBy = "instructor")
+    public List<Event> events;
+
     @Constraints.Required
     @Formats.NonEmpty
     @Column(unique = true)
     public String fullname = "";
 
     public String confirmationToken;
+
+    @ManyToMany(mappedBy = "participants")
+    public List<Event> EventsParticipated;
 
     @Constraints.Required
     @Formats.NonEmpty
@@ -58,6 +64,16 @@ public class User extends Model {
     @Formats.NonEmpty
     public int hashTagContributions = 0;
 
+    @Constraints.Required
+    @Formats.NonEmpty
+    public String bio;
+
+    @OneToOne
+    public UserStats stats;
+
+    @OneToMany(mappedBy = "user")
+    public List<EventActions> actions;
+
     // -- Queries (long id, user.class)
     public static Model.Finder<Long, User> find = new Model.Finder<Long, User>(Long.class, User.class);
 
@@ -67,6 +83,7 @@ public class User extends Model {
      * @param email email to search
      * @return a user
      */
+
     public static User findByEmail(String email) {
         return find.where().eq("email", email).findUnique();
     }

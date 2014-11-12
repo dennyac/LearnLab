@@ -16,7 +16,7 @@ smtp.password=password
 smtp.ssl=true
 
 # Mail user from
-mail.from="PlayStartApp@yourdomain.com"
+mail.from="learnlabtolc@gmail.com"
 
 # Mail sign
 mail.sign=The PlayStartApp Team
