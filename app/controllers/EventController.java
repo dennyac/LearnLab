@@ -37,8 +37,8 @@ public class EventController extends Controller {
 //        }
         User currUser = User.findByEmail(request().username());
         Event eventSelected = Event.findById(eventId);
-        System.out.println("Request().username:"+ currUser.fullname);
-        System.out.println("User email id is " + currUser.email);
+//        System.out.println("Request().username:"+ currUser.fullname);
+//        System.out.println("User email id is " + currUser.email);
         //System.out.println("EVENT ID" + eventId);
         return ok(chatRoom.render((currUser),eventSelected));
     }

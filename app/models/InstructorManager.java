@@ -48,8 +48,8 @@ public class InstructorManager {
                     try {
                         //All messages are pushed through the pub/sub channel
                         //todo need to send event details in json message
-                        j.publish(username + ".event." + "te", Json.stringify(Json.toJson(talk)));
-                        System.out.println(username + ".event." + "te");
+                        j.publish(username + ".event." + event.get("eventid").asText(), Json.stringify(Json.toJson(talk)));
+                        System.out.println(username + ".event." + event.get("eventid").asText().split(" ")[1]);
                     } finally {
                         play.Play.application().plugin(RedisPlugin.class).jedisPool().returnResource(j);
                     }

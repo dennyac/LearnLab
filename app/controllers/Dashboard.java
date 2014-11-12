@@ -74,8 +74,8 @@ public class Dashboard extends Controller {
 //            return redirect(routes.Application.index());
 //        }
         User currUser = User.findByEmail(request().username());
-        System.out.println("Request().username:"+ currUser.fullname);
-        System.out.println("User email id is " + currUser.email);
+//        System.out.println("Request().username:"+ currUser.fullname);
+//        System.out.println("User email id is " + currUser.email);
         return ok(instructorView.render(currUser));
     }
 

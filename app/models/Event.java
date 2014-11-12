@@ -136,7 +136,6 @@ public class Event extends Model{
         return list.get(1).Answer;
     }
 
-
     public static Event findEvent(){
         Event e = new Event();
         HashSet<String> tags = new HashSet<String>();
