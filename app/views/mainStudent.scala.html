@@ -41,16 +41,16 @@
             <i class="fa fa-rocket"></i> LearnLab
         </a>
         <ul class="nav navbar-nav navbar-right">
+            <li class=""><a href="@routes.Application.leaderBoard()">Leader-Board</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class=""><a href="@routes.Application.pastEventDiscussion()">Past-Event-Discussions</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class=""><a href="@routes.Application.profile()">Profile</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
             <li class=""><a href="@routes.Application.index()">Home</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li class=""><a href="@routes.Application.index()">Profile</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li class=""><a href="@routes.Application.index()">Past-Event-Discussions</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li class=""><a href="@routes.Application.index()">Leader-Board</a></li>
         </ul>
     </div>
     @logged(user)
