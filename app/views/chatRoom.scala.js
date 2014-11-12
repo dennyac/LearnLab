@@ -16,6 +16,7 @@ $(function() {
 
         // Handle errors
         if(data.error) {
+            alert("helo");
             chatSocket.close()
             $("#onError span").text(data.error)
             $("#onError").show()
@@ -30,7 +31,7 @@ $(function() {
         $("p", el).text(data.message)
         $(el).addClass(data.kind)
         if(data.user == '@username') $(el).addClass('me')
-        $('#messages').append(el)
+        $('#messages').prepend(el)
 
         if(data.message.match(/(^|\s)(#[a-z\d-]+)/ig) != null){
             var li = document.createElement('li');

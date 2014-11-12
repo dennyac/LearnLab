@@ -9,15 +9,26 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import models.utils.AppException;
+import models.utils.Hash;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.util.Date;
+
 /**
  * Created by Supriya on 14/10/2014.
  */
+@Entity
 public class Event extends Model{
 
+    public static Model.Finder<Long, User> ufind = new Model.Finder<Long, User>(Long.class, User.class);
+    public static Model.Finder<Long, Event> efind = new Model.Finder<Long, Event>(Long.class, Event.class);
     @Id
     @Constraints.Required
     @Formats.NonEmpty
-    public Long eventId;
+    public String eventId;
 
     @Constraints.Required
     @Formats.NonEmpty
@@ -33,7 +44,7 @@ public class Event extends Model{
 
     @Constraints.Required
     @Formats.NonEmpty
-    public ArrayList<User> participants;
+    public ArrayList<String> participants;
 
     @Constraints.Required
     @Formats.NonEmpty
@@ -47,4 +58,39 @@ public class Event extends Model{
         tags.add("#Examples");
         return e;
     }
+
+    public static void populateEvents(){
+        HashSet<String> tags = new HashSet<String>();
+        ArrayList<String> particpants = new ArrayList<String>();
+//        List<User> userlist = ufind.findList();
+//        for(int i=0;<userlist.size();i++){
+//
+//        }
+        particpants.add("ANil");
+        particpants.add("denny");
+        particpants.add("supriya");
+        particpants.add("dhanyatha");
+        particpants.add("shruthi");
+        ArrayList<String> questions = new ArrayList<String>();
+        questions.add("What is the diff b/w database and schema");
+        questions.add("can a database multiple schemas");
+        tags.add("#Concept");
+        tags.add("#Justification");
+        tags.add("#Examples");
+        Event e = new Event();
+        e.eventId = "EventGroupId4";
+        e.eventName = "EventGroup5";
+        e.hashTags = tags;
+        e.participants = particpants;
+        e.Question = questions;
+        e.script = "New script";
+        e.save();
+    }
+
+    public static List<Event> getEventList() {
+        List<Event> list = efind.findList();
+        return list;
+    }
+
+
 }

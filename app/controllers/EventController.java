@@ -8,6 +8,12 @@ import play.mvc.Security;
 import views.html.eventSequence.eventStage1;
 import views.html.eventSequence.eventStage3;
 import views.html.chatRoom;
+import views.html.live.liveFeeds;
+import views.html.live.liveStats;
+import views.html.live.offlineStats;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Security.Authenticated(Secured.class)
 public class EventController extends Controller {
@@ -30,4 +36,35 @@ public class EventController extends Controller {
     public static Result eventStage3Render() {
         return ok(eventStage3.render((User.findByEmail(request().username())), Event.findEvent()));
     }
+
+    public static Result eventFeeds(){
+        Event.populateEvents();
+        ArrayList<String> eventnames = new ArrayList<String>();
+        eventnames.add("EventGroup1");
+        eventnames.add("EventGroup2");
+        return ok(liveFeeds.render((User.findByEmail(request().username())), eventnames));
+    }
+
+    public static Result eventStats(){
+//        Event.populateEvents();
+        ArrayList<String> eventnames = new ArrayList<String>();
+        eventnames.add("EventGroup1");
+        eventnames.add("EventGroup2");
+        return ok(liveStats.render((User.findByEmail(request().username())), eventnames));
+    }
+
+    public static Result offlineEventStats(){
+//        Event.populateEvents();
+        ArrayList<String> eventnames = new ArrayList<String>();
+        eventnames.add("EventGroup1");
+        eventnames.add("EventGroup2");
+        return ok(offlineStats.render((User.findByEmail(request().username())), eventnames));
+    }
+
+
+    public static Result eventFeedsJs(){
+        return ok(views.js.live.liveFeeds.render());
+    }
+
+
 }
