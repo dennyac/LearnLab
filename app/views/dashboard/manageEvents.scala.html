@@ -13,96 +13,102 @@
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="createEvent">
                 <form method="POST" class="form-compact" role="form" action="@routes.Dashboard.createEvent()">
-                <div class="well">
-                  <div class="row">
-                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                    <br>
+                  <fieldset class="fieldSetLegend">
+                      <legend class="fieldSetLegend"><h5><b>Event and Scripts</b></h5></legend>
+                    <div class="row">
+                      <div class="form-group col-md-3 col-sm-4 col-xs-12">
                         <label for="eventName">Event Name</label>
-                        <input type="text" class="form-control" id="eventName" placeholder="Event Name">
-                    </div>
-                    <div class="form-group col-md-7 col-sm-4 col-xs-12">
+                        <input type="text" class="form-control" id="eventName">
+                      </div>
+                        <div class="form-group col-md-7 col-sm-4 col-xs-12">
                         <label for="eventDescription">Event Description</label>
-                        <input type="text" class="form-control" id="eventDescription" placeholder="Event Description">
+                        <input type="text" class="form-control" id="eventDescription">
+                     </div>
                     </div>
-                  </div>
                   <div class="row">
-                    <div class="form-group col-md-3.3 col-sm-4 col-xs-12">
+                        <div class="form-group col-md-3.3 col-sm-4 col-xs-12">
                             <label for="Script1">Phase 1 Script</label>
-                            <textarea type="text" class="form-control" id="Script1" rows="2" placeholder="Script Description"></textarea>
+                            <textarea type="text" class="form-control" id="Script1" rows="2"></textarea>
                         </div>
                         <div class="form-group col-md-3.3 col-sm-4 col-xs-12">
                             <label for="Script2">Phase 2 Script</label>
-                            <textarea type="text" class="form-control" id="Script2" rows="2" placeholder="Script Description"></textarea>
+                            <textarea type="text" class="form-control" id="Script2" rows="2"></textarea>
                         </div>
                         <div class="form-group col-md-3.3 col-sm-4 col-xs-12">
                             <label for="Script3">Phase 3 Script</label>
-                            <textarea type="text" class="form-control" id="Script3" rows="2" placeholder="Script Description"></textarea>
+                            <textarea type="text" class="form-control" id="Script3" rows="2"></textarea>
                         </div>
-                </div>
-                </div>
-                <div class="well">
+                  </div>
+                </fieldset>
+
+                <fieldset class="fieldSetLegend">
+                <legend class="fieldSetLegend"><h5><b>Question and Answers</b></h5></legend>
                   <div class="row">
                     <div class="form-group col-md-7 col-sm-4 col-xs-12">
                         <label for="Question">Question</label>
-                        <textarea type="text" class="form-control" id="Question" rows="2" placeholder="Question"></textarea>
+                        <textarea type="text" class="form-control" id="Question" rows="2"></textarea>
                     </div>
                     <div class="form-group col-md-3 col-sm-4 col-xs-12">
                         <label for="Answer">Answer</label>
-                        <textarea type="text" class="form-control" id="Answer" rows="2" placeholder="Answer"></textarea>
+                        <textarea type="text" class="form-control" id="Answer" rows="2"></textarea>
                     </div>
                 </div>
 
                   <div class="row">
                         <div class="form-group col-md-3 col-sm-4 col-xs-12">
                             <label for="Option1">Option 1</label>
-                            <textarea type="text" class="form-control" id="Option 1" rows="2" placeholder="Option 1"></textarea>
+                            <textarea type="text" class="form-control" id="Option 1" rows="2"></textarea>
                         </div>
                         <div class="form-group col-md-3 col-sm-4 col-xs-12">
                             <label for="Option2">Option 2</label>
-                            <textarea type="text" class="form-control" id="Option 2" rows="2" placeholder="Option 2"></textarea>
+                            <textarea type="text" class="form-control" id="Option 2" rows="2" ></textarea>
                         </div>
                         <div class="form-group col-md-3 col-sm-4 col-xs-12">
                             <label for="Option3">Option 3</label>
-                            <textarea type="text" class="form-control" id="Option 3" rows="2" placeholder="Option 3"></textarea>
+                            <textarea type="text" class="form-control" id="Option 3" rows="2" ></textarea>
                         </div>
                         <div class="form-group col-md-3 col-sm-4 col-xs-12">
                             <label for="Option4">Option 4</label>
-                            <textarea type="text" class="form-control" id="Option 4" rows="2" placeholder="Option 4"></textarea>
+                            <textarea type="text" class="form-control" id="Option 4" rows="2" ></textarea>
                         </div>
                 </div>
-                </div>
-                <div class="well">
+                </fieldset>
+                    <fieldset class="fieldSetLegend">
+                        <legend class="fieldSetLegend"><h5><b>FollowUp Question and Answer</b></h5></legend>
                   <div class="row">
                     <div class="form-group col-md-7 col-sm-4 col-xs-12">
                         <label for="FollowUpQuestion">FollowUp Question</label>
-                        <textarea type="text" class="form-control" id="FollowUpQuestion" rows="2" placeholder="FollowUpQuestion"></textarea>
+                        <textarea type="text" class="form-control" id="FollowUpQuestion" rows="2" ></textarea>
                     </div>
                     <div class="form-group col-md-3 col-sm-4 col-xs-12">
                         <label for="FollowUpAnswer">FollowUp Answer</label>
-                        <textarea type="text" class="form-control" id="FollowUpAnswer" rows="2" placeholder="FollowUpAnswer"></textarea>
+                        <textarea type="text" class="form-control" id="FollowUpAnswer" rows="2"></textarea>
                     </div>
                 </div>
 
                   <div class="row">
                     <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                        <label for="FollowUpOption1">FollowUp Option 1</label>
-                        <textarea type="text" class="form-control" id="FollowUpOption 1" rows="2" placeholder="FollowUp Option 1"></textarea>
+                        <label for="FollowUpOption1">Option 1</label>
+                        <textarea type="text" class="form-control" id="FollowUpOption 1" rows="2"></textarea>
                     </div>
                     <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                        <label for="FollowUpOption2">FollowUp Option 2</label>
-                        <textarea type="text" class="form-control" id="FollowUp Option 2" rows="2" placeholder="FollowUp Option 2"></textarea>
+                        <label for="FollowUpOption2">Option 2</label>
+                        <textarea type="text" class="form-control" id="FollowUp Option 2" rows="2"></textarea>
                     </div>
                     <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                        <label for="FollowUpOption3">FollowUp Option 3</label>
-                        <textarea type="text" class="form-control" id="FollowUp Option 3" rows="2" placeholder="FollowUp Option 3"></textarea>
+                        <label for="FollowUpOption3">Option 3</label>
+                        <textarea type="text" class="form-control" id="FollowUp Option 3" rows="2"></textarea>
                     </div>
                     <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                        <label for="FollowUpOption4">FollowUp Option 4</label>
-                        <textarea type="text" class="form-control" id="FollowUp Option 4" rows="2" placeholder="FollowUp Option 4"></textarea>
+                        <label for="FollowUpOption4">Option 4</label>
+                        <textarea type="text" class="form-control" id="FollowUp Option 4" rows="2"></textarea>
                     </div>
                 </div>
-                </div>
+                </fieldset>
 
-                <div class="well">
+                    <fieldset class="fieldSetLegend">
+                        <legend class="fieldSetLegend"><h5><b>Event Participants and Schedule</b></h5></legend>
                   <div class="row">
                     <div class="form-group dropdown col-md-3 col-sm-4 col-xs-12">
                         <br>
@@ -128,7 +134,7 @@
                         <input type="text" class="time start form-control" id="endTimeCreateForm"/>
                     </div>
                 </div>
-                </div>
+                </fieldset>
                   <div class="row">
                     <div class="form-group dropdown col-md-3 col-sm-6 col-xs-12">
                             <button type="submit" class="btn btn-success">Create Event</button>
@@ -139,7 +145,8 @@
 
             <div role="tabpanel" class="tab-pane" id="deleteEvent">
                 <br>
-              <div class="well">
+                <fieldset class="fieldSetLegend">
+                    <legend class="fieldSetLegend"><h5><b>Delete Event</b></h5></legend>
                 <form method="POST" class="form-horizontal" role="form" action="@routes.Dashboard.deleteEvent()">
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Event ID</label>
@@ -153,7 +160,8 @@
                         </div>
                     </div>
                 </form>
-            </div>
+            </fieldset>
+
             </div>
 
         <div role="tabpanel" class="tab-pane" id="updateEvent">
@@ -200,19 +208,19 @@
                         <div class="row">
                             <div class="form-group col-md-3 col-sm-4 col-xs-12">
                                 <label for="Option1">Option 1</label>
-                                <textarea type="text" class="form-control" id="Option 1" rows="2" placeholder="Option 1"></textarea>
+                                <textarea type="text" class="form-control" id="Option1" rows="2" placeholder="Option 1"></textarea>
                             </div>
                             <div class="form-group col-md-3 col-sm-4 col-xs-12">
                                 <label for="Option2">Option 2</label>
-                                <textarea type="text" class="form-control" id="Option 2" rows="2" placeholder="Option 2"></textarea>
+                                <textarea type="text" class="form-control" id="Option2" rows="2" placeholder="Option 2"></textarea>
                             </div>
                             <div class="form-group col-md-3 col-sm-4 col-xs-12">
                                 <label for="Option3">Option 3</label>
-                                <textarea type="text" class="form-control" id="Option 3" rows="2" placeholder="Option 3"></textarea>
+                                <textarea type="text" class="form-control" id="Option3" rows="2" placeholder="Option 3"></textarea>
                             </div>
                             <div class="form-group col-md-3 col-sm-4 col-xs-12">
                                 <label for="Option4">Option 4</label>
-                                <textarea type="text" class="form-control" id="Option 4" rows="2" placeholder="Option 4"></textarea>
+                                <textarea type="text" class="form-control" id="Option4" rows="2" placeholder="Option 4"></textarea>
                             </div>
                         </div>
                     </div>
@@ -231,19 +239,19 @@
                         <div class="row">
                             <div class="form-group col-md-3 col-sm-4 col-xs-12">
                                 <label for="FollowUpOption1">FollowUp Option 1</label>
-                                <textarea type="text" class="form-control" id="FollowUpOption 1" rows="2" placeholder="FollowUp Option 1"></textarea>
+                                <textarea type="text" class="form-control" id="FollowUpOption1" rows="2" placeholder="FollowUp Option 1"></textarea>
                             </div>
                             <div class="form-group col-md-3 col-sm-4 col-xs-12">
                                 <label for="FollowUpOption2">FollowUp Option 2</label>
-                                <textarea type="text" class="form-control" id="FollowUp Option 2" rows="2" placeholder="FollowUp Option 2"></textarea>
+                                <textarea type="text" class="form-control" id="FollowUpOption2" rows="2" placeholder="FollowUp Option 2"></textarea>
                             </div>
                             <div class="form-group col-md-3 col-sm-4 col-xs-12">
                                 <label for="FollowUpOption3">FollowUp Option 3</label>
-                                <textarea type="text" class="form-control" id="FollowUp Option 3" rows="2" placeholder="FollowUp Option 3"></textarea>
+                                <textarea type="text" class="form-control" id="FollowUpOption3" rows="2" placeholder="FollowUp Option 3"></textarea>
                             </div>
                             <div class="form-group col-md-3 col-sm-4 col-xs-12">
                                 <label for="FollowUpOption4">FollowUp Option 4</label>
-                                <textarea type="text" class="form-control" id="FollowUp Option 4" rows="2" placeholder="FollowUp Option 4"></textarea>
+                                <textarea type="text" class="form-control" id="FollowUpOption4" rows="2" placeholder="FollowUp Option 4"></textarea>
                             </div>
                         </div>
                     </div>
