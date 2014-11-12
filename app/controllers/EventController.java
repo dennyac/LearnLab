@@ -40,7 +40,7 @@ public class EventController extends Controller {
     }
 
     public static Result eventFeeds(){
-        Event.populateEvents();
+//        Event.populateEvents();
         ArrayList<String> eventnames = new ArrayList<String>();
         eventnames.add("EventGroup1");
         eventnames.add("EventGroup2");

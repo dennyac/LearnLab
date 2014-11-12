@@ -59,7 +59,7 @@ public class User extends Model {
     public long aggregatedScore = 0;
 
     @Formats.NonEmpty
-    public String badge = "Beginner";
+    public String badge;
 
     @Formats.NonEmpty
     public int hashTagContributions = 0;
