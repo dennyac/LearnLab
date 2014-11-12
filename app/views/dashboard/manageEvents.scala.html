@@ -1,43 +1,8 @@
 @(user: User, event: Event)
 
-@main(user) {
+@mainInstructor(user) {
 <div id="wrapper">
-    <div class="col-md-3">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">@user.fullname 's Profile</h3>
-            </div>
-            <div class="panel-body">
-                <div class="panel-body">
-                    <div class="text-left">
-                        <a href="@routes.Dashboard.manageEvents()">Manage Events <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <div class="text-left">
-                        <a href="#">Group Statistics <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <div class="text-left">
-                        <a href="#">Individual Statistics <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <div class="text-left">
-                    <a href="@routes.Dashboard.instructorView()">Live Feed <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <div class="text-left">
-                    <a href="#">Past Events <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-
-    <div class="col-md-9">
+        <div class="col-md-9">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist" id="myTab">
             <li role="presentation" class="active"><a href="#createEvent" role="tab" data-toggle="tab">Create</a></li>
@@ -46,89 +11,142 @@
         </ul>
 
         <div class="tab-content">
-            <br>
             <div role="tabpanel" class="tab-pane active" id="createEvent">
-                <form method="POST" class="form-horizontal" role="form" action="@routes.Dashboard.createEvent()">
-                    <div class="form-group">
-                        <label for="eventID" class="col-sm-2 control-label">Event ID</label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control" id="eventID" placeholder="Event ID">
-                        </div>
+                <form method="POST" class="form-compact" role="form" action="@routes.Dashboard.createEvent()">
+                    <br>
+                  <fieldset class="fieldSetLegend">
+                      <legend class="fieldSetLegend"><h5><b>Event and Scripts</b></h5></legend>
+                    <div class="row">
+                      <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                        <label for="eventName">Event Name</label>
+                        <input type="text" class="form-control" id="eventName">
+                      </div>
+                        <div class="form-group col-md-7 col-sm-4 col-xs-12">
+                        <label for="eventDescription">Event Description</label>
+                        <input type="text" class="form-control" id="eventDescription">
+                     </div>
                     </div>
-                    <div class="form-group">
-                        <label for="eventName" class="col-sm-2 control-label">Event Name</label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control" id="eventName" placeholder="Event Name">
+                  <div class="row">
+                        <div class="form-group col-md-3.3 col-sm-4 col-xs-12">
+                            <label for="Script1">Phase 1 Script</label>
+                            <textarea type="text" class="form-control" id="Script1" rows="2"></textarea>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="Script1" class="col-sm-2 control-label">Phase 1 Script</label>
-                        <div class="col-sm-7">
-                            <textarea type="text" class="form-control" id="Script1" rows="2" placeholder="Script Description"></textarea>
+                        <div class="form-group col-md-3.3 col-sm-4 col-xs-12">
+                            <label for="Script2">Phase 2 Script</label>
+                            <textarea type="text" class="form-control" id="Script2" rows="2"></textarea>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="Script2" class="col-sm-2 control-label">Phase 2 Script</label>
-                        <div class="col-sm-7">
-                            <textarea type="text" class="form-control" id="Script2" rows="2" placeholder="Script Description"></textarea>
+                        <div class="form-group col-md-3.3 col-sm-4 col-xs-12">
+                            <label for="Script3">Phase 3 Script</label>
+                            <textarea type="text" class="form-control" id="Script3" rows="2"></textarea>
                         </div>
+                  </div>
+                </fieldset>
+
+                <fieldset class="fieldSetLegend">
+                <legend class="fieldSetLegend"><h5><b>Question and Answers</b></h5></legend>
+                  <div class="row">
+                    <div class="form-group col-md-7 col-sm-4 col-xs-12">
+                        <label for="Question">Question</label>
+                        <textarea type="text" class="form-control" id="Question" rows="2"></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="Script3" class="col-sm-2 control-label">Phase 3 Script</label>
-                        <div class="col-sm-7">
-                            <textarea type="text" class="form-control" id="Script3" rows="2" placeholder="Script Description"></textarea>
+                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                        <label for="Answer">Answer</label>
+                        <textarea type="text" class="form-control" id="Answer" rows="2"></textarea>
+                    </div>
+                </div>
+
+                  <div class="row">
+                        <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                            <label for="Option1">Option 1</label>
+                            <textarea type="text" class="form-control" id="Option 1" rows="2"></textarea>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="eventDescription" class="col-sm-2 control-label">Event Description</label>
-                        <div class="col-sm-7">
-                            <textarea type="text" class="form-control" id="eventDescription" rows="2" placeholder="Event Description"></textarea>
+                        <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                            <label for="Option2">Option 2</label>
+                            <textarea type="text" class="form-control" id="Option 2" rows="2" ></textarea>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="Question" class="col-sm-2 control-label">Questions</label>
-                        <div class="col-sm-7">
-                            <textarea type="text" class="form-control" id="Question" rows="2" placeholder="Question"></textarea>
+                        <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                            <label for="Option3">Option 3</label>
+                            <textarea type="text" class="form-control" id="Option 3" rows="2" ></textarea>
                         </div>
+                        <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                            <label for="Option4">Option 4</label>
+                            <textarea type="text" class="form-control" id="Option 4" rows="2" ></textarea>
+                        </div>
+                </div>
+                </fieldset>
+                    <fieldset class="fieldSetLegend">
+                        <legend class="fieldSetLegend"><h5><b>FollowUp Question and Answer</b></h5></legend>
+                  <div class="row">
+                    <div class="form-group col-md-7 col-sm-4 col-xs-12">
+                        <label for="FollowUpQuestion">FollowUp Question</label>
+                        <textarea type="text" class="form-control" id="FollowUpQuestion" rows="2" ></textarea>
                     </div>
-                    <div class="form-group dropdown">
-                        <label for="dropdownMenu1" class="col-sm-2 control-label">Participants</label>
+                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                        <label for="FollowUpAnswer">FollowUp Answer</label>
+                        <textarea type="text" class="form-control" id="FollowUpAnswer" rows="2"></textarea>
+                    </div>
+                </div>
+
+                  <div class="row">
+                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                        <label for="FollowUpOption1">Option 1</label>
+                        <textarea type="text" class="form-control" id="FollowUpOption 1" rows="2"></textarea>
+                    </div>
+                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                        <label for="FollowUpOption2">Option 2</label>
+                        <textarea type="text" class="form-control" id="FollowUp Option 2" rows="2"></textarea>
+                    </div>
+                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                        <label for="FollowUpOption3">Option 3</label>
+                        <textarea type="text" class="form-control" id="FollowUp Option 3" rows="2"></textarea>
+                    </div>
+                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                        <label for="FollowUpOption4">Option 4</label>
+                        <textarea type="text" class="form-control" id="FollowUp Option 4" rows="2"></textarea>
+                    </div>
+                </div>
+                </fieldset>
+
+                    <fieldset class="fieldSetLegend">
+                        <legend class="fieldSetLegend"><h5><b>Event Participants and Schedule</b></h5></legend>
+                  <div class="row">
+                    <div class="form-group dropdown col-md-3 col-sm-4 col-xs-12">
+                        <br>
                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                            Participants<nbsp>   </nbsp>
-                            <span class="caret"></span>
+                            Participants
                         </button>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">User1</a></li>
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">User2</a></li>
                         </ul>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
                         <label for="createdatepicker" class="col-sm-2 control-label">Date</label>
-                        <div class='col-sm-5'>
-                            <input type="text" class="form-control" id="createdatepicker" size="30">
-                        </div>
+                        <input type="text" class="form-control" id="createdatepicker" size="30">
                     </div>
-                    <div class="form-group">
-                        <label for="startTimeCreateForm" class="col-sm-2 control-label">Start Time</label>
-                        <div class='col-sm-5'>
-                            <input type="text" class="time start form-control" id="startTimeCreateForm"/>
-                        </div>
+                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                        <label for="startTimeCreateForm" class="col-sm-2 control-label">StartTime</label>
+                        <input type="text" class="time start form-control" id="startTimeCreateForm"/>
                     </div>
-                    <div class="form-group">
-                        <label for="endTimeCreateForm" class="col-sm-2 control-label">End Time</label>
-                        <div class='col-sm-5'>
-                            <input type="text" class="time start form-control" id="endTimeCreateForm"/>
-                        </div>
+
+                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                        <label for="endTimeCreateForm" class="col-sm-2 control-label">EndTime</label>
+                        <input type="text" class="time start form-control" id="endTimeCreateForm"/>
                     </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-default">Create</button>
-                        </div>
+                </div>
+                </fieldset>
+                  <div class="row">
+                    <div class="form-group dropdown col-md-3 col-sm-6 col-xs-12">
+                            <button type="submit" class="btn btn-success">Create Event</button>
                     </div>
-                </form>
+                  </div>
+            </form>
             </div>
+
             <div role="tabpanel" class="tab-pane" id="deleteEvent">
                 <br>
+                <fieldset class="fieldSetLegend">
+                    <legend class="fieldSetLegend"><h5><b>Delete Event</b></h5></legend>
                 <form method="POST" class="form-horizontal" role="form" action="@routes.Dashboard.deleteEvent()">
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Event ID</label>
@@ -138,88 +156,136 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-default">Delete</button>
+                            <button type="submit" class="btn btn-success">Delete</button>
                         </div>
                     </div>
                 </form>
+            </fieldset>
+
             </div>
-            <div role="tabpanel" class="tab-pane" id="updateEvent">
+
+        <div role="tabpanel" class="tab-pane" id="updateEvent">
                 <br>
                 <form method="POST" class="form-horizontal" role="form" action="@routes.Dashboard.updateEvent()">
-                    <div class="form-group">
-                        <label for="updateEventID" class="col-sm-2 control-label">Event ID</label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control" id="updateEventID" placeholder="Event ID">
+                    <div class="well">
+                        <div class="row">
+                            <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                <label for="eventName">Event Name</label>
+                                <input type="text" class="form-control" id="eventName" placeholder="Event Name">
+                            </div>
+                            <div class="form-group col-md-7 col-sm-4 col-xs-12">
+                                <label for="eventDescription">Event Description</label>
+                                <input type="text" class="form-control" id="eventDescription" placeholder="Event Description">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-3.3 col-sm-4 col-xs-12">
+                                <label for="Script1">Phase 1 Script</label>
+                                <textarea type="text" class="form-control" id="Script1" rows="2" placeholder="Script Description"></textarea>
+                            </div>
+                            <div class="form-group col-md-3.3 col-sm-4 col-xs-12">
+                                <label for="Script2">Phase 2 Script</label>
+                                <textarea type="text" class="form-control" id="Script2" rows="2" placeholder="Script Description"></textarea>
+                            </div>
+                            <div class="form-group col-md-3.3 col-sm-4 col-xs-12">
+                                <label for="Script3">Phase 3 Script</label>
+                                <textarea type="text" class="form-control" id="Script3" rows="2" placeholder="Script Description"></textarea>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="updateEventName" class="col-sm-2 control-label">Event Name</label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control" id="updateEventName" placeholder="Event Name">
+                    <div class="well">
+                        <div class="row">
+                            <div class="form-group col-md-7 col-sm-4 col-xs-12">
+                                <label for="Question">Question</label>
+                                <textarea type="text" class="form-control" id="Question" rows="2" placeholder="Question"></textarea>
+                            </div>
+                            <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                <label for="Answer">Answer</label>
+                                <textarea type="text" class="form-control" id="Answer" rows="2" placeholder="Answer"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                <label for="Option1">Option 1</label>
+                                <textarea type="text" class="form-control" id="Option1" rows="2" placeholder="Option 1"></textarea>
+                            </div>
+                            <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                <label for="Option2">Option 2</label>
+                                <textarea type="text" class="form-control" id="Option2" rows="2" placeholder="Option 2"></textarea>
+                            </div>
+                            <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                <label for="Option3">Option 3</label>
+                                <textarea type="text" class="form-control" id="Option3" rows="2" placeholder="Option 3"></textarea>
+                            </div>
+                            <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                <label for="Option4">Option 4</label>
+                                <textarea type="text" class="form-control" id="Option4" rows="2" placeholder="Option 4"></textarea>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="updateScript1" class="col-sm-2 control-label">Phase 1 Script</label>
-                        <div class="col-sm-7">
-                            <textarea type="text" class="form-control" id="updateScript1" rows="2" placeholder="Script Description"></textarea>
+                    <div class="well">
+                        <div class="row">
+                            <div class="form-group col-md-7 col-sm-4 col-xs-12">
+                                <label for="FollowUpQuestion">FollowUp Question</label>
+                                <textarea type="text" class="form-control" id="FollowUpQuestion" rows="2" placeholder="FollowUpQuestion"></textarea>
+                            </div>
+                            <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                <label for="FollowUpAnswer">FollowUp Answer</label>
+                                <textarea type="text" class="form-control" id="FollowUpAnswer" rows="2" placeholder="FollowUpAnswer"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                <label for="FollowUpOption1">FollowUp Option 1</label>
+                                <textarea type="text" class="form-control" id="FollowUpOption1" rows="2" placeholder="FollowUp Option 1"></textarea>
+                            </div>
+                            <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                <label for="FollowUpOption2">FollowUp Option 2</label>
+                                <textarea type="text" class="form-control" id="FollowUpOption2" rows="2" placeholder="FollowUp Option 2"></textarea>
+                            </div>
+                            <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                <label for="FollowUpOption3">FollowUp Option 3</label>
+                                <textarea type="text" class="form-control" id="FollowUpOption3" rows="2" placeholder="FollowUp Option 3"></textarea>
+                            </div>
+                            <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                <label for="FollowUpOption4">FollowUp Option 4</label>
+                                <textarea type="text" class="form-control" id="FollowUpOption4" rows="2" placeholder="FollowUp Option 4"></textarea>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="updateScript2" class="col-sm-2 control-label">Phase 2 Script</label>
-                        <div class="col-sm-7">
-                            <textarea type="text" class="form-control" id="updateScript2" rows="2" placeholder="Script Description"></textarea>
+
+                    <div class="well">
+                        <div class="row">
+                            <div class="form-group dropdown col-md-3 col-sm-4 col-xs-12">
+                                <br>
+                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                                    Participants
+                                </button>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">User1</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">User2</a></li>
+                                </ul>
+                            </div>
+                            <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                <label for="createdatepicker" class="col-sm-2 control-label">Date</label>
+                                <input type="text" class="form-control" id="createdatepicker" size="30">
+                            </div>
+                            <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                <label for="startTimeCreateForm" class="col-sm-2 control-label">StartTime</label>
+                                <input type="text" class="time start form-control" id="startTimeCreateForm"/>
+                            </div>
+
+                            <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                <label for="endTimeCreateForm" class="col-sm-2 control-label">EndTime</label>
+                                <input type="text" class="time start form-control" id="endTimeCreateForm"/>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="updateScript3" class="col-sm-2 control-label">Phase 3 Script</label>
-                        <div class="col-sm-7">
-                            <textarea type="text" class="form-control" id="updateScript3" rows="2" placeholder="Script Description"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="updateEventDescription" class="col-sm-2 control-label">Event Description</label>
-                        <div class="col-sm-7">
-                            <textarea type="text" class="form-control" id="updateEventDescription" rows="2" placeholder="Event Description"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="updateQuestions" class="col-sm-2 control-label">Questions</label>
-                        <div class="col-sm-7">
-                            <textarea type="text" class="form-control" id="updateQuestions" rows="2" placeholder="Questions"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group dropdown">
-                        <label for="updatedropdownMenu1" class="col-sm-2 control-label">Participants</label>
-                        <button class="btn btn-default dropdown-toggle" type="button" id="updatedropdownMenu1" data-toggle="dropdown">
-                            Participants<nbsp>   </nbsp>
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="updatedropdownMenu1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">User1</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">User2</a></li>
-                        </ul>
-                    </div>
-                    <div class="form-group">
-                        <label for="datepicker" class="col-sm-2 control-label">Date</label>
-                        <div class='col-sm-5'>
-                            <input type="text" class="form-control" id="datepicker" size="30">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="startTimeUpdateForm" class="col-sm-2 control-label">Start Time</label>
-                        <div class='col-sm-5'>
-                            <input type="text" class="time start form-control" id="startTimeUpdateForm"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="endTimeUpdateForm" class="col-sm-2 control-label">End Time</label>
-                        <div class='col-sm-5'>
-                            <input type="text" class="time start form-control" id="endTimeUpdateForm"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-default">Update</button>
+                    <div class="row">
+                        <div class="form-group dropdown col-md-3 col-sm-6 col-xs-12">
+                            <button type="submit" class="btn btn-success">Create Event</button>
                         </div>
                     </div>
                 </form>
