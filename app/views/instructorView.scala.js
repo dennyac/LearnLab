@@ -1,13 +1,15 @@
 @(username: String)
 var barData = [{
     'x': "Informal Messages",
-    'y': 5
+    'y': 0
 }, {
     'x': "Hashtag Messages",
-    'y': 20
+    'y': 0
 }
 ];
 
+var message_count =  0;
+var hash_message_count = 0;
 $(function() {
     var temp = 0
     var WS = window['MozWebSocket'] ? MozWebSocket : WebSocket
@@ -24,7 +26,7 @@ $(function() {
         console.log("Received event")
 
         var data = JSON.parse(event.data)
-        console.log(data.text)
+//        console.log(data.text)
 
         // Handle errors
         if(data.error) {
@@ -46,7 +48,7 @@ $(function() {
             $('#messages').prepend(el)
         }
 
-
+    console.log(event);
 
         // Update the members list
 //        $("#members").html('')
@@ -56,9 +58,27 @@ $(function() {
 //            $("#members").append(li);
 //        })
 //        alert("receiving");
-        barData.shift();
-        barData.push(next());
-        redraw();
+//        barData.shift();
+//        barData.push(next());
+        if(data.text.match(/(^|\s)(#[a-z\d-]+)/ig) != null){
+            hash_message_count = hash_message_count + 1;
+        }else{
+            message_count = message_count + 1;
+        }
+
+//        message_count = message_count + 1;
+//        hash_message_count = hash_message_count + 1;
+        var newData = [];
+        var temp1 = {};
+        temp1["x"]="Informal Messages";
+        temp1["y"]=message_count;
+        newData.push(temp1);
+        var temp2 = {};
+        temp2["x"]="Hashtag Messages";
+        temp2["y"]=hash_message_count;
+        newData.push(temp2);
+        console.log(newData);
+        redraw(newData);
 
     }
 
@@ -93,11 +113,14 @@ $(function() {
         })),
 
 
-        yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
-            d3.max(barData, function (d) {
-                return d.y;
-            })
-        ]),
+//        yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
+//            d3.max(barData, function (d) {
+//                return d.y;
+//            })
+//        ]),
+
+        yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,40]),
+
 
         xAxis = d3.svg.axis()
             .scale(xRange)
@@ -148,10 +171,12 @@ $(function() {
 
     function next()
     {
+        message_count = message_count + 1;
 //        alert("redrawing");
         return {
             x: "phase1",
-            y: Math.floor((Math.random() * 10) + 1)
+//            y: Math.floor((Math.random() * 10) + 1)
+            y:message_count
         };
     }
 
@@ -162,13 +187,14 @@ $(function() {
 //        redraw();
 //    }, 1500);
 
-    function redraw()
+    function redraw(newData)
     {
         vis.selectAll("rect")
-            .data(barData)
-            .transition()
-            .duration(1000)
-            //            .attr("x", function(d,i){ return xRange(i)})
+            .data(newData)
+//            .transition()
+//            .duration(1000)
+//            .attr('width', xRange.rangeBand())
+//            .attr("x", function(d,i){ return xRange(i)})
             .attr("y", function(d) { return yRange(d.y); })
             .attr("height", function(d) { return ((HEIGHT - MARGINS.bottom) - yRange(d.y)); });
     }
