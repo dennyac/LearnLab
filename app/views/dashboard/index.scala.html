@@ -1,5 +1,4 @@
-@(user: User, event: Event)
-
+@(user: User, eventList: List[Event])
 @mainStudent(user) {
 <div id="wrapper">
     <div class="col-md-3">
@@ -25,24 +24,26 @@
         </div>
     </div>
 </div>
-    <div class="col-md-9">
-        <table class="table table-striped">
-            <tr>
-                <th>Event Name</th>
-                <th>Script</th>
-                <th>Participants</th>
-                <th>JoinIn</th>
-            </tr>
-            <tr>
-                <td>@event.eventName</td>
-                <td><div class="well">@event.script</div></td>
-                <td>1</td>
-                <td>
-                    <form  method="POST" name="joinEvent" action="@routes.EventController.eventStage1()">
-                        <input type="submit" name="Join" value= "Join" class="btn btn-success">
-                    </form>
-            </tr>
-        </table>
-    </div>
-    <!--/span-->
-    }
+<div class="col-md-9">
+    <table class="table table-striped">
+        <tr>
+            <th>Event Name</th>
+            <th>Script</th>
+            <th>Participants</th>
+            <th>JoinIn</th>
+        </tr>
+        @for(event <- eventList){
+        <tr>
+            <td>@event.eventName</td>
+            <td><div class="well">@event.script</div></td>
+            <td>1</td>
+            <td>
+                <form  method="POST" name="joinEvent" action="@routes.EventController.eventStage1(event.eventId)">
+                    <input type="submit" name="Join" value= "Join" class="btn btn-success">
+                </form>
+        </tr>
+        }
+    </table>
+</div>
+<!--/span-->
+}

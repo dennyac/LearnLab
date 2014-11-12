@@ -13,6 +13,10 @@ import views.html.dashboard.deleteEventConfirmation;
 import views.html.dashboard.updateEventConfirmation;
 import views.html.chatRoom;
 import views.html.instructorView;
+import java.util.List;
+import java.util.Set;
+import scala.collection.JavaConverters;
+
 /**
  * User: yesnault
  * Date: 22/01/12
@@ -34,9 +38,11 @@ public class Dashboard extends Controller {
         if(isInstructor){
             return ok(instructorDashboard.render((User.findByEmail(request().username())), Event.findEvent()));
         }
-            //is a student
-            return ok(index.render((User.findByEmail(request().username())), Event.findEvent()));
+        else {
+            List<Event> eventList = currentUser.EventsParticipated;
+            return ok(index.render((User.findByEmail(request().username())), eventList));
         }
+     }
 
     public static Result manageEvents()
     {
@@ -44,7 +50,7 @@ public class Dashboard extends Controller {
 
     }
 
-    public static Result createEvent()
+    public static Result createEvent(String arg)
     {
         return ok(createEventConfirmation.render((User.findByEmail(request().username())), Event.findEvent()));
 

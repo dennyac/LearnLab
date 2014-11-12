@@ -24,7 +24,7 @@ public class Question extends Model {
 
     @Constraints.Required
     @Formats.NonEmpty
-    public String Question;
+    public String questionString;
 
     @Constraints.Required
     @Formats.NonEmpty
