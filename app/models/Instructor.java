@@ -122,7 +122,7 @@ public class Instructor extends UntypedActor {
             if("talk".equals(messageType)) {
                 message = new ChatRoom.Talk(
                         parsedMessage.get("username").asText(),
-                        parsedMessage.get("eventId").asText(),
+                        Long.parseLong(parsedMessage.get("eventId").asText()),
                         parsedMessage.get("text").asText()
                 );
                 remoteMessage(message);

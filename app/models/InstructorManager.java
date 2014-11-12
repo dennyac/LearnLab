@@ -31,19 +31,23 @@ public class InstructorManager {
     private static HashMap<String, ActorRef> instructors = new HashMap<String,ActorRef>();
     public static void createInstructor(final String username, final WebSocket.In<JsonNode> in, final WebSocket.Out<JsonNode> out) throws Exception {
         User u = findByEmail(username);
+
         if(!instructors.containsKey(username))
             instructors.put(username, Akka.system().actorOf(Instructor.props(username, out), username));
 
             // For each event received on the socket,
             in.onMessage(new F.Callback<JsonNode>() {
+                //todo need to send event details in json message
                 public void invoke(JsonNode event) {
 
                    // ChatRoom.Talk talk = new ChatRoom.Talk(username, event.get("eventId").asText(), event.get("text").asText());
-                    ChatRoom.Talk talk = new ChatRoom.Talk(username, "te", event.get("text").asText());
+                    //todo need to send event details in json message
+                    ChatRoom.Talk talk = new ChatRoom.Talk(username, 1L, event.get("text").asText());
 
                     Jedis j = play.Play.application().plugin(RedisPlugin.class).jedisPool().getResource();
                     try {
                         //All messages are pushed through the pub/sub channel
+                        //todo need to send event details in json message
                         j.publish(username + ".event." + "te", Json.stringify(Json.toJson(talk)));
                         System.out.println(username + ".event." + "te");
                     } finally {

@@ -1,5 +1,6 @@
 package models;
 
+import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
 import play.db.ebean.Model;
 
@@ -8,6 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import java.util.Date;
+import static akka.dispatch.Futures.future;
+import akka.actor.Status;
+import java.util.concurrent.Callable;
+
+import play.libs.Akka;
+import scala.concurrent.Future;
+
 
 /**
  * Created by shruthir28 on 11/10/2014.
@@ -25,7 +33,7 @@ public class EventActions {
     @ManyToOne
     public User user;
 
-    public static String ActionType;  //Possible values : Join	Question(Phase1)	Message
+    public String ActionType;  //Possible values : Join	Question(Phase1)	Message
 
     public String Attribute1;  //Possible values: Pre-Answer	Message Content	Post-Answer	Answer2
 
@@ -46,6 +54,18 @@ public class EventActions {
     public static int getHashTagMessageCount(String EventName)
     {
         return find.where().eq("event.eventName", EventName).and(Expr.like("Attribute2","#" + "%"),Expr.like("ActionType", "Message")).findRowCount();
+    }
+
+
+    public static Future<String> asyncSave(final EventActions ea) { /* should the params be ServerMessageModel? */
+        return future(new Callable<String>() {
+            public String call() {
+                System.out.println("Entered Async call");
+                Ebean.save(ea);
+                System.out.println("Completed save");
+                return "Success";
+            }
+        }, Akka.system().dispatcher());
     }
 
 //    public getInformalMessageCount( String EventName)

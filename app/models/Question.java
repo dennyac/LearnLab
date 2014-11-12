@@ -18,10 +18,6 @@ public class Question {
     @Formats.NonEmpty
     public Long questionNumber;
 
-    @Constraints.Required
-    @Formats.NonEmpty
-    public Long eventId;
-
     @ManyToMany(mappedBy = "Questions")
     public List<Event> EventsUsingQuestion;
 

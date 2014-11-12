@@ -27,7 +27,7 @@ public class Robot {
         
         // Join the room
 
-        actor.tell(new ChatRoom.Join("Robot", robotChannel), null);
+        actor.tell(new ChatRoom.Join("Robot", robotChannel,null), null);
 
         
         // Make the robot talk every 30 seconds
@@ -35,7 +35,7 @@ public class Robot {
             Duration.create(30, SECONDS),
             Duration.create(30, SECONDS),
             actor,
-            new ChatRoom.Talk("Robot", "dummyEvent", "I'm still alive"),
+            new ChatRoom.Talk("Robot", 1l   , "I'm still alive"),
             Akka.system().dispatcher(),
             /** sender **/ null
         );
