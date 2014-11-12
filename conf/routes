@@ -6,7 +6,7 @@
 GET     /                                       controllers.Application.index()
 GET     /dashboard                              controllers.Dashboard.index()
 GET     /dashboard/manageEvents                 controllers.Dashboard.manageEvents()
-POST    /dashboard/createEvent                  controllers.Dashboard.createEvent()
+GET    /dashboard/createEvent                  controllers.Dashboard.createEvent(arg:String)
 POST    /dashboard/deleteEvent                  controllers.Dashboard.deleteEvent()
 POST    /dashboard/updateEvent                  controllers.Dashboard.updateEvent()
 
@@ -15,9 +15,9 @@ GET     /leaderBoard                controllers.Application.leaderBoard()
 GET     /profile                    controllers.Application.profile()
 GET     /pastEventDiscussion        controllers.Application.pastEventDiscussion()
 
-POST    /eventStage1                controllers.EventController.eventStage1()
-POST    /eventStage3                controllers.EventController.eventStage3()
-POST    /eventStage4                controllers.EventController.eventStage4()
+POST    /eventStage1                controllers.EventController.eventStage1(eventId: Long)
+POST    /eventStage3                controllers.EventController.eventStage3(eventId: Long)
+POST    /eventStage4                controllers.EventController.eventStage4(eventId: Long)
 POST    /eventResult                controllers.EventController.eventResult()
 
 POST    /login                      controllers.Application.authenticate()
@@ -29,6 +29,12 @@ POST    /settings/password          controllers.account.settings.Password.runPas
 GET     /settings/email             controllers.account.settings.Email.index()
 POST    /settings/email             controllers.account.settings.Email.runEmail()
 
+#Live Feeds
+
+GET     /eventFeeds                      controllers.EventController.eventFeeds()
+GET     /assets/javascripts/liveFeed.js  controllers.EventController.eventFeedsJs()
+GET     /eventStats                      controllers.EventController.eventStats()
+GET     /offlineStats                    controllers.EventController.offlineEventStats()
 
 # Registers the user, sending an email to confirm the account.
 GET     /signup                     controllers.account.Signup.create()
@@ -48,7 +54,7 @@ POST    /reset/:token               controllers.account.Reset.runReset(token:Str
 GET     /email/:token               controllers.account.settings.Email.validateEmail(token:String)
 
 #Chat related resources
-GET     /room                            controllers.EventController.chatRoom()
+POST     /room                            controllers.EventController.chatRoom(eventId: Long)
 GET     /room/chat                       controllers.Chat.chat(username)
 GET     /assets/javascripts/chatroom.js  controllers.Chat.chatRoomJs(username)
 

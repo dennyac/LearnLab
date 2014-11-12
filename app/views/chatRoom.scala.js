@@ -17,6 +17,7 @@ $(function() {
 
         // Handle errors
         if(data.error) {
+            alert("helo");
             chatSocket.close()
             $("#onError span").text(data.error)
             $("#onError").show()
@@ -35,8 +36,6 @@ $(function() {
             if(data.user == '@username') $(el).addClass('me')
             $('#messages').append(el)
         }
-
-
 
 
 

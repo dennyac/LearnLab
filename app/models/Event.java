@@ -14,6 +14,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import models.utils.AppException;
+import models.utils.Hash;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.util.Date;
+
 /**
  * Created by Supriya on 14/10/2014.
  */
@@ -59,6 +67,7 @@ public class Event extends Model{
 
     @Constraints.Required
     @Formats.NonEmpty
+
     @ManyToMany
     public List<User> participants;
 

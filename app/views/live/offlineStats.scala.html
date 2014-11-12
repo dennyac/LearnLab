@@ -1,0 +1,766 @@
+@import models.Event;
+@(user: User, eventList: List[String])
+@import play.api.libs.json.Json
+
+@main(user) {
+<style>
+    .col-md-4 {
+        border: 2px solid;
+        border-radius: 25px;
+    }
+    .chart rect {
+        fill: steelblue;
+        stroke: white;
+    }
+    .axis path, .axis line
+    {
+        fill: none;
+        stroke: #777;
+        shape-rendering: crispEdges;
+    }
+
+    .axis text
+    {
+        font-family: 'Arial';
+        font-size: 13px;
+    }
+    .tick
+    {
+        stroke-dasharray: 1, 2;
+    }
+    .bar
+    {
+        fill: FireBrick;
+    }
+    .nav nav-tabs
+    {
+        width: 500;
+    }
+
+    .take-all-space-you-can{
+        width:100%;
+    }
+</style>
+
+<div id="wrapper">
+    <div class="col-md-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">@user.fullname 's Profile</h3>
+            </div>
+            <div class="panel-body">
+                <div class="panel-body">
+                    <div class="text-left">
+                        <a href="">Create Event <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="text-left">
+                        <a href="#">Group Statistics <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="text-left">
+                        <a href="#">Individual Statistics <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="text-left">
+                        <a href="@routes.EventController.eventFeeds()">On going Event Feeds <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-3">
+<div class="row">
+    <select class="form-control" id="eventSelect">
+        <option>------</option>
+        <option>Event 1</option>
+        <option>Event 2</option>
+        <option>Event 3</option>
+    </select>
+</div>
+<div class="row" id="tabid">
+<ul class="nav nav-tabs take-all-space-you-can" role="tablist" id="myTab">
+    <li role="presentation"><a href="#home" role="tab" data-toggle="tab">Messages</a></li>
+    <li role="presentation"><a href="#profile" role="tab" data-toggle="tab">Timeseries</a></li>
+    <li role="presentation"><a href="#messages" role="tab" data-toggle="tab">Answers</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="home"><div class="row" id="id1"></div></div>
+    <div role="tabpanel" class="tab-pane" id="profile"><svg id="visualisation" width="700" height="340"></svg></div>
+    <!--<div role="tabpanel" class="tab-pane" id="messages"><svg id="visualisation1" width="500" height="300"></svg></div>-->
+    <div role="tabpanel" class="tab-pane" id="messages"><div class="row" id="id2"></div></div>
+
+</div>
+</div>
+
+<script>
+$("#tabid").hide();
+$('#myTab a').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show');
+});
+
+$("select")
+        .change(function () {
+            var str = "";
+            $( "select option:selected" ).each(function() {
+                str  = $( this ).text();
+                if(str!="------") {
+                    getEventData(str);
+                }
+                else{
+                    $("#tabid").hide();
+                }
+            });
+            console.log(str);
+        })
+        .change();
+
+
+function getEventData(str)
+{
+    $("#tabid").show();
+    drawPieChart();
+}
+
+function drawPieChart() {
+    var data = [
+        {
+            "age": "Informal Messages",
+            "population": "40"
+        },
+        {
+            "age": "Hashtag Messages",
+            "population": "10"
+        }
+    ];
+    var width = 500,
+            height = 300,
+//            radius = Math.min(width, height) / 2;
+              radius = 100;
+    var color = d3.scale.ordinal()
+            .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+    var arc = d3.svg.arc()
+            .outerRadius(radius - 10)
+            .innerRadius(0);
+
+    var pie = d3.layout.pie()
+            .sort(null)
+            .value(function (d) {
+                return d.population;
+            });
+
+    var id1 = document.getElementById("id1");
+    console.log(id1);
+    var svg = d3.select("#id1").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+    //            d3.csv("data.csv", function(error, data) {
+
+    data.forEach(function (d) {
+        d.population = +d.population;
+    });
+
+    var g = svg.selectAll(".arc")
+            .data(pie(data))
+            .enter().append("g")
+            .attr("class", "arc");
+
+    g.append("path")
+            .attr("d", arc)
+            .style("fill", function (d) {
+                return color(d.data.age);
+            });
+
+    g.append("text")
+            .attr("transform", function (d) {
+//                d.outerRadius = radius + 50; // Set Outer Coordinate
+//                d.innerRadius = radius - 35;
+//                return "translate(" + arc.centroid(d) + ")";
+                return "translate(" +
+                        ( (radius - 12) * Math.sin( ((d.endAngle - d.startAngle) / 2) + d.startAngle ) ) +
+                        ", " +
+                        ( -1 * (radius - 12) * Math.cos( ((d.endAngle - d.startAngle) / 2) + d.startAngle ) ) +
+                        ")";
+
+            })
+            .attr("dy", ".35em")
+            .style("text-anchor", "middle")
+            .text(function (d) {
+                return d.data.age;
+            });
+
+    g.append("text")
+            .attr("dy", ".35em")
+            .attr("text-anchor", "middle")
+        //.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")rotate(" + angle(d) + ")"; })
+            .attr("transform", function(d) { //set the label's origin to the center of the arc
+                //we have to make sure to set these before calling arc.centroid
+                d.outerRadius = radius; // Set Outer Coordinate
+                d.innerRadius = radius/2; // Set Inner Coordinate
+                return "translate(" + arc.centroid(d) + ")rotate(" + angle(d) + ")";
+            })
+            .style("fill", "White")
+            .style("font", "bold 12px Arial")
+            .text(function(d) { return d.data.population; });
+
+    function angle(d) {
+        var a = (d.startAngle + d.endAngle) * 90 / Math.PI - 90;
+        return a > 90 ? a - 180 : a;
+    }
+    //            });
+}
+
+function drawTimeSeries(){
+    var margin = {top: 20, right: 80, bottom: 30, left: 50},
+            width = 960 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
+
+    var parseDate = d3.time.format("%Y%m%d").parse;
+
+    var x = d3.time.scale()
+            .range([0, width]);
+
+    var y = d3.scale.linear()
+            .range([height, 0]);
+
+    var color = d3.scale.category10();
+
+    var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left");
+
+    var line = d3.svg.line()
+            .interpolate("basis")
+            .x(function(d) { return x(d.date); })
+            .y(function(d) { return y(d.temperature); });
+
+    var svg = d3.select("body").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    d3.tsv("data.tsv", function(error, data) {
+        color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
+
+        data.forEach(function(d) {
+            d.date = parseDate(d.date);
+        });
+
+        var cities = color.domain().map(function(name) {
+            return {
+                name: name,
+                values: data.map(function(d) {
+                    return {date: d.date, temperature: +d[name]};
+                })
+            };
+        });
+
+        x.domain(d3.extent(data, function(d) { return d.date; }));
+
+        y.domain([
+            d3.min(cities, function(c) { return d3.min(c.values, function(v) { return v.temperature; }); }),
+            d3.max(cities, function(c) { return d3.max(c.values, function(v) { return v.temperature; }); })
+        ]);
+
+        svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+
+        svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis)
+                .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 6)
+                .attr("dy", ".71em")
+                .style("text-anchor", "end")
+                .text("Temperature (ºF)");
+
+        var city = svg.selectAll(".city")
+                .data(cities)
+                .enter().append("g")
+                .attr("class", "city");
+
+        city.append("path")
+                .attr("class", "line")
+                .attr("d", function(d) { return line(d.values); })
+                .style("stroke", function(d) { return color(d.name); });
+
+        city.append("text")
+                .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
+                .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.temperature) + ")"; })
+                .attr("x", 3)
+                .attr("dy", ".35em")
+                .text(function(d) { return d.name; });
+    });
+}
+
+
+
+
+function drawTimeSeries() {
+    var data = [
+        {
+            "time": "1",
+            "imsg": "6",
+            "hmsg": "2"
+        },
+        {
+            "time": "2",
+            "imsg": "10",
+            "hsmg": "2"
+        },
+        {
+            "time": "3",
+            "imsg": "16",
+            "hmsg": "4"
+        },
+        {
+            "time": "4",
+            "imsg": "18",
+            "hmsg": "7"
+        },
+        {
+            "time": "5",
+            "imsg": "25",
+            "hmsg": "9"
+        }
+
+    ];
+    var margin = {top: 20, right: 80, bottom: 30, left: 50},
+            width = 960 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
+
+//    var parseDate = d3.time.format("%Y%m%d").parse;
+
+    var x = d3.scale.linear()
+            .range([0, width]);
+
+    var y = d3.scale.linear()
+            .range([height, 0]);
+
+    var color = d3.scale.category10();
+
+    var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left");
+
+    var line = d3.svg.line()
+            .interpolate("basis")
+            .x(function (d) {
+                return x(d.time);
+            })
+            .y(function (d) {
+                return y(d.imsg);
+            });
+
+    var svg = d3.select("#id2").append("svg")
+            .attr("width", width + margin.left + margin.right+100)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+//    d3.tsv("data.tsv", function (error, data)
+//    {
+//    color.domain(d3.keys(data[0]).filter(function (key) {
+//        return key !== "time";
+//    }));
+//
+////    data.forEach(function (d) {
+////        d.date = parseDate(d.date);
+////    });
+//
+//    var messages = color.domain().map(function (name) {
+//        return {
+//            name: name,
+//            values: data.map(function (d) {
+//                return {time: d.time, noOfMessages: +d[name]};
+//            })
+//        };
+//    });
+
+    x.domain(d3.extent(data, function (d) {
+        return d.time;
+    }));
+
+
+    y.domain([0, d3.max(data, function(d) { return d.imsg; })]);
+
+
+    svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+    var lineFunc = d3.svg.line()
+            .x(function (d) {
+                return xRange(d.time);
+            })
+            .y(function (d) {
+                return yRange(d.imsg);
+            })
+            .interpolate('linear');
+
+
+    svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+            .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", ".71em")
+            .style("text-anchor", "end")
+            .text("Number of Messages")
+            .append("path")
+            .attr("d", lineFunc(data))
+            .attr("stroke", "blue")
+            .attr("stroke-width", 2)
+            .attr("fill", "none");
+
+
+
+//    });
+}
+function drawTimeSeriesNew(){
+    var lineData = [{
+        'x': 10,
+        'y': 5,
+        'z':10
+    }, {
+        'x': 20,
+        'y': 20,
+        'z':10
+    }, {
+        'x': 30,
+        'y': 10,
+        'z':10
+    }, {
+        'x': 40,
+        'y': 40,
+        'z':10
+    }, {
+        'x': 50,
+        'y': 5,
+        'z':10
+    }, {
+        'x': 60,
+        'y': 60,
+        'z':10
+    }];
+
+    var vis = d3.select("#visualisation"),
+            WIDTH = 500,
+            HEIGHT = 300,
+            MARGINS = {
+                top: 20,
+                right: 20,
+                bottom: 20,
+                left: 50
+            },
+            xRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(lineData, function (d) {
+                return d.x;
+            }),
+                d3.max(lineData, function (d) {
+                    return d.x;
+                })
+            ]),
+
+            yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([d3.min(lineData, function (d) {
+                return d.y;
+            }),
+                d3.max(lineData, function (d) {
+                    return d.y;
+                })
+            ]),
+
+            xAxis = d3.svg.axis()
+                    .scale(xRange)
+                    .tickSize(5)
+                    .tickSubdivide(true),
+
+            yAxis = d3.svg.axis()
+                    .scale(yRange)
+                    .tickSize(5)
+                    .orient("left")
+                    .tickSubdivide(true);
+
+
+    vis.append("svg:g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+            .call(xAxis);
+
+    vis.append("svg:g")
+            .attr("class", "y axis")
+            .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+            .call(yAxis);
+
+    var lineFunc1 = d3.svg.line()
+            .x(function (d) {
+                return xRange(d.x);
+            })
+            .y(function (d) {
+                return yRange(d.y);
+            })
+            .interpolate('linear');
+
+    var lineFunc2 = d3.svg.line()
+            .x(function (d) {
+                return xRange(d.x);
+            })
+            .y(function (d) {
+                return yRange(d.z);
+            })
+            .interpolate('linear');
+
+    vis.append("svg:path")
+            .attr("d", lineFunc1(lineData))
+            .attr("stroke", "blue")
+            .attr("stroke-width", 2)
+            .attr("fill", "none");
+
+    vis.append("svg:path")
+            .attr("d", lineFunc2(lineData))
+            .attr("stroke", "red")
+            .attr("stroke-width", 2)
+            .attr("fill", "none");
+    vis.append("text")      // text label for the x axis
+            .attr("x", 260 )
+            .attr("y",  HEIGHT + MARGINS.bottom)
+            .style("text-anchor", "middle")
+            .text("Date");
+    vis.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 50)
+            .attr("x",0-(HEIGHT/3))
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .text("Number of Messages");
+
+}
+
+function drawBarGraph(){
+    var barData = [{
+        'x': "Informal Messages",
+        'y': 5
+    }, {
+        'x': "Hashtag Messages",
+        'y': 20
+    }
+    ];
+
+    var vis = d3.select('#visualisation1'),
+            WIDTH = 500,
+            HEIGHT = 300,
+            MARGINS = {
+                top: 20,
+                right: 20,
+                bottom: 20,
+                left: 50
+            },
+            xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function (d) {
+                return d.x;
+            })),
+
+
+            yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
+                d3.max(barData, function (d) {
+                    return d.y;
+                })
+            ]),
+
+            xAxis = d3.svg.axis()
+                    .scale(xRange)
+                    .tickSize(5)
+                    .tickSubdivide(true),
+
+            yAxis = d3.svg.axis()
+                    .scale(yRange)
+                    .tickSize(5)
+                    .orient("left")
+                    .tickSubdivide(true);
+
+
+    vis.append('svg:g')
+            .attr('class', 'x axis')
+            .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+            .call(xAxis);
+
+    vis.append('svg:g')
+            .attr('class', 'y axis')
+            .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+            .call(yAxis);
+
+    vis.selectAll('rect')
+            .data(barData)
+            .enter()
+            .append('rect')
+            .attr('x', function (d) {
+                return xRange(d.x);
+            })
+            .attr('y', function (d) {
+                return yRange(d.y);
+            })
+            .attr('width', xRange.rangeBand())
+            .attr('height', function (d) {
+                return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
+            })
+            .attr('fill', 'grey')
+            .on('mouseover',function(d){
+                d3.select(this)
+                        .attr('fill','blue');
+            })
+            .on('mouseout',function(d){
+                d3.select(this)
+                        .attr('fill','grey');
+            });
+
+}
+
+function drawGroupBarGraph(){
+
+
+    var data = [
+        {
+            "State":"Phase1",
+            "Correct Answers":"4",
+            "Incorrect Answers":"1"
+        },
+        {
+            "State":"Phase2",
+            "Correct Answers":"3",
+            "Incorrect Answers":"2"
+        },
+        {
+            "State":"Phase3",
+            "Correct Answers":"5",
+            "Incorrect Answers":"0"
+        }
+    ];
+
+
+    var margin = {top: 20, right: 20, bottom: 30, left: 40},
+            width = 700 - margin.left - margin.right,
+            height = 300 - margin.top - margin.bottom;
+
+    var x0 = d3.scale.ordinal()
+            .rangeRoundBands([0, width], .1);
+
+    var x1 = d3.scale.ordinal();
+
+    var y = d3.scale.linear()
+            .range([height, 0]);
+
+    var color = d3.scale.ordinal()
+            .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+    var xAxis = d3.svg.axis()
+            .scale(x0)
+            .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left")
+            .tickFormat(d3.format(".2s"));
+
+    var svg = d3.select("#id2").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+//    d3.csv("data.csv", function(error, data) {
+        var ageNames = d3.keys(data[0]).filter(function(key) { return key !== "State"; });
+
+        data.forEach(function(d) {
+            d.ages = ageNames.map(function(name) { return {name: name, value: +d[name]}; });
+        });
+
+        x0.domain(data.map(function(d) { return d.State; }));
+        x1.domain(ageNames).rangeRoundBands([0, x0.rangeBand()]);
+        y.domain([0, 50]);
+
+        svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+
+        svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis)
+                .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 6)
+                .attr("dy", ".71em")
+                .style("text-anchor", "end")
+                .text("Number of students");
+
+        var state = svg.selectAll(".state")
+                .data(data)
+                .enter().append("g")
+                .attr("class", "g")
+                .attr("transform", function(d) { return "translate(" + x0(d.State) + ",0)"; });
+
+        state.selectAll("rect")
+                .data(function(d) { return d.ages; })
+                .enter().append("rect")
+                .attr("width", x1.rangeBand())
+                .attr("x", function(d) { return x1(d.name); })
+                .attr("y", function(d) { return y(d.value); })
+                .attr("height", function(d) { return height - y(d.value); })
+                .style("fill", function(d) { return color(d.name); });
+
+        var legend = svg.selectAll(".legend")
+                .data(ageNames.slice().reverse())
+                .enter().append("g")
+                .attr("class", "legend")
+                .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+        legend.append("rect")
+                .attr("x", width - 18)
+                .attr("width", 18)
+                .attr("height", 18)
+                .style("fill", color);
+
+        legend.append("text")
+                .attr("x", width - 24)
+                .attr("y", 9)
+                .attr("dy", ".35em")
+                .style("text-anchor", "end")
+                .text(function(d) { return d; });
+
+//    });
+}
+
+//drawTimeSeries();
+drawTimeSeriesNew();
+drawBarGraph();
+drawGroupBarGraph();
+//drawDynamicBarGraph();
+
+</script>
+<!--<script type="text/javascript" charset="utf-8" src="@routes.EventController.eventFeeds()"></script>-->
+<!--<script src="@routes.Assets.at("javascripts/d3.v3.js")" type="text/javascript"></script>-->
+
+}

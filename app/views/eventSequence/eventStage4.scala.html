@@ -1,5 +1,4 @@
-@(user: User, event: Event)
-
+@(user: User, event: Event, question: Question)
 @mainStudent(user) {
 <div id="wrapper">
     <div class="col-md-3">
@@ -55,17 +54,15 @@
     </div>
     <div class="well">
         <form method="POST" name="" action="@routes.EventController.eventResult()">
-    <div class="well">
-        <ul class="answers">
-                <fieldset>
-                    <p class="question"><b>A WHERE clause can be added to a SELECT statement to add conditions to the rows being returned.<br> <br>
-                        SELECT * FROM products WHERE ordernumber >= 1000 <br><br> What rows will this select statement return? <br> </b></p>
-                    <input type="radio" name="q2" value="b" id="q2b"><label for="q2b">  All rows in the products table whose order number is greater than or equal to 1000.</label><br/>
-                    <input type="radio" name="q2" value="c" id="q2c"><label for="q2c">  All rows in the products table whose order number is less than or equal to 1000 </label><br/>
-                    <input type="radio" name="q2" value="d" id="q2d"><label for="q2d">  All rows in the products table whose order number is greater than 1000.</label><br/>
-                </fieldset>
-        </ul>
-    </div>
+            <div class="well">
+                <ul class="answers">
+                    <p class="question"><b><br>@question.questionString<br> </b></p>
+                    <input type="radio" name="q2" value="a" id="q2a" onchange="pushSelection(this);"><label for="q2a">  @question.Option1</label><br/>
+                    <input type="radio" name="q2" value="b" id="q2b" onchange="pushSelection(this);"><label for="q2b">  @question.Option2</label><br/>
+                    <input type="radio" name="q2" value="c" id="q2c" onchange="pushSelection(this);"><label for="q2c">  @question.Option3 </label><br/>
+                    <input type="radio" name="q2" value="d" id="q2d" onchange="pushSelection(this);"><label for="q2d">  @question.Option4</label><br/>
+                </ul>
+            </div>
     <div class="well">
         <div class="radio">
             <p><b>Evaluate your peers. Let us know who helped you!</b></p>
