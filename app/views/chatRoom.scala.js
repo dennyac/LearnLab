@@ -1,6 +1,7 @@
 @(username: String)
 
 $(function() {
+    console.log("Hello");
     var WS = window['MozWebSocket'] ? MozWebSocket : WebSocket
  var chatSocket = new WS("@routes.Chat.chat(username).webSocketURL(request)")
 

@@ -20,38 +20,6 @@ import java.util.concurrent.TimeUnit;
 @Entity
 public class Event extends Model{
 
-//    static{
-//        Event e = new Event();
-//        e.eventId = 1l;
-//        e.eventName = "DB Normalization";
-//        e.script = "The event contains 3 stages. Stage 1: Answer the question that is being displayed. Stage 2: Collaborate with you event-mates and brainstorm about the answer options.Use Hashtags to anything that might be relevant. Stage 3: Having discussed, conclude the right answer and submit it. Give a short justification as to why you pick the answer. Also let us know who helped you better to arrive at the answer";
-//        e.scriptPhase1 = "This is the Phase 1 script";
-//        e.scriptPhase2 = "This is the Phase 2 script";
-//        e.scriptPhase3 = "This is the Phase 3 script";
-//        e.hashTags = new HashSet<String>();
-//        e.hashTags.add("#advantages");
-//        e.hashTags.add("#disadvantages");
-//        e.hashTags.add("#examples");
-//        e.Questions = new ArrayList<Question>();
-//        Question q = new Question();
-//        q.Question = "What keyword will you use to sort the results of a query?";
-//        q.Answer = "Option 2";
-//        q.Option1 = "sort by";
-//        q.Option2 = "order by";
-//        q.Option3 = "arrange by";
-//        q.Option4 = "reorder";
-//        q.questionNumber = 1l;
-//        Ebean.save(q);
-//        e.Questions.add(q);
-//        e.participants = new ArrayList<User>();
-//        e.participants.add(User.findByEmail("dennyac@gmail.com"));
-//        e.active = true;
-//        e.EventStartTime = new Date(System.currentTimeMillis());
-//        Ebean.save(e);
-//
-//
-//    }
-
     @Id
     @Constraints.Required
     @Formats.NonEmpty
@@ -157,13 +125,5 @@ public class Event extends Model{
 
         List<Question> list = findByName(EventName).Questions;
         return list.get(1).Answer;
-    }
-    public static Event findEvent(){
-        Event e = new Event();
-        HashSet<String> tags = new HashSet<String>();
-        tags.add("#Concept");
-        tags.add("#Justification");
-        tags.add("#Examples");
-        return e;
     }
 }

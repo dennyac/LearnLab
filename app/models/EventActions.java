@@ -15,6 +15,7 @@ import java.util.concurrent.Callable;
 
 import play.libs.Akka;
 import scala.concurrent.Future;
+import play.db.ebean.Model;
 
 
 /**
@@ -22,7 +23,7 @@ import scala.concurrent.Future;
  */
 
 @Entity
-public class EventActions {
+public class EventActions extends Model{
 
     @Id
     public Long id;
@@ -61,7 +62,7 @@ public class EventActions {
         return future(new Callable<String>() {
             public String call() {
                 System.out.println("Entered Async call");
-                Ebean.save(ea);
+                ea.save();
                 System.out.println("Completed save");
                 return "Success";
             }
