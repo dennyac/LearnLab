@@ -134,12 +134,12 @@ public class Application extends Controller {
     public static Result authenticate() {
         Form<Login> loginForm = form(Login.class).bindFromRequest();
 
-        Form<Register> registerForm = form(Register.class);
+            Form<Register> registerForm = form(Register.class);
 
-        if (loginForm.hasErrors()) {
-            return badRequest(index.render(registerForm, loginForm));
-        } else {
-            session("email", loginForm.get().email);
+            if (loginForm.hasErrors()) {
+                return badRequest(index.render(registerForm, loginForm));
+            } else {
+                session("email", loginForm.get().email);
             return GO_DASHBOARD;
         }
     }

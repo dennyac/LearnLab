@@ -3,6 +3,9 @@ package models;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.validation.Constraint;
+
+import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 /**
@@ -14,14 +17,18 @@ public class EventStats extends Model {
     @Id
     public Long id;
 
-    @OneToOne(mappedBy = "eventStats")
-    public Event event;
+//    @OneToOne(mappedBy = "eventStats")
+//    public Event event;
 
-    public int TotalMessages;
+    @Constraints.Required
+    public String answer;
+
+
+    // /public int TotalMessages;
 
 
 
-    public double percentOfSuccess; //% of who got it right
+    //public double percentOfSuccess; //% of who got it right
 
     //collaboration index
 
