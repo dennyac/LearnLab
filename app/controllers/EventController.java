@@ -46,9 +46,8 @@ public class EventController extends Controller {
         Form<EventStage1form> form1 = form(EventStage1form.class);
         EventStage1form f = form1.bindFromRequest().get();
         System.out.println("Came HERE!!"+ f.answer);
-
+        System.out.println("Event ID I got was:"+ f.eventId);
         initEventStage(f);
-
 
 
 //        Form<EventStats> userForm = form(EventStats.class);
@@ -118,5 +117,18 @@ public class EventController extends Controller {
     public static class EventStage1form{
         @Constraints.Required
         public String answer;
+        public String eventId;
     }
+
+    public static class EventStage3form{
+        @Constraints.Required
+        public String collaborativeanswer;
+    }
+
+    public static class EventStage4form{
+        @Constraints.Required
+        public String fanswer;
+    }
+
+
 }

@@ -20,8 +20,22 @@ public class EventStats extends Model {
 //    @OneToOne(mappedBy = "eventStats")
 //    public Event event;
 
-    @Constraints.Required
-    public String answer;
+   @Constraints.Required
+   public String answer;
+//
+//    @Constraints.Required
+//    public Long eventId;
+//
+//    @Constraints.Required
+//    public int noOfHashTaggedMessages;
+//
+//    @Constraints.Required
+//    public int noOfInformal;
+//
+//    @Constraints.Required
+//    public int noOf
+
+
 
 
     // /public int TotalMessages;

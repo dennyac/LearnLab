@@ -56,29 +56,18 @@
     </div>
     <div class="well">
         <ul class="answers">
+            @form(routes.EventController.chatRoom(event.eventId)){
             <p><b><br>@question.questionString<br> </b></p>
-            <input type="radio" name="q2" value="a" id="q2a" onchange="pushSelection(this);"><label for="q2a">  @question.Option1</label><br/>
-            <input type="radio" name="q2" value="b" id="q2b" onchange="pushSelection(this);"><label for="q2b">  @question.Option2</label><br/>
-            <input type="radio" name="q2" value="c" id="q2c" onchange="pushSelection(this);"><label for="q2c">  @question.Option3 </label><br/>
-            <input type="radio" name="q2" value="d" id="q2d" onchange="pushSelection(this);"><label for="q2d">  @question.Option4</label><br/>
-            <form  method="POST" name="" action="@routes.EventController.chatRoom(event.eventId)">
-                <input type="submit" name="Join" value= "Submit" class="btn btn-success">
-            </form>
+            <input type="radio" name="answer" value="a" id="q2a"><label for="q2a">  @question.Option1</label><br/>
+            <input type="radio" name="answer" value="b" id="q2b"><label for="q2b">  @question.Option2</label><br/>
+            <input type="radio" name="answer" value="c" id="q2c"><label for="q2c">  @question.Option3 </label><br/>
+            <input type="radio" name="answer" value="d" id="q2d"><label for="q2d">  @question.Option4</label><br/>
+            <input type="hidden" name="eventId" value="event.eventId"/>
+            <input type="submit" name="Join" value= "Submit" class="btn btn-success">
+            }
         </ul>
     </div>
 </div>
-@form(routes.EventController.chatRoom(event.eventId)){
-    <fieldset>
-        @inputText(form1("answer"))
-        <input type="submit" value="Post">
-    </fieldset>
-    }
-<script>
-                var answer = "";
-                function pushSelection(obj){
-                answer = obj.value;
-                }
-        </script>
 }
 
 
