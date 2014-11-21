@@ -2,6 +2,7 @@ package models;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
+import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
@@ -43,6 +44,10 @@ public class EventActions extends Model{
     public Date TimeOfEventAction;
 
     public static Model.Finder<Long, EventActions> find = new Model.Finder<Long, EventActions>(Long.class, EventActions.class);
+
+    public static EventActions findByEventIDUserIDActionType(Event event,User user,String actionType){
+        return find.where().eq("event", event).eq("user",user).ieq("ActionType",actionType).findUnique();
+    }
 
    //number of informal messages
     public static int noOfInformalMessages(String EventName )
