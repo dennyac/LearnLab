@@ -61,6 +61,9 @@ public class Event extends Model{
     @Column(columnDefinition = "TEXT")
     public String scriptPhase3;
 
+    @Column(columnDefinition = "TEXT")
+    public String scriptPhase4;
+
     @Constraints.Required
     @Formats.NonEmpty
     public HashSet<String> hashTags;

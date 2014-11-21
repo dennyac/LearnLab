@@ -1,4 +1,5 @@
-@(user: User, event: Event, question: Question)
+@(user: User, event: Event, question: Question, form3: Form[util.EventUtils.EventStageform])
+@import helper._
 
 @mainStudent(user) {
 <div id="wrapper">
@@ -39,35 +40,39 @@
             </div>
         </div>
     </div>
-</div>
 
-<div class="col-md-9">
 
-    <div class="progress progress-striped">
-        <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-            Stage 3
-            <span class="sr-only">bootstrap.min.css + bootstrap-theme.min.css (master branch</span>
+    <div class="col-md-9">
+
+        <div class="progress progress-striped">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                Stage 3
+                <span class="sr-only">bootstrap.min.css + bootstrap-theme.min.css (master branch</span>
+            </div>
+        </div>
+
+        <div class="well">
+            <ul class="answers">
+                <p>@event.scriptPhase3</p>
+            </ul>
+        </div>
+
+        <div class="well">
+            <ul class="answers">
+                @form(routes.EventController.eventStage4(event.eventId)){
+                <p><b><br>@question.questionString<br> </b></p>
+                <input type="radio" name="answer" value="Option1" id="q2a"><label for="q2a">  @question.Option1</label><br/>
+                <input type="radio" name="answer" value="Option2" id="q2b"><label for="q2b">  @question.Option2</label><br/>
+                <input type="radio" name="answer" value="Option3" id="q2c"><label for="q2c">  @question.Option3 </label><br/>
+                <input type="radio" name="answer" value="Option4" id="q2d"><label for="q2d">  @question.Option4</label><br/>
+                <input type="hidden" name="eventId" value=@event.eventId />
+                <input type="hidden" name="fullName" value=@user.fullname />
+                <input type="submit" name="Join" value= "Submit" class="btn btn-success">
+                }
+            </ul>
         </div>
     </div>
 
-    <div class="well">
-        <ul class="answers">
-            <p>@event.script</p>
-        </ul>
-    </div>
-
-    <div class="well">
-        <ul class="answers">
-            <p class="question"><b><br>@question.questionString<br> </b></p>
-            <input type="radio" name="q2" value="a" id="q2a" onchange="pushSelection(this);"><label for="q2a">  @question.Option1</label><br/>
-            <input type="radio" name="q2" value="b" id="q2b" onchange="pushSelection(this);"><label for="q2b">  @question.Option2</label><br/>
-            <input type="radio" name="q2" value="c" id="q2c" onchange="pushSelection(this);"><label for="q2c">  @question.Option3 </label><br/>
-            <input type="radio" name="q2" value="d" id="q2d" onchange="pushSelection(this);"><label for="q2d">  @question.Option4</label><br/>
-            <form  method="POST" name="" action="@routes.EventController.eventStage4(event.eventId)">
-                <input type="submit" name="Join" value= "Submit" class="btn btn-success">
-            </form>
-        </ul>
-    </div>
 </div>
 }
 
