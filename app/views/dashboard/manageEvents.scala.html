@@ -1,5 +1,5 @@
-@(user: User, event: Event)
-
+@(user: User, event: Event, createEveForm: Form[Dashboard.CreateEventForm])
+@import helper._
 @mainInstructor(user) {
 <div id="wrapper">
         <div class="col-md-9">
@@ -192,6 +192,31 @@
     </div>
 </div>
 <!--/span-->
+@form(routes.Dashboard.createEvent()){
+<fieldset>
+    @inputText(createEveForm("eventName"))
+    @inputText(createEveForm("eventDescription"))
+    @inputText(createEveForm("script1"))
+    @inputText(createEveForm("script2"))
+    @inputText(createEveForm("script3"))
+    @inputText(createEveForm("question"))
+    @inputText(createEveForm("answer"))
+    @inputText(createEveForm("option1"))
+    @inputText(createEveForm("option2"))
+    @inputText(createEveForm("option3"))
+    @inputText(createEveForm("option4"))
+    @inputText(createEveForm("fquestion"))
+    @inputText(createEveForm("fanswer"))
+    @inputText(createEveForm("foption1"))
+    @inputText(createEveForm("foption2"))
+    @inputText(createEveForm("foption3"))
+    @inputText(createEveForm("foption4"))
+    @inputText(createEveForm("date"))
+    @inputText(createEveForm("endTime"))
+    @inputText(createEveForm("startTime"))
+    <input type="submit" value="Post">
+</fieldset>
+}
 
 <script>
             function getData()

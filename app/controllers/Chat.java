@@ -2,10 +2,8 @@ package controllers;
 
 import akka.actor.ActorRef;
 import com.fasterxml.jackson.databind.JsonNode;
-import models.ChatRoomManager;
-import models.Instructor;
-import models.InstructorManager;
-import models.User;
+import models.*;
+import play.data.Form;
 import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -13,6 +11,8 @@ import play.mvc.WebSocket;
 import views.html.chatRoom;
 import views.html.index;
 import akka.actor.*;
+
+import static play.data.Form.form;
 
 public class Chat extends Controller {
 
@@ -26,15 +26,24 @@ public class Chat extends Controller {
     /**
      * Display the chat room.
      */
-    public static Result chatRoom() {
+    public static Result chatRoom(long eventId) {
 //        if(username == null || username.trim().equals("")) {
 //            flash("error", "Please choose a valid username.");
 //            return redirect(routes.Application.index());
 //        }
+
+//        Form<EventStats> userForm = form(EventStats.class);
+//        EventStats s = userForm.bindFromRequest().get();
+//        System.out.println("Came HERE!!"+ s.answer);
+
+
+
+
         User currUser = User.findByEmail(request().username());
+        Event eventSelected = Event.findById(eventId);
 //        System.out.println("Request().username:"+ currUser.fullname);
 //        System.out.println("User email id is " + currUser.email);
-        return ok(chatRoom.render(currUser));
+        return ok(chatRoom.render((currUser),eventSelected));
     }
 
     public static Result chatRoomJs(String username) {

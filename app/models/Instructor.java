@@ -45,7 +45,7 @@ public class Instructor extends UntypedActor {
 
     public Instructor(final String instructor, final WebSocket.Out<JsonNode> socket){
         CHANNEL = instructor + ".event.*";
-        System.out.println(CHANNEL);
+//        System.out.println(CHANNEL);
         sockets.add(socket);
         //add the robot
 
@@ -87,10 +87,10 @@ public class Instructor extends UntypedActor {
         if(message instanceof ChatRoom.Talk)  {
                 // Received a ChatRoom.Talk message
                 ChatRoom.Talk talk = (ChatRoom.Talk)message;
-               System.out.println("Before Writing to websocket" + talk.eventId);
+//               System.out.println("Before Writing to websocket" + talk.eventId);
                 for(WebSocket.Out<JsonNode> socket: sockets)
                 socket.write(Json.toJson(talk));
-            System.out.println("After Writing to websocket" + talk.eventId);
+//            System.out.println("After Writing to websocket" + talk.eventId);
 
             }else if(message instanceof ChatRoom.Quit)  {
             // Received a Quit message
@@ -111,10 +111,10 @@ public class Instructor extends UntypedActor {
 
         @Override
         public void onPMessage(String arg0, String arg1, String arg2) {
-            System.out.println("Recieved Message");
-            System.out.println("arg0 - " + arg0);
-            System.out.println("arg1 - " + arg1);
-            System.out.println("arg2 - " + arg2);
+//            System.out.println("Recieved Message");
+//            System.out.println("arg0 - " + arg0);
+//            System.out.println("arg1 - " + arg1);
+//            System.out.println("arg2 - " + arg2);
             //Process messages from the pub/sub channel
             JsonNode parsedMessage = Json.parse(arg2);
             Object message = null;
@@ -122,7 +122,7 @@ public class Instructor extends UntypedActor {
             if("talk".equals(messageType)) {
                 message = new ChatRoom.Talk(
                         parsedMessage.get("username").asText(),
-                        parsedMessage.get("eventId").asText(),
+                        Long.parseLong(parsedMessage.get("eventId").asText()),
                         parsedMessage.get("text").asText()
                 );
                 remoteMessage(message);

@@ -35,7 +35,7 @@ public class ChatRoom extends UntypedActor {
     private final String CHANNEL;
     private final String MEMBERS;
 
-    public static Props props(final String eventId, final String instructor) {
+    public static Props props(final Long eventId, final String instructor) {
         return Props.create(new Creator<ChatRoom>() {
             private static final long serialVersionUID = 1L;
 
@@ -46,9 +46,9 @@ public class ChatRoom extends UntypedActor {
         });
     }
 
-    public ChatRoom(final String eventId, final String instructor){
+    public ChatRoom(final Long eventId, final String instructor){
         CHANNEL = instructor + ".event." + eventId;
-        System.out.println(CHANNEL);
+//        System.out.println(CHANNEL);
         MEMBERS = "members." + eventId;
         //add the robot
         //new Robot(getSelf());
@@ -99,9 +99,9 @@ public class ChatRoom extends UntypedActor {
                     //    getSender().tell("This username is already used", getSelf());
                     //} else {
                         //Add the member to this node and the global roster
-                        System.out.println("join.channel - " + join.channel);
-                        System.out.println("join.channel.toString() - " + join.channel.toString());
-                        System.out.println("join.channel.hashCode() - " + join.channel.hashCode());
+//                        System.out.println("join.channel - " + join.channel);
+//                        System.out.println("join.channel.toString() - " + join.channel.toString());
+//                        System.out.println("join.channel.hashCode() - " + join.channel.hashCode());
                      //= members.containsKey(join.username)? members.get(join.getUsername()):new ArrayList<WebSocket.Out<JsonNode>>();
 
                     if(members.containsKey(join.username)){
@@ -117,7 +117,8 @@ public class ChatRoom extends UntypedActor {
                         j.sadd(MEMBERS, join.username);
 
                         //Publish the join notification to all nodes
-                        RosterNotification rosterNotify = new RosterNotification(join.username, "join");
+//                        System.out.println("From on receive join.message is " + join.message);
+                        RosterNotification rosterNotify = new RosterNotification(join.username, "join", join.message);
                         j.publish(CHANNEL, Json.stringify(Json.toJson(rosterNotify)));
                         getSender().tell("OK", getSelf());
                     //}
@@ -130,13 +131,15 @@ public class ChatRoom extends UntypedActor {
                     j.srem(MEMBERS, quit.username);
 
                     //Publish the quit notification to all nodes
-                    RosterNotification rosterNotify = new RosterNotification(quit.username, "quit");
+                    RosterNotification rosterNotify = new RosterNotification(quit.username, "quit",null);
                     j.publish(CHANNEL, Json.stringify(Json.toJson(rosterNotify)));
                 } else if(message instanceof RosterNotification) {
                     //Received a roster notification
                     RosterNotification rosterNotify = (RosterNotification) message;
+
+//                    System.out.println("From onReceive rosterNotify.message" + rosterNotify.message);
                     if("join".equals(rosterNotify.direction)) {
-                        notifyAll("join", rosterNotify.username, "Hi, Anil this side. Doing my Masters in Computer Science at ASU. I like developing mobile apps!");
+                        notifyAll("join", rosterNotify.username, rosterNotify.message);
                     } else if("quit".equals(rosterNotify.direction)) {
                         notifyAll("quit", rosterNotify.username, "has left the room");
                     }
@@ -186,6 +189,7 @@ public class ChatRoom extends UntypedActor {
         
         final String username;
         final WebSocket.Out<JsonNode> channel;
+        final String message;
         
         public String getUsername() {
 			return username;
@@ -193,10 +197,14 @@ public class ChatRoom extends UntypedActor {
         public String getType() {
         	return "join";
         }
+        public String getMessage() {
+            return message;
+        }
 
-		public Join(String username, WebSocket.Out<JsonNode> channel) {
+		public Join(String username, WebSocket.Out<JsonNode> channel, String message) {
             this.username = username;
             this.channel = channel;
+            this.message = message;
         }
     }
     
@@ -204,6 +212,7 @@ public class ChatRoom extends UntypedActor {
     	
     	final String username;
     	final String direction;
+        final String message;
     	
     	public String getUsername() {
     		return username;
@@ -211,26 +220,30 @@ public class ChatRoom extends UntypedActor {
     	public String getDirection() {
     		return direction;
     	}
+        public String getMessage() {
+            return message;
+        }
     	public String getType() {
     		return "rosterNotify";
     	}
     	
-    	public RosterNotification(String username, String direction) {
+    	public RosterNotification(String username, String direction, String message) {
     		this.username = username;
     		this.direction = direction;
+            this.message = message;
     	}
     }
     
     public static class Talk {
         
         final String username;
-        final String eventId;
+        final Long eventId;
         final String text;
         
         public String getUsername() {
 			return username;
 		}
-        public String getEventId() {
+        public Long getEventId() {
             return eventId;
         }
 		public String getText() {
@@ -240,7 +253,7 @@ public class ChatRoom extends UntypedActor {
 			return "talk";
 		}
 
-		public Talk(String username, String eventId, String text) {
+		public Talk(String username, Long eventId, String text) {
             this.eventId = eventId;
             this.username = username;
             this.text = text;
@@ -277,13 +290,15 @@ public class ChatRoom extends UntypedActor {
 	    	if("talk".equals(messageType)) {	    		
 	    		message = new Talk(
 	    				parsedMessage.get("username").asText(),
-                        parsedMessage.get("eventId").asText(),
+                        Long.parseLong(parsedMessage.get("eventId").asText()),
 	    				parsedMessage.get("text").asText()
 	    				);
-	    	} else if("rosterNotify".equals(messageType)) {	
+	    	} else if("rosterNotify".equals(messageType)) {
+//                System.out.println("From MyListener parsed message is " + parsedMessage.get("message").asText());
 	    		message = new RosterNotification(
 	    				parsedMessage.get("username").asText(),
-	    				parsedMessage.get("direction").asText()
+	    				parsedMessage.get("direction").asText(),
+                        parsedMessage.get("message").asText()
 	    				);
 	    	}
 			remoteMessage(message);

@@ -7,8 +7,8 @@ import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * User: yesnault
@@ -25,6 +25,10 @@ public class User extends Model {
     @Column(unique = true)
     public String email;
 
+
+    @OneToMany(mappedBy = "instructor")
+    public List<Event> events;
+
     @Constraints.Required
     @Formats.NonEmpty
     @Column(unique = true)
@@ -33,7 +37,7 @@ public class User extends Model {
     public String confirmationToken;
 
     @ManyToMany(mappedBy = "participants")
-    public ArrayList<Event> EventsParticipated;
+    public List<Event> EventsParticipated;
 
     @Constraints.Required
     @Formats.NonEmpty
@@ -55,7 +59,7 @@ public class User extends Model {
     public long aggregatedScore = 0;
 
     @Formats.NonEmpty
-    public String badge = "Beginner";
+    public String badge;
 
     @Formats.NonEmpty
     public int hashTagContributions = 0;
@@ -68,7 +72,7 @@ public class User extends Model {
     public UserStats stats;
 
     @OneToMany(mappedBy = "user")
-    public EventActions actions;
+    public List<EventActions> actions;
 
     // -- Queries (long id, user.class)
     public static Model.Finder<Long, User> find = new Model.Finder<Long, User>(Long.class, User.class);

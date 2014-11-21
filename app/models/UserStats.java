@@ -7,13 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import java.util.ArrayList;
+import play.db.ebean.Model;
 
 /**
  * Created by shruthir28 on 11/10/2014.
  */
 
 @Entity
-public class UserStats {
+public class UserStats extends Model{
 
 
     @Id

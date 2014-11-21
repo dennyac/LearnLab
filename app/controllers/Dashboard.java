@@ -1,10 +1,13 @@
 package controllers;
 
 import models.Event;
+import models.Question;
 import models.User;
+import play.data.validation.Constraints;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import play.data.Form;
 import views.html.dashboard.index;
 import views.html.dashboard.instructorDashboard;
 import views.html.dashboard.manageEvents;
@@ -12,8 +15,14 @@ import views.html.dashboard.createEventConfirmation;
 import views.html.dashboard.deleteEventConfirmation;
 import views.html.dashboard.updateEventConfirmation;
 import views.html.chatRoom;
+import views.html.eventSequence.eventStage1;
 import views.html.instructorView;
-import java.util.*;
+import java.util.List;
+import java.util.Set;
+import scala.collection.JavaConverters;
+
+import static play.data.Form.form;
+
 
 /**
  * User: yesnault
@@ -36,63 +45,36 @@ public class Dashboard extends Controller {
         if(isInstructor){
             return ok(instructorDashboard.render((User.findByEmail(request().username())), Event.findEvent()));
         }
-            //is a student
-            return ok(index.render((User.findByEmail(request().username())), Event.findEvent()));
+        else {
+            List<Event> eventList = currentUser.EventsParticipated;
+            return ok(index.render((User.findByEmail(request().username())), eventList));
         }
+     }
 
     public static Result manageEvents()
     {
-        return ok(manageEvents.render((User.findByEmail(request().username())), Event.findEvent()));
-
+        User currentUser = User.findByEmail(request().username());
+        Event eventSelected = Event.findEvent();
+        return ok(manageEvents.render(currentUser,eventSelected,form(CreateEventForm.class)));
     }
 
-    public static Result createEvent(String arg)
-    {
-        System.out.println("argument is "+ arg);
-        Event eventObj=new Event();
-        String[] createFormData=arg.split("\\|");
+    public static Result createEvent() {
+        Form<CreateEventForm> form2 = form(CreateEventForm.class);
+        CreateEventForm f = form2.bindFromRequest().get();
+        System.out.println("Read event form!!"+ f.eventName);
 
-        //Need to make sure User is in the db already
-        //Participant
-        System.out.println("This is the first element"+createFormData[0]+ "second"+createFormData[1]);
-
-        User u=User.findByFullname(createFormData[1]);
-        System.out.println("user "+ u.fullname);
-
-        if(u==null)
-            System.out.println("User is null");
-
-        if(eventObj.participants==null)
-            eventObj.participants=new ArrayList<User>();
-        else
-            eventObj.participants.add(u);
-
-        //event name
-        eventObj.eventName=createFormData[2];
-        System.out.println("argument is "+ eventObj.eventName);
-
-        if(eventObj.hashTags==null)
-            eventObj.hashTags=new HashSet<String>();
-        else
-            eventObj.hashTags.add(createFormData[3]);
-
-
-
-
-
+        //initEventStage(f);
 
         return ok(createEventConfirmation.render((User.findByEmail(request().username())), Event.findEvent()));
 
     }
 
-    public static Result deleteEvent()
-    {
+    public static Result deleteEvent(){
         return ok(deleteEventConfirmation.render((User.findByEmail(request().username())), Event.findEvent()));
 
     }
 
-    public static Result updateEvent()
-    {
+    public static Result updateEvent(){
         return ok(updateEventConfirmation.render((User.findByEmail(request().username())), Event.findEvent()));
 
     }
@@ -103,11 +85,74 @@ public class Dashboard extends Controller {
 //            return redirect(routes.Application.index());
 //        }
         User currUser = User.findByEmail(request().username());
-        System.out.println("Request().username:"+ currUser.fullname);
-        System.out.println("User email id is " + currUser.email);
+//        System.out.println("Request().username:"+ currUser.fullname);
+//        System.out.println("User email id is " + currUser.email);
         return ok(instructorView.render(currUser));
     }
 
+    public static class CreateEventForm {
+
+        @Constraints.Required
+        public String eventName;
+
+        @Constraints.Required
+        public String eventDescription;
+
+        @Constraints.Required
+        public String script1;
+
+        @Constraints.Required
+        public String script2;
+
+        @Constraints.Required
+        public String script3;
+
+        @Constraints.Required
+        public String question;
+
+        @Constraints.Required
+        public String option1;
+
+        @Constraints.Required
+        public String option2;
+
+        @Constraints.Required
+        public String option3;
+
+        @Constraints.Required
+        public String option4;
+
+        @Constraints.Required
+        public String answer;
+
+        @Constraints.Required
+        public String fquestion;
+
+        @Constraints.Required
+        public String foption1;
+
+        @Constraints.Required
+        public String foption2;
+
+        @Constraints.Required
+        public String foption3;
+
+        @Constraints.Required
+        public String foption4;
+
+        @Constraints.Required
+        public String fanswer;
+
+        @Constraints.Required
+        public String date;
+
+        @Constraints.Required
+        public String endTime;
+
+        @Constraints.Required
+        public String startTime;
+
+    }
 }
 //        public static Result index() {
 //        return START_CHAT;

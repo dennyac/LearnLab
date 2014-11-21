@@ -1,8 +1,6 @@
-@(user: User)
+@(user: User, event: Event)
 
 @mainStudent(user) {
-
-
 
 <div id="wrapper">
 
@@ -52,28 +50,41 @@
                 <span class="sr-only">bootstrap.min.css + bootstrap-theme.min.css (master branch</span>
             </div>
         </div>
+        <div class="well">
+            <ul class="answers">
+                <p>@event.script</p>
+            </ul>
+        </div>
             <div id="onChat" class="row">
                 <div class="span10" id="main">
                     <div id="messages">
                     </div>
                     <textarea id="talk" size="35"></textarea>
-                    <form  method="POST" name="" action="@routes.EventController.eventStage3()">
+                    <form  method="POST" name="" action="@routes.EventController.eventStage3(event.eventId)">
                         <input type="submit" name="Submit" value= "Submit" class="btn btn-success">
                     </form>
                 </div>
             </div>
     </div>
 
-    <div class="col-md-3">
-         <div class="span4">
-             <h2>Pinned Messages</h2>
-                  <ul id="members">
-                  </ul>
-         </div>
-     </div>
+<div class="col-md-3">
+    <div class="span4">
+        <h2>Pinned Messages</h2>
+        <ul id="members">
+        </ul>
+    </div>
+</div>
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+
+
+
+
+</div>
+
+
 </div>
 
 <script type="text/javascript" charset="utf-8" src="@routes.Chat.chatRoomJs(user.email)"></script>
-
-
 }

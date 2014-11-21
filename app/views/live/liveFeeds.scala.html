@@ -1,0 +1,87 @@
+@import models.Event;
+@(user: User, eventList: List[String])
+@import play.api.libs.json.Json
+
+@mainInstructor (user) {
+    <style>
+    .col-md-4 {
+    border: 2px solid;
+    border-radius: 25px;
+    }
+    </style>
+    <script>
+        var messages = [
+         {
+            "eventId":"event1",
+            "userId":"user1",
+            "messageId":"msgid1",
+            "message":"hi there this is for event1",
+            "timestamp":"2014-11-09 12:36:43.4567",
+            "IsHashTag":"True",
+            "HashTag":"#explain"
+         },
+         {
+                "eventId":"event1",
+                "userId":"user1",
+                "messageId":"msgid1",
+                "message":"hi there this is for event1",
+                "timestamp":"2014-11-09 12:36:43.4567",
+                "IsHashTag":"True",
+                "HashTag":"#explain"
+         }
+        ];
+    var uname = '@user.fullname';
+    var eventlist = [];
+    @for(ename <- eventList){
+        eventlist.push('@ename');
+        console.log('@ename');
+    }
+    console.log(eventlist.length);
+
+
+    </script>
+<div id="wrapper">
+    <div class="col-md-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">@user.fullname 's Profile</h3>
+            </div>
+            <div class="panel-body">
+                <div class="panel-body">
+                    <div class="text-left">
+                        <a href="">Create Event <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="text-left">
+                        <a href="#">Group Statistics <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="text-left">
+                        <a href="#">Individual Statistics <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="text-left">
+                        <a href="@routes.EventController.eventFeeds()">On going Event Feeds <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="id1">
+        <script>
+            for(var i=0;i<eventlist.length;i++)
+            {
+                var el = $('<div></div>');
+                $(el).text(eventlist[i]);
+                $(el).addClass("col-md-4");
+                console.log($(el));
+                $('#id1').append($(el));
+            }
+        </script>
+    </div>
+</div>
+<!--<script type="text/javascript" charset="utf-8" src="@routes.EventController.eventFeeds()"></script>-->
+}

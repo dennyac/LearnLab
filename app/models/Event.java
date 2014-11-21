@@ -1,5 +1,6 @@
 package models;
 
+import com.avaje.ebean.Ebean;
 import org.joda.time.Minutes;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
@@ -12,6 +13,14 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import models.utils.AppException;
+import models.utils.Hash;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.util.Date;
 
 /**
  * Created by Supriya on 14/10/2014.
@@ -27,18 +36,29 @@ public class Event extends Model{
 
     @Constraints.Required
     @Formats.NonEmpty
+    @ManyToOne
+    public User instructor;
+
+    @Constraints.Required
+    @Formats.NonEmpty
     @Column(unique = true)
-    public String eventName = "DB Normalization";
+    public String eventName;
 
     @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
     public Date EventStartTime;
 
     @Constraints.Required
     @Formats.NonEmpty
+    @Column(columnDefinition = "TEXT")
+    public String script;
 
-    public String script = "The event contains 3 stages. Stage 1: Answer the question that is being displayed. Stage 2: Collaborate with you event-mates and brainstorm about the answer options.Use Hashtags to anything that might be relevant. Stage 3: Having discussed, conclude the right answer and submit it. Give a short justification as to why you pick the answer. Also let us know who helped you better to arrive at the answer";
+    @Column(columnDefinition = "TEXT")
     public String scriptPhase1;
+
+    @Column(columnDefinition = "TEXT")
     public String scriptPhase2;
+
+    @Column(columnDefinition = "TEXT")
     public String scriptPhase3;
 
     @Constraints.Required
@@ -47,8 +67,9 @@ public class Event extends Model{
 
     @Constraints.Required
     @Formats.NonEmpty
+
     @ManyToMany
-    public ArrayList<User> participants;
+    public List<User> participants;
 
     @Constraints.Required
     @Formats.NonEmpty
@@ -79,8 +100,10 @@ public class Event extends Model{
 
     public static Model.Finder<Long, Event> find = new Model.Finder<Long, Event>(Long.class, Event.class);
 
-    public static Event findById(String eventId ) {
-        return find.where().eq("eventId",eventId ).findUnique();
+    public static Event findById(Long eId ) {
+
+        //return find.where().eq("eventId", eId ).findUnique();
+        return Event.find.byId(eId);
     }
 
     public static Event findByName(String EventName)
@@ -112,6 +135,7 @@ public class Event extends Model{
         List<Question> list = findByName(EventName).Questions;
         return list.get(1).Answer;
     }
+
     public static Event findEvent(){
         Event e = new Event();
         HashSet<String> tags = new HashSet<String>();
