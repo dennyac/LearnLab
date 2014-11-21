@@ -61,8 +61,11 @@ public class Dashboard extends Controller {
     public static Result createEvent() {
         Form<CreateEventForm> form2 = form(CreateEventForm.class);
         CreateEventForm f = form2.bindFromRequest().get();
-        System.out.println("Read event form!!"+ f.eventName);
-
+        System.out.println("Read event form!!" + f.eventName);
+        System.out.println("participant list size!!" + f.participants.size());
+        for(String s: f.participants) {
+            System.out.println("Participants:" + s);
+        }
         //initEventStage(f);
 
         return ok(createEventConfirmation.render((User.findByEmail(request().username())), Event.findEvent()));
@@ -151,6 +154,9 @@ public class Dashboard extends Controller {
 
         @Constraints.Required
         public String startTime;
+
+        @Constraints.Required
+        public List<String> participants;
 
     }
 }

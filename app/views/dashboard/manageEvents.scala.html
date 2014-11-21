@@ -1,5 +1,6 @@
 @(user: User, event: Event, createEveForm: Form[Dashboard.CreateEventForm])
 @import helper._
+@import play.api.mvc._
 @mainInstructor(user) {
 <div id="wrapper">
         <div class="col-md-9">
@@ -12,134 +13,128 @@
 
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="createEvent">
-
-                    <br>
+                <br>
+                @form(routes.Dashboard.createEvent()){
                   <fieldset class="fieldSetLegend">
                       <legend class="fieldSetLegend"><h5><b>Event and Scripts</b></h5></legend>
-                    <div class="row">
-                      <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                        <label for="eventName">Event Name</label>
-                        <input type="text" class="form-control" id="eventName">
-                      </div>
-                        <div class="form-group col-md-7 col-sm-4 col-xs-12">
-                        <label for="eventDescription">Event Description</label>
-                        <input type="text" class="form-control" id="eventDescription">
-                     </div>
-                    </div>
-                  <div class="row">
-                        <div class="form-group col-md-3.3 col-sm-4 col-xs-12">
-                            <label for="Script1">Phase 1 Script</label>
-                            <textarea type="text" class="form-control" id="Script1" rows="2"></textarea>
-                        </div>
-                        <div class="form-group col-md-3.3 col-sm-4 col-xs-12">
-                            <label for="Script2">Phase 2 Script</label>
-                            <textarea type="text" class="form-control" id="Script2" rows="2"></textarea>
-                        </div>
-                        <div class="form-group col-md-3.3 col-sm-4 col-xs-12">
-                            <label for="Script3">Phase 3 Script</label>
-                            <textarea type="text" class="form-control" id="Script3" rows="2"></textarea>
-                        </div>
-                  </div>
-                </fieldset>
+                            <div class="row">
+                                <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                    <label for="eventName">Event Name</label>
+                                    <input name="eventName" type="text" class="form-control" id="eventName">
+                                </div>
+                                <div class="form-group col-md-7 col-sm-4 col-xs-12">
+                                    <label for="eventDescription">Event Description</label>
+                                    <input name="eventDescription" type="text" class="form-control" id="eventDescription">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-3.3 col-sm-4 col-xs-12">
+                                    <label for="Script1">Phase 1 Script</label>
+                                    <textarea name="script1" type="text" class="form-control" id="Script1" rows="2"></textarea>
+                                </div>
+                                <div class="form-group col-md-3.3 col-sm-4 col-xs-12">
+                                    <label for="Script2">Phase 2 Script</label>
+                                    <textarea name="script2" type="text" class="form-control" id="Script2" rows="2"></textarea>
+                                </div>
+                                <div class="form-group col-md-3.3 col-sm-4 col-xs-12">
+                                    <label for="Script3">Phase 3 Script</label>
+                                    <textarea name="script3" type="text" class="form-control" id="Script3" rows="2"></textarea>
+                                </div>
+                            </div>
+                  </fieldset>
+                  <fieldset class="fieldSetLegend">
+                      <legend class="fieldSetLegend"><h5><b>Question and Answers</b></h5></legend>
+                            <div class="row">
+                                <div class="form-group col-md-7 col-sm-4 col-xs-12">
+                                    <label for="Question">Question</label>
+                                    <textarea name="question" type="text" class="form-control" id="Question" rows="2"></textarea>
+                                </div>
+                                <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                    <label for="Answer">Answer</label>
+                                    <textarea name="answer" type="text" class="form-control" id="Answer" rows="2"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                    <label for="Option1">Option 1</label>
+                                    <textarea name="option1" type="text" class="form-control" id="Option1" rows="2"></textarea>
+                                </div>
+                                <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                    <label for="Option2">Option 2</label>
+                                    <textarea name="option2" type="text" class="form-control" id="Option2" rows="2" ></textarea>
+                                </div>
+                                <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                    <label for="Option3">Option 3</label>
+                                    <textarea name="option3" type="text" class="form-control" id="Option3" rows="2" ></textarea>
+                                </div>
+                                <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                    <label for="Option4">Option 4</label>
+                                    <textarea name="option4" type="text" class="form-control" id="Option4" rows="2" ></textarea>
+                                </div>
+                            </div>
+                  </fieldset>
+                  <fieldset class="fieldSetLegend">
+                            <legend class="fieldSetLegend"><h5><b>FollowUp Question and Answer</b></h5></legend>
+                                <div class="row">
+                                    <div class="form-group col-md-7 col-sm-4 col-xs-12">
+                                        <label for="FollowUpQuestion">FollowUp Question</label>
+                                        <textarea name="fquestion" type="text" class="form-control" id="FollowUpQuestion" rows="2" ></textarea>
+                                    </div>
+                                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                        <label for="FollowUpAnswer">FollowUp Answer</label>
+                                        <textarea name="fanswer" type="text" class="form-control" id="FollowUpAnswer" rows="2"></textarea>
+                                    </div>
+                                </div>
 
-                <fieldset class="fieldSetLegend">
-                <legend class="fieldSetLegend"><h5><b>Question and Answers</b></h5></legend>
-                  <div class="row">
-                    <div class="form-group col-md-7 col-sm-4 col-xs-12">
-                        <label for="Question">Question</label>
-                        <textarea type="text" class="form-control" id="Question" rows="2"></textarea>
-                    </div>
-                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                        <label for="Answer">Answer</label>
-                        <textarea type="text" class="form-control" id="Answer" rows="2"></textarea>
-                    </div>
-                </div>
-
-                  <div class="row">
-                        <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                            <label for="Option1">Option 1</label>
-                            <textarea type="text" class="form-control" id="Option 1" rows="2"></textarea>
-                        </div>
-                        <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                            <label for="Option2">Option 2</label>
-                            <textarea type="text" class="form-control" id="Option 2" rows="2" ></textarea>
-                        </div>
-                        <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                            <label for="Option3">Option 3</label>
-                            <textarea type="text" class="form-control" id="Option 3" rows="2" ></textarea>
-                        </div>
-                        <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                            <label for="Option4">Option 4</label>
-                            <textarea type="text" class="form-control" id="Option 4" rows="2" ></textarea>
-                        </div>
-                </div>
-                </fieldset>
-                    <fieldset class="fieldSetLegend">
-                        <legend class="fieldSetLegend"><h5><b>FollowUp Question and Answer</b></h5></legend>
-                  <div class="row">
-                    <div class="form-group col-md-7 col-sm-4 col-xs-12">
-                        <label for="FollowUpQuestion">FollowUp Question</label>
-                        <textarea type="text" class="form-control" id="FollowUpQuestion" rows="2" ></textarea>
-                    </div>
-                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                        <label for="FollowUpAnswer">FollowUp Answer</label>
-                        <textarea type="text" class="form-control" id="FollowUpAnswer" rows="2"></textarea>
-                    </div>
-                </div>
-
-                  <div class="row">
-                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                        <label for="FollowUpOption1">Option 1</label>
-                        <textarea type="text" class="form-control" id="FollowUpOption 1" rows="2"></textarea>
-                    </div>
-                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                        <label for="FollowUpOption2">Option 2</label>
-                        <textarea type="text" class="form-control" id="FollowUp Option 2" rows="2"></textarea>
-                    </div>
-                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                        <label for="FollowUpOption3">Option 3</label>
-                        <textarea type="text" class="form-control" id="FollowUp Option 3" rows="2"></textarea>
-                    </div>
-                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                        <label for="FollowUpOption4">Option 4</label>
-                        <textarea type="text" class="form-control" id="FollowUpOption4" rows="2"></textarea>
-                    </div>
-                </div>
-                </fieldset>
-
-                    <fieldset class="fieldSetLegend">
+                                <div class="row">
+                                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                        <label for="FollowUpOption1">Option 1</label>
+                                        <textarea name="foption1" type="text" class="form-control" id="FollowUpOption1" rows="2"></textarea>
+                                    </div>
+                                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                        <label for="FollowUpOption2">Option 2</label>
+                                        <textarea name="foption2" type="text" class="form-control" id="FollowUpOption2" rows="2"></textarea>
+                                    </div>
+                                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                        <label for="FollowUpOption3">Option 3</label>
+                                        <textarea name="foption3" type="text" class="form-control" id="FollowUpOption3" rows="2"></textarea>
+                                    </div>
+                                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                        <label for="FollowUpOption4">Option 4</label>
+                                        <textarea name="foption4" type="text" class="form-control" id="FollowUpOption4" rows="2"></textarea>
+                                    </div>
+                                </div>
+                  </fieldset>
+                  <fieldset class="fieldSetLegend">
                         <legend class="fieldSetLegend"><h5><b>Event Participants and Schedule</b></h5></legend>
+                        <div class="row">
+                            <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                <select multiple class="form-control" name="participants" id="participantSelect" onchange="getSelectedOptions()">
+                                    <option value="Dhanyatha">Dhanyatha</option>
+                                    <option value="Shruthi">Shruthi</option>
+                                    <option value="Denny">Denny</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                <label for="createdatepicker" class="col-sm-2 control-label">Date</label>
+                                <input name="date" type="text" class="form-control" id="createdatepicker" size="30">
+                            </div>
+                            <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                <label for="startTimeCreateForm" class="col-sm-2 control-label">StartTime</label>
+                                <input name="startTime" type="text" class="time start form-control" id="startTimeCreateForm"/>
+                            </div>
+                            <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                <label for="endTimeCreateForm" class="col-sm-2 control-label">EndTime</label>
+                                <input name="endTime" type="text" class="time start form-control" id="endTimeCreateForm"/>
+                            </div>
+                        </div>
+                  </fieldset>
                   <div class="row">
-                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                        <select multiple class="form-control" id="participantSelect">
-                            <option>Select User</option>
-                            <option>Dhanyatha</option>
-                            <option>Shruthi</option>
-                            <option>Denny</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                        <label for="createdatepicker" class="col-sm-2 control-label">Date</label>
-                        <input type="text" class="form-control" id="createdatepicker" size="30">
-                    </div>
-                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                        <label for="startTimeCreateForm" class="col-sm-2 control-label">StartTime</label>
-                        <input type="text" class="time start form-control" id="startTimeCreateForm"/>
-                    </div>
-
-                    <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                        <label for="endTimeCreateForm" class="col-sm-2 control-label">EndTime</label>
-                        <input type="text" class="time start form-control" id="endTimeCreateForm"/>
-                    </div>
-                </div>
-                </fieldset>
-                  <div class="row">
-                    <div class="form-group dropdown col-md-3 col-sm-6 col-xs-12">
-                            <!--<button type="submit" class="btn btn-success">Create Event</button>-->
-                        <button type="button" class="btn btn-success" onclick="getData();">Create Event</button>
-                    </div>
+                      <div class="form-group dropdown col-md-3 col-sm-6 col-xs-12">
+                            <button type="submit" class="btn btn-success">Create Event</button>
+                      </div>
                   </div>
-            <!--</form>-->
+                }
             </div>
 
             <div role="tabpanel" class="tab-pane" id="deleteEvent">
@@ -162,8 +157,7 @@
             </fieldset>
 
             </div>
-
-        <div role="tabpanel" class="tab-pane" id="updateEvent">
+            <div role="tabpanel" class="tab-pane" id="updateEvent">
                 <br>
                 <form method="POST" class="form-horizontal" role="form" action="@routes.Dashboard.updateEvent()">
                     <fieldset class="fieldSetLegend">
@@ -189,7 +183,7 @@
                 </form>
             </div>
         </div>
-    </div>
+        </div>
 </div>
 <!--/span-->
 @form(routes.Dashboard.createEvent()){
@@ -217,28 +211,12 @@
     <input type="submit" value="Post">
 </fieldset>
 }
-
-<script>
-            function getData()
-            {
-                var inputlist = document.getElementById("createEvent");
-                var inputs = inputlist.getElementsByTagName("input");
-                var textareaInputs = inputlist.getElementsByTagName("textarea");
-                var output = "";
-
-
-                var e = document.getElementById("participantSelect");
-                var strUser = e.options[e.selectedIndex].value;
-                output = output +"|"+strUser;
-                for(var i=0;i<inputs.length;i++){
-                    output = output+"|"+inputs[i].value;
+        <script>
+            function getSelectedOptions()
+                {
+                    var selectedValues = $('#participantSelect').val();
+                    console.log("Inside javascript");
+                    return selectedValues;
                 }
-                for(var i=0;i<textareaInputs.length;i++){
-                    output = output+"|"+textareaInputs[i].value;
-                }
-
-                window.location.href='/dashboard/createEvent?arg='+output;
-            }
-
-</script>
+        </script>
 }
