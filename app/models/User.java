@@ -15,6 +15,7 @@ import java.util.List;
  * Date: 20/01/12
  */
 @Entity
+@Table(name = "users")
 public class User extends Model {
 
     @Id

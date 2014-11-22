@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/learnlab -Dhttp.port=${PORT} ${JAVA_OPTS} -DapplyEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver -Ddb.default.url=${DATABASE_URL}
+web: target/universal/stage/bin/learnlab -Dhttp.port=${PORT} -Dconfig.resource=prod.conf -DapplyEvolutions.default=true -DapplyDownEvolutions.default=true -Ddb.default.driver=org.postgresql.Driver -Ddb.default.url=${DATABASE_URL}
