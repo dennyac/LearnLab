@@ -41,36 +41,51 @@ public class Event extends Model{
 
     @Constraints.Required
     @Formats.NonEmpty
-    @Column(unique = true)
+    //@Column(unique = true)
     public String eventName;
 
-    @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
-    public Date EventStartTime;
+    @Formats.DateTime(pattern = "MM/dd/yyyy")
+    public Date EventDate;
+
+    @Constraints.Required
+    @Formats.NonEmpty
+    public String startTime;
+
+    @Constraints.Required
+    @Formats.NonEmpty
+    public String endTime;
+
+    //@Constraints.Required
+    //@Formats.NonEmpty
+    @Column(columnDefinition = "TEXT")
+    public String script;
 
     @Constraints.Required
     @Formats.NonEmpty
     @Column(columnDefinition = "TEXT")
-    public String script;
-
-    @Column(columnDefinition = "TEXT")
     public String scriptPhase1;
 
+    @Constraints.Required
+    @Formats.NonEmpty
     @Column(columnDefinition = "TEXT")
     public String scriptPhase2;
 
+    @Constraints.Required
+    @Formats.NonEmpty
     @Column(columnDefinition = "TEXT")
     public String scriptPhase3;
 
+    //@Constraints.Required
+    //@Formats.NonEmpty
     @Column(columnDefinition = "TEXT")
     public String scriptPhase4;
 
     @Constraints.Required
     @Formats.NonEmpty
-    public HashSet<String> hashTags;
+    public String hashes;
 
     @Constraints.Required
     @Formats.NonEmpty
-
     @ManyToMany
     public List<User> participants;
 
@@ -81,15 +96,17 @@ public class Event extends Model{
 
     @Constraints.Required
     @Formats.NonEmpty
-    public static long phase1Duration; // needs to be minutes
+    public long phase1Duration; // needs to be minutes
 
     @Constraints.Required
     @Formats.NonEmpty
-    public static long phase2Duration;
+    public long phase2Duration;
 
     @Constraints.Required
     @Formats.NonEmpty
-    public static long phase3Duration;
+    public long phase3Duration;
+
+
 
     public boolean active;  //flag to check if the event is an ongoing event.
 
@@ -115,7 +132,7 @@ public class Event extends Model{
     }
 
 
-    public static List<Event> getActiveEventNameList()
+   /* public static List<Event> getActiveEventNameList()
     {
 
         long minTotal =  (phase3Duration +phase3Duration +phase2Duration);
@@ -125,7 +142,7 @@ public class Event extends Model{
 
         return find.where().ge("EventStartTime" , d).lt("EventStartTime" , d1).findList();
 
-    }
+    }*/
 
     public static String getNumberofCorrectAnswersPhase1(String EventName) {
 
