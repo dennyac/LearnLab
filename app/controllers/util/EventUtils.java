@@ -23,9 +23,36 @@ public class EventUtils {
         public List<String> peers;
     }
 
+    public static class EventAggergator{
+        public long eventId;
+        public int noOfPraticipants;
+        public int totalNoOfMessages;
+        public int noOfHashTagMessgaes;
+        public int noOfInformalMessages;
+        public float percentageCorrectInPhase1;
+        public float percentageCorrectInPhase3;
+        public float percentageCorrectInPhase4;
+        public float positiveCollaborationScore;
+        public float negativeCollaborationScore;
+
+    }
+
+    public static class UserAggregator{
+        public long userId;
+        public long eventId;
+        public boolean phase1Answer;
+        public boolean phase3Answer;
+        public boolean phase4Answer;
+        public int noOfIndividualInformalMessages;
+        public int getNoOfIndividualHashTagMessages;
+        public float scorePhase1;
+        public float scorePhase3;
+        public float scorePhase4;
+    }
+
     public static EventActions EventAggregator(Event event,User user){
         EventActions e = EventActions.findByEventIDUserIDActionType(event,user,"Stage1");
-        System.out.println("Got Event Actions" + e.Attribute1);
+
         return e;
     }
 
@@ -45,4 +72,6 @@ public class EventUtils {
         e.user = u;
         e.save();
     }
+
+
 }

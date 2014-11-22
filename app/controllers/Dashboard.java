@@ -3,6 +3,7 @@ package controllers;
 import models.Event;
 import models.Question;
 import models.User;
+import models.UserStats;
 import play.data.validation.Constraints;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -47,7 +48,9 @@ public class Dashboard extends Controller {
         }
         else {
             List<Event> eventList = currentUser.EventsParticipated;
-            return ok(index.render((User.findByEmail(request().username())), eventList));
+            User user = User.findByEmail(request().username());
+            UserStats userStats = UserStats.findUserStatsByUser(user);
+            return ok(index.render(user, userStats, eventList));
         }
      }
 

@@ -17,39 +17,25 @@ public class EventStats extends Model {
     @Id
     public Long id;
 
-//    @OneToOne(mappedBy = "eventStats")
-//    public Event event;
+    @OneToOne(mappedBy = "eventStats")
+    public Event event;
 
-   @Constraints.Required
-   public String answer;
-//
-//    @Constraints.Required
-//    public Long eventId;
-//
-//    @Constraints.Required
-//    public int noOfHashTaggedMessages;
-//
-//    @Constraints.Required
-//    public int noOfInformal;
-//
-//    @Constraints.Required
-//    public int noOf
+    public int noOfPraticipants;
 
+    public int totalNoOfMessages;
 
+    public int noOfHashTagMessgaes;
 
+    public int noOfInformalMessages;
 
-    // /public int TotalMessages;
+    public float percentageCorrectInPhase1;
 
+    public float percentageCorrectInPhase3;
 
+    public float percentageCorrectInPhase4;
 
-    //public double percentOfSuccess; //% of who got it right
+    public float positiveCollaborationScore;
 
-    //collaboration index
-
-   //ration between formal and informal messgae
-
-    //correction rate
-
-
+    public float negativeCollaborationScore;
 
 }

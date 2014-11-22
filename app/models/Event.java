@@ -99,7 +99,8 @@ public class Event extends Model{
     @OneToMany(mappedBy = "event")
     public List<EventActions> eventActions;
 
-
+    @OneToMany(mappedBy = "event")
+    public List<UserEventStats> listOfUserEventStats;
 
     public static Model.Finder<Long, Event> find = new Model.Finder<Long, Event>(Long.class, Event.class);
 

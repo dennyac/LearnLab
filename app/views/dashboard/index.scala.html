@@ -1,4 +1,4 @@
-@(user: User, eventList: List[Event])
+@(user: User, userStats: UserStats , eventList: List[Event])
 @mainStudent(user) {
 <div id="wrapper">
     <div class="col-md-3">
@@ -10,13 +10,11 @@
                 <ol class="nav">
                     <li>Student ID: @user.id</li>
                     <br>
-                    <li>Quizzes Attempted: @user.noOfQuizesParticipated</li>
+                    <li>Events Participated In: @userStats.noOfEventsParticipatedIn </li>
                     <br>
-                    <li>Aggregated Score: @user.aggregatedScore</li>
+                    <li>Hash Tag Contribution: @userStats.noOfIndividualHashTagMessages </li>
                     <br>
-                    <li>Badges: @user.badge</li>
-                    <br>
-                    <li>HashTag Contribution: @user.hashTagContributions</li>
+                    <li>Peers who you have helped: @userStats.upVotes</li>
                     <br>
                     <li><a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a></li>
                 </ol>
