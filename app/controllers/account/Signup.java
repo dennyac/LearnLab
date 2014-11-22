@@ -2,6 +2,8 @@ package controllers.account;
 
 import controllers.Application;
 import models.User;
+import models.UserEventStats;
+import models.UserStats;
 import models.utils.AppException;
 import models.utils.Hash;
 import models.utils.Mail;
@@ -92,6 +94,18 @@ public class Signup extends Controller {
         user.confirmationToken = UUID.randomUUID().toString();
         user.isInstructor = register.isInstructor;
         user.save();
+        if(user.isInstructor == false){
+            System.out.println("Came to this point");
+            UserStats userStats = new UserStats();
+            userStats.user = user;
+            userStats.cognitiveAbilitiesScore = 0;
+            userStats.noOfEventsParticipatedIn = 0;
+            userStats.noOfIndividualHashTagMessages = 0;
+            userStats.noOfIndividualInformalMessages = 0;
+            userStats.upVotes = 0;
+            userStats.save();
+
+        }
         sendMailAskForConfirmation(user);
     }
 
