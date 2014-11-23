@@ -28,14 +28,14 @@ public class EventStats extends Model {
 
     public int noOfInformalMessages;
 
-    public float percentageCorrectInPhase1;
+    public double percentageCorrectInPhase1;
 
-    public float percentageCorrectInPhase3;
+    public double percentageCorrectInPhase3;
 
-    public float percentageCorrectInPhase4;
+    public double percentageCorrectInPhase4;
 
-    public float positiveCollaborationScore;
+    public double positiveCollaborationScore;
 
-    public float negativeCollaborationScore;
+    public double negativeCollaborationScore;
 
 }

@@ -12,6 +12,8 @@ import javax.persistence.OneToOne;
 import java.util.Date;
 import static akka.dispatch.Futures.future;
 import akka.actor.Status;
+
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import play.libs.Akka;
@@ -46,22 +48,56 @@ public class EventActions extends Model{
     public static Model.Finder<Long, EventActions> find = new Model.Finder<Long, EventActions>(Long.class, EventActions.class);
 
     public static EventActions findByEventIDUserIDActionType(Event event,User user,String actionType){
-        return find.where().eq("event", event).eq("user",user).ieq("ActionType",actionType).findUnique();
+        return find.where().eq("event", event).eq("user",user).eq("ActionType",actionType).findUnique();
     }
 
+    public static List<EventActions> findHashTagMessagesByEventIDUserID(User user,Event event){
+        return find.where().eq("event", event).eq("user",user).eq("Attribute2","hashTag").findList();
+    }
+
+    public static List<EventActions> findMessagesByEventIDUserID(User user,Event event){
+        return find.where().eq("event", event).eq("user",user).eq("ActionType","Message").findList();
+    }
    //number of informal messages
     public static int noOfInformalMessages(String EventName )
     {
         return find.where().eq("event.eventName", EventName).and(Expr.like("Attribute2", null),Expr.like("ActionType", "Message")).findRowCount();
 
     }
+    public static int findNoOfInformalMessagesByEvent(Event event)
+    {
+        return find.where().eq("event", event).and(Expr.like("Attribute2", null),Expr.like("ActionType", "Message")).findRowCount();
+
+    }
 
     //no of hash tag messages
     public static int getHashTagMessageCount(String EventName)
     {
-        return find.where().eq("event.eventName", EventName).and(Expr.like("Attribute2","#" + "%"),Expr.like("ActionType", "Message")).findRowCount();
+        return find.where().eq("event.eventName", EventName).and(Expr.like("Attribute2", "hashTag"), Expr.like("ActionType", "Message")).findRowCount();
+    }
+    public static int findNoOfHashTagMessageCountByEvent(Event event)
+    {
+        return find.where().eq("event.eventName", event).and(Expr.like("Attribute2", "hashTag"), Expr.like("ActionType", "Message")).findRowCount();
     }
 
+    //list of all the informal messages
+    public static List<EventActions> findAllInformalMessagesOfEvents(Event event){
+        return find.where().eq("event",event).eq("action_Type","Message").findList();
+    }
+
+    //list of all the hashTagged messages
+    public static List<EventActions> findHashTagMessagesOfEvents(Event event){
+        return find.where().eq("event",event).eq("Attribute2","hashTag").findList();
+    }
+
+    public static boolean hasAUserParticipatedInAnEvent(Event event, User user){
+        boolean userParticipated = false;
+        EventActions ea = EventActions.findByEventIDUserIDActionType(event,user,"Stage1");
+        if(ea != null){
+            userParticipated = true;
+        }
+        return userParticipated;
+    }
 
     public static Future<String> asyncSave(final EventActions ea) { /* should the params be ServerMessageModel? */
         return future(new Callable<String>() {
@@ -73,6 +109,7 @@ public class EventActions extends Model{
             }
         }, Akka.system().dispatcher());
     }
+
 
 //    public getInformalMessageCount( String EventName)
 //    {

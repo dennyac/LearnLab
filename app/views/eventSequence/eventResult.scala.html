@@ -1,4 +1,4 @@
-@(user: User, event: Event)
+@(user: User, event: Event, eventStats: controllers.util.EventStatsWrapper)
 
 @mainStudent(user) {
 <div id="wrapper">
@@ -44,9 +44,14 @@
 <h4> Event Results Summary</h4>
 <div class="col-md-9">
 <div class="well">
-<h5> Collaborative Index: 4</h5>
-<h5> No of formal msgs: 4</h5>
-<h5> No of informal msgs: 4</h5>
+<h5> Number of Participants: @eventStats.noOfPraticipants</h5>
+<h5> Total Number Of Messages Exchanged: @eventStats.totalNoOfMessages</h5>
+<h5> Total Number Of HashTagged Messages: @eventStats.noOfHashTagMessgaes</h5>
+<h5> Percentage Correct in Stage 1: @eventStats.percentageCorrectInPhase1 % </h5>
+<h5> Percentage Correct in Stage 3: @eventStats.percentageCorrectInPhase3 %</h5>
+<h5> Percentage Correct in Stage 4: @eventStats.percentageCorrectInPhase4 %</h5>
+<h5> Positive Collaboration Index: @eventStats.positiveCollaborationScore</h5>
+<h5> Negative Collaboration Index: @eventStats.negativeCollaborationScore </h5>
 </div>
 </div>
 }

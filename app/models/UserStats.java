@@ -40,7 +40,6 @@ public class UserStats extends Model{
     @Formats.NonEmpty
     public int upVotes;
 
-
     public static Model.Finder<Long, UserStats> find = new Model.Finder<Long, UserStats>(Long.class, UserStats.class);
 
     public static UserStats findUserStatsByUser(User user){

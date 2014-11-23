@@ -1,7 +1,9 @@
 package controllers;
 
+import controllers.util.EventStatsWrapper;
 import controllers.util.EventUtils;
 import controllers.util.EventUtils.EventStageform;
+import controllers.util.UserEventStatsWrapper;
 import models.*;
 import play.data.Form;
 import play.data.validation.Constraints;
@@ -69,8 +71,9 @@ public class EventController extends Controller {
         EventStageform f = form4.bindFromRequest().get();
         f.eventAction = "Stage4";
         EventUtils.initEventStage(f);
-        EventUtils.EventAggregator(Event.findById(Long.parseLong(f.eventId)),User.findByFullname(f.fullName));
-        return ok(eventResult.render((User.findByEmail(request().username())), Event.findEvent()));
+        EventStatsWrapper eventStatsWrapper = EventUtils.EventAggregator(Event.findById(Long.parseLong(f.eventId)), User.findByFullname(f.fullName));
+        ;
+        return ok(eventResult.render((User.findByEmail(request().username())), Event.findEvent(),eventStatsWrapper));
     }
 
     public static Result eventFeeds(){

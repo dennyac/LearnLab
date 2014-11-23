@@ -36,9 +36,6 @@ public class Chat extends Controller {
 //        EventStats s = userForm.bindFromRequest().get();
 //        System.out.println("Came HERE!!"+ s.answer);
 
-
-
-
         User currUser = User.findByEmail(request().username());
         Event eventSelected = Event.findById(eventId);
 //        System.out.println("Request().username:"+ currUser.fullname);

@@ -1,18 +1,16 @@
 package models;
 
-import play.data.format.Formats;
-
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
+import play.db.ebean.Model;
 /**
  * Created by Supriya on 22/11/2014.
  */
 
 @Entity
-public class UserEventStats {
-
+public class UserEventStats extends Model{
     @Id
     public Long userEventId;
 
@@ -25,33 +23,24 @@ public class UserEventStats {
     @ManyToOne
     public UserStats userStats;
 
-    @Formats.NonEmpty
     public boolean phase1AnswerInEvent;
 
-    @Formats.NonEmpty
     public boolean phase3AnswerInEvent;
 
-    @Formats.NonEmpty
     public boolean phase4AnswerInEvent;
 
-    @Formats.NonEmpty
     public int noOfIndividualInformalMessagesInEvent;
 
-    @Formats.NonEmpty
     public int getNoOfIndividualHashTagMessagesInEvent;
 
-    @Formats.NonEmpty
-    public float scorePhase1InEvent;
+    public double scorePhase1InEvent;
 
-    @Formats.NonEmpty
-    public float scorePhase3InEvent;
+    public double scorePhase3InEvent;
 
-    @Formats.NonEmpty
-    public float scorePhase4InEvent;
+    public double scorePhase4InEvent;
 
-    @Formats.NonEmpty
-    public float aggregatedScoreForEvent;
+    public double aggregatedScoreForEvent;
 
-    @Formats.NonEmpty
-    public float collaborativeIndexForEvent;
+    public double collaborativeIndexForEvent;
+
 }
