@@ -1,8 +1,12 @@
 package controllers;
 
-import models.Event;
-import models.Question;
-import models.User;
+import controllers.util.EventStatsWrapper;
+import controllers.util.EventUtils;
+import controllers.util.EventUtils.EventStageform;
+import controllers.util.UserEventStatsWrapper;
+import models.*;
+import play.data.Form;
+import play.data.validation.Constraints;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -20,6 +24,9 @@ import java.util.List;
 
 import java.util.ArrayList;
 
+import static play.data.Form.form;
+
+
 @Security.Authenticated(Secured.class)
 public class EventController extends Controller {
 
@@ -27,19 +34,16 @@ public class EventController extends Controller {
         User currentUser = User.findByEmail(request().username());
         Event eventSelected = Event.findById(eventId);
         Question question =  eventSelected.Questions.get(0);
-        return ok(eventStage1.render((currentUser), eventSelected, question));
+        return ok(eventStage1.render((currentUser), eventSelected, question,form(EventStageform.class)));
     }
 
     public static Result chatRoom(long eventId) {
-//        if(username == null || username.trim().equals("")) {
-//            flash("error", "Please choose a valid username.");
-//            return redirect(routes.Application.index());
-//        }
+        Form<EventStageform> form1 = form(EventStageform.class);
+        EventStageform f = form1.bindFromRequest().get();
+        f.eventAction = "Stage1";
+        EventUtils.initEventStage(f);
         User currUser = User.findByEmail(request().username());
         Event eventSelected = Event.findById(eventId);
-//        System.out.println("Request().username:"+ currUser.fullname);
-//        System.out.println("User email id is " + currUser.email);
-        //System.out.println("EVENT ID" + eventId);
         return ok(chatRoom.render((currUser),eventSelected));
     }
 
@@ -47,7 +51,29 @@ public class EventController extends Controller {
         User currUser = User.findByEmail(request().username());
         Event eventSelected = Event.findById(eventId);
         Question question = eventSelected.Questions.get(0);
-        return ok(eventStage3.render((currUser), eventSelected, question));
+        return ok(eventStage3.render((currUser), eventSelected, question, form(EventStageform.class)));
+    }
+
+    public static Result eventStage4(long eventId){
+        Form<EventStageform> form3 = form(EventStageform.class);
+        EventStageform f = form3.bindFromRequest().get();
+        f.eventAction = "Stage3";
+        EventUtils.initEventStage(f);
+
+        User currUser = User.findByEmail(request().username());
+        Event eventSelected = Event.findById(eventId);
+        Question question = eventSelected.Questions.get(1);
+        return ok(eventStage4.render((currUser), eventSelected, question, form(EventStageform.class)));
+    }
+
+    public static Result eventResult(){
+        Form<EventStageform> form4 = form(EventStageform.class);
+        EventStageform f = form4.bindFromRequest().get();
+        f.eventAction = "Stage4";
+        EventUtils.initEventStage(f);
+        EventStatsWrapper eventStatsWrapper = EventUtils.EventAggregator(Event.findById(Long.parseLong(f.eventId)), User.findByFullname(f.fullName));
+        ;
+        return ok(eventResult.render((User.findByEmail(request().username())), Event.findEvent(),eventStatsWrapper));
     }
 
     public static Result eventFeeds(){
@@ -74,20 +100,8 @@ public class EventController extends Controller {
         return ok(offlineStats.render((User.findByEmail(request().username())), eventnames));
     }
 
-
     public static Result eventFeedsJs(){
         return ok(views.js.live.liveFeeds.render());
     }
 
-    public static Result eventStage4(long eventId){
-        User currUser = User.findByEmail(request().username());
-        Event eventSelected = Event.findById(eventId);
-        Question question = eventSelected.Questions.get(1);
-        return ok(eventStage4.render((currUser), eventSelected, question));
-
-    }
-
-    public static Result eventResult(){
-        return ok(eventResult.render((User.findByEmail(request().username())), Event.findEvent()));
-    }
 }

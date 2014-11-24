@@ -37,9 +37,6 @@ public class User extends Model {
 
     public String confirmationToken;
 
-    @ManyToMany(mappedBy = "participants")
-    public List<Event> EventsParticipated;
-
     @Constraints.Required
     @Formats.NonEmpty
     public String passwordHash;
@@ -53,24 +50,18 @@ public class User extends Model {
     @Formats.NonEmpty
     public Boolean isInstructor = false;
 
-    @Formats.NonEmpty
-    public int noOfQuizesParticipated = 0;
-
-    @Formats.NonEmpty
-    public long aggregatedScore = 0;
-
-    @Formats.NonEmpty
-    public String badge;
-
-    @Formats.NonEmpty
-    public int hashTagContributions = 0;
-
     @Constraints.Required
     @Formats.NonEmpty
     public String bio;
 
+    @ManyToMany(mappedBy = "participants")
+    public List<Event> EventsParticipated;
+
     @OneToOne
-    public UserStats stats;
+    public UserStats userStatsInformation;
+
+    @OneToMany(mappedBy = "user")
+    public List<UserEventStats> listOfUserEventStats;
 
     @OneToMany(mappedBy = "user")
     public List<EventActions> actions;

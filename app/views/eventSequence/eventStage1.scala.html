@@ -1,5 +1,6 @@
-@(user: User, event: Event, question: Question)
-@mainStudent(user) {
+@(user: User, event: Event, question: Question, form1: Form[util.EventUtils.EventStageform])
+@import helper._
+@mainStudent(user){
 <div id="wrapper">
     <div class="col-md-3">
         <div class="well sidebar-nav">
@@ -50,28 +51,24 @@
     </div>
     <div class="well">
         <ul class="answers">
-            <p>@event.script</p>
+            <p>@event.scriptPhase1</p>
         </ul>
     </div>
     <div class="well">
         <ul class="answers">
-            <p class="question"><b><br>@question.questionString<br> </b></p>
-            <input type="radio" name="q2" value="a" id="q2a" onchange="pushSelection(this);"><label for="q2a">  @question.Option1</label><br/>
-            <input type="radio" name="q2" value="b" id="q2b" onchange="pushSelection(this);"><label for="q2b">  @question.Option2</label><br/>
-            <input type="radio" name="q2" value="c" id="q2c" onchange="pushSelection(this);"><label for="q2c">  @question.Option3 </label><br/>
-            <input type="radio" name="q2" value="d" id="q2d" onchange="pushSelection(this);"><label for="q2d">  @question.Option4</label><br/>
-            <form  method="POST" name="" action="@routes.EventController.chatRoom(event.eventId)">
-                <input type="submit" name="Join" value= "Submit" class="btn btn-success">
-            </form>
+            @form(routes.EventController.chatRoom(event.eventId)){
+            <p><b><br>@question.questionString<br> </b></p>
+            <input type="radio" name="answer" value="Option1" id="q2a"><label for="q2a">  @question.Option1</label><br/>
+            <input type="radio" name="answer" value="Option2" id="q2b"><label for="q2b">  @question.Option2</label><br/>
+            <input type="radio" name="answer" value="Option3" id="q2c"><label for="q2c">  @question.Option3 </label><br/>
+            <input type="radio" name="answer" value="Option4" id="q2d"><label for="q2d">  @question.Option4</label><br/>
+            <input type="hidden" name="eventId" value=@event.eventId />
+            <input type="hidden" name="fullName" value=@user.fullname />
+            <input type="submit" name="Join" value= "Submit" class="btn btn-success">
+            }
         </ul>
     </div>
 </div>
-        <script>
-                var answer = "";
-                function pushSelection(obj){
-                answer = obj.value;
-                }
-        </script>
 }
 
 

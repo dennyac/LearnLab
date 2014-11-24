@@ -6,12 +6,15 @@ import akka.actor.ActorRef;
 import akka.actor.Props;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.*;
+import play.data.Form;
 import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.WebSocket;
 import views.html.chatRoom;
 
+
+import static play.data.Form.form;
 
 public class Chat extends Controller {
 
@@ -30,6 +33,11 @@ public class Chat extends Controller {
 //            flash("error", "Please choose a valid username.");
 //            return redirect(routes.Application.index());
 //        }
+
+//        Form<EventStats> userForm = form(EventStats.class);
+//        EventStats s = userForm.bindFromRequest().get();
+//        System.out.println("Came HERE!!"+ s.answer);
+
         User currUser = User.findByEmail(request().username());
         Event eventSelected = Event.findById(eventId);
 //        System.out.println("Request().username:"+ currUser.fullname);

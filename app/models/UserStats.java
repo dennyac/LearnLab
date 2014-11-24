@@ -3,10 +3,10 @@ package models;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
+
 import play.db.ebean.Model;
 
 /**
@@ -16,15 +16,33 @@ import play.db.ebean.Model;
 @Entity
 public class UserStats extends Model{
 
-
     @Id
     public Long id;
 
-    @OneToOne(mappedBy = "stats")
+    @OneToOne
     public User user;
 
-    //public ArrayList<Badge> BadgesAcquired;
+    @OneToMany(mappedBy = "userStats")
+    public List<UserEventStats> listOfUserEventStatsInStats;
 
-    public int NoOfPosts;
+    @Formats.NonEmpty
+    public int noOfEventsParticipatedIn;
 
+    @Formats.NonEmpty
+    public int noOfIndividualInformalMessages;
+
+    @Formats.NonEmpty
+    public int noOfIndividualHashTagMessages;
+
+    @Formats.NonEmpty
+    public float cognitiveAbilitiesScore;
+
+    @Formats.NonEmpty
+    public int upVotes;
+
+    public static Model.Finder<Long, UserStats> find = new Model.Finder<Long, UserStats>(Long.class, UserStats.class);
+
+    public static UserStats findUserStatsByUser(User user){
+        return find.where().eq("user", user).findUnique();
+    }
 }
