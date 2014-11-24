@@ -1,4 +1,5 @@
 @(username: String)
+var uname = '@username';
 var barData = [{
     'x': "Informal Messages",
     'y': 0
@@ -7,7 +8,7 @@ var barData = [{
     'y': 0
 }
 ];
-
+alert(uname);
 var message_count =  0;
 var hash_message_count = 0;
 $(function() {

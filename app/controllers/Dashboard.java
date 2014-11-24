@@ -1,5 +1,6 @@
 package controllers;
 
+import jdk.nashorn.internal.ir.ObjectNode;
 import models.Event;
 import models.Question;
 import models.User;
@@ -173,6 +174,15 @@ public class Dashboard extends Controller {
     public static Result updateEvent(){
         return ok(updateEventConfirmation.render((User.findByEmail(request().username())), Event.findEvent()));
 
+    }
+
+    public static Result getEventstoActivate(){
+        String s = "[{\"eventId\":\"jhhj\",\"eventName\":\"hjkghsjk\",\"Date\":\"jkdghs jkhsg\"}]";
+        return ok(s);
+    }
+
+    public static Result activateEvent(String eventId){
+        return ok(eventId+" activated");
     }
 
     public static Result instructorView() {

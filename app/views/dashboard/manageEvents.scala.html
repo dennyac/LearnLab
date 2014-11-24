@@ -9,6 +9,7 @@
             <li role="presentation" class="active"><a href="#createEvent" role="tab" data-toggle="tab">Create</a></li>
             <li role="presentation"><a href="#deleteEvent" role="delete" data-toggle="tab">Delete</a></li>
             <li role="presentation"><a href="#updateEvent" role="delete" data-toggle="tab">Update</a></li>
+            <li role="presentation"><a href="#viewEvent" role="delete" data-toggle="tab" onclick="loadData()">View</a></li>
         </ul>
 
         <div class="tab-content">
@@ -207,6 +208,20 @@
                     </fieldset>
                 </form>
             </div>
+            <div role="tabpanel" class="tab-pane" id="viewEvent">
+                <br>
+                <table class="table table-striped" id="eventViewId">
+                    <thead>
+                    <tr>
+                        <td>EventId</td>
+                        <td>Created On</td>
+                        <td>Activate</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </div>
         </div>
 </div>
@@ -218,5 +233,35 @@
                     console.log("Inside javascript");
                     return selectedValues;
                 }
+
+            function activate(eventId){
+                alert("Activating"+eventId);
+
+
+                $.ajax({
+                    url: "/dashboard/getEvents/activate",
+                    type: 'GET',
+                    data: { eventId: eventId } ,
+                    success: function (response) {
+                        $("#"+eventId).html(response);
+                    },
+                    error: function () {
+                    //your error code
+                    }
+                });
+
+            }
+
+            function loadData(){
+                var activateUrl = "/dashboard/getEvents/activate"
+                var table = $("#eventViewId tbody");
+                $.ajax({url:"/dashboard/getEvents",success:function(result){
+                        var data = jQuery.parseJSON(result);
+                        $.each(data, function(idx, elem){
+                        table.append("<tr><td>"+elem.eventId+"</td><td>"+elem.eventName+"</td><td id="+elem.eventId+"><a href='javascript:;' onclick='activate(\""+elem.eventId+"\")'>"+'Activate'+"</a></td></tr>");
+                        });
+
+                }});
+            }
         </script>
 }
