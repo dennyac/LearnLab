@@ -4,40 +4,53 @@
 # --- !Ups
 
 create table event (
-  event_id                  bigint not null,
+  event_id                  bigint auto_increment not null,
   instructor_id             bigint,
   event_name                varchar(255),
-  event_start_time          timestamp,
+  event_date                datetime,
+  start_time                varchar(255),
+  end_time                  varchar(255),
   script                    TEXT,
   script_phase1             TEXT,
   script_phase2             TEXT,
   script_phase3             TEXT,
-  active                    boolean,
+  script_phase4             TEXT,
+  hashes                    varchar(255),
+  phase1duration            bigint,
+  phase2duration            bigint,
+  phase3duration            bigint,
+  active                    tinyint(1) default 0,
   event_stats_id            bigint,
-  constraint uq_event_event_name unique (event_name),
   constraint pk_event primary key (event_id))
 ;
 
 create table event_actions (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   event_event_id            bigint,
   user_id                   bigint,
   action_type               varchar(255),
   attribute1                varchar(255),
   attribute2                varchar(255),
-  time_of_event_action      timestamp,
+  time_of_event_action      datetime,
   constraint pk_event_actions primary key (id))
 ;
 
 create table event_stats (
-  id                        bigint not null,
-  total_messages            integer,
-  percent_of_success        float,
+  id                        bigint auto_increment not null,
+  no_of_praticipants        integer,
+  total_no_of_messages      integer,
+  no_of_hash_tag_messgaes   integer,
+  no_of_informal_messages   integer,
+  percentage_correct_in_phase1 double,
+  percentage_correct_in_phase3 double,
+  percentage_correct_in_phase4 double,
+  positive_collaboration_score double,
+  negative_collaboration_score double,
   constraint pk_event_stats primary key (id))
 ;
 
 create table question (
-  question_number           bigint not null,
+  question_number           bigint auto_increment not null,
   question_string           varchar(255),
   option1                   varchar(255),
   option2                   varchar(255),
@@ -51,35 +64,54 @@ create table token (
   token                     varchar(255) not null,
   user_id                   bigint,
   type                      varchar(8),
-  date_creation             timestamp,
+  date_creation             datetime,
   email                     varchar(255),
   constraint ck_token_type check (type in ('password','email')),
   constraint pk_token primary key (token))
 ;
 
 create table users (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   email                     varchar(255),
   fullname                  varchar(255),
   confirmation_token        varchar(255),
   password_hash             varchar(255),
-  date_creation             timestamp,
-  validated                 boolean,
-  is_instructor             boolean,
-  no_of_quizes_participated integer,
-  aggregated_score          bigint,
-  badge                     varchar(255),
-  hash_tag_contributions    integer,
+  date_creation             datetime,
+  validated                 tinyint(1) default 0,
+  is_instructor             tinyint(1) default 0,
   bio                       varchar(255),
-  stats_id                  bigint,
+  user_stats_information_id bigint,
   constraint uq_users_email unique (email),
   constraint uq_users_fullname unique (fullname),
   constraint pk_users primary key (id))
 ;
 
+create table user_event_stats (
+  user_event_id             bigint auto_increment not null,
+  user_id                   bigint,
+  event_event_id            bigint,
+  user_stats_id             bigint,
+  phase1answer_in_event     tinyint(1) default 0,
+  phase3answer_in_event     tinyint(1) default 0,
+  phase4answer_in_event     tinyint(1) default 0,
+  no_of_individual_informal_messages_in_event integer,
+  get_no_of_individual_hash_tag_messages_in_event integer,
+  score_phase1in_event      double,
+  score_phase3in_event      double,
+  score_phase4in_event      double,
+  aggregated_score_for_event double,
+  collaborative_index_for_event double,
+  constraint pk_user_event_stats primary key (user_event_id))
+;
+
 create table user_stats (
-  id                        bigint not null,
-  no_of_posts               integer,
+  id                        bigint auto_increment not null,
+  user_id                   bigint,
+  no_of_events_participated_in integer,
+  no_of_individual_informal_messages integer,
+  no_of_individual_hash_tag_messages integer,
+  cognitive_abilities_score float,
+  up_votes                  integer,
   constraint pk_user_stats primary key (id))
 ;
 
@@ -95,72 +127,58 @@ create table event_question (
   question_question_number       bigint not null,
   constraint pk_event_question primary key (event_event_id, question_question_number))
 ;
-create sequence event_seq;
-
-create sequence event_actions_seq;
-
-create sequence event_stats_seq;
-
-create sequence question_seq;
-
-create sequence token_seq;
-
-create sequence users_seq;
-
-create sequence user_stats_seq;
-
-alter table event add constraint fk_event_instructor_1 foreign key (instructor_id) references users (id);
+alter table event add constraint fk_event_instructor_1 foreign key (instructor_id) references users (id) on delete restrict on update restrict;
 create index ix_event_instructor_1 on event (instructor_id);
-alter table event add constraint fk_event_eventStats_2 foreign key (event_stats_id) references event_stats (id);
+alter table event add constraint fk_event_eventStats_2 foreign key (event_stats_id) references event_stats (id) on delete restrict on update restrict;
 create index ix_event_eventStats_2 on event (event_stats_id);
-alter table event_actions add constraint fk_event_actions_event_3 foreign key (event_event_id) references event (event_id);
+alter table event_actions add constraint fk_event_actions_event_3 foreign key (event_event_id) references event (event_id) on delete restrict on update restrict;
 create index ix_event_actions_event_3 on event_actions (event_event_id);
-alter table event_actions add constraint fk_event_actions_user_4 foreign key (user_id) references users (id);
+alter table event_actions add constraint fk_event_actions_user_4 foreign key (user_id) references users (id) on delete restrict on update restrict;
 create index ix_event_actions_user_4 on event_actions (user_id);
-alter table users add constraint fk_users_stats_5 foreign key (stats_id) references user_stats (id);
-create index ix_users_stats_5 on users (stats_id);
+alter table users add constraint fk_users_userStatsInformation_5 foreign key (user_stats_information_id) references user_stats (id) on delete restrict on update restrict;
+create index ix_users_userStatsInformation_5 on users (user_stats_information_id);
+alter table user_event_stats add constraint fk_user_event_stats_user_6 foreign key (user_id) references users (id) on delete restrict on update restrict;
+create index ix_user_event_stats_user_6 on user_event_stats (user_id);
+alter table user_event_stats add constraint fk_user_event_stats_event_7 foreign key (event_event_id) references event (event_id) on delete restrict on update restrict;
+create index ix_user_event_stats_event_7 on user_event_stats (event_event_id);
+alter table user_event_stats add constraint fk_user_event_stats_userStats_8 foreign key (user_stats_id) references user_stats (id) on delete restrict on update restrict;
+create index ix_user_event_stats_userStats_8 on user_event_stats (user_stats_id);
+alter table user_stats add constraint fk_user_stats_user_9 foreign key (user_id) references users (id) on delete restrict on update restrict;
+create index ix_user_stats_user_9 on user_stats (user_id);
 
 
 
-alter table event_users add constraint fk_event_users_event_01 foreign key (event_event_id) references event (event_id);
+alter table event_users add constraint fk_event_users_event_01 foreign key (event_event_id) references event (event_id) on delete restrict on update restrict;
 
-alter table event_users add constraint fk_event_users_users_02 foreign key (users_id) references users (id);
+alter table event_users add constraint fk_event_users_users_02 foreign key (users_id) references users (id) on delete restrict on update restrict;
 
-alter table event_question add constraint fk_event_question_event_01 foreign key (event_event_id) references event (event_id);
+alter table event_question add constraint fk_event_question_event_01 foreign key (event_event_id) references event (event_id) on delete restrict on update restrict;
 
-alter table event_question add constraint fk_event_question_question_02 foreign key (question_question_number) references question (question_number);
+alter table event_question add constraint fk_event_question_question_02 foreign key (question_question_number) references question (question_number) on delete restrict on update restrict;
 
 # --- !Downs
 
-drop table if exists event cascade;
+SET FOREIGN_KEY_CHECKS=0;
 
-drop table if exists event_users cascade;
+drop table event;
 
-drop table if exists event_question cascade;
+drop table event_users;
 
-drop table if exists event_actions cascade;
+drop table event_question;
 
-drop table if exists event_stats cascade;
+drop table event_actions;
 
-drop table if exists question cascade;
+drop table event_stats;
 
-drop table if exists token cascade;
+drop table question;
 
-drop table if exists users cascade;
+drop table token;
 
-drop table if exists user_stats cascade;
+drop table users;
 
-drop sequence if exists event_seq;
+drop table user_event_stats;
 
-drop sequence if exists event_actions_seq;
+drop table user_stats;
 
-drop sequence if exists event_stats_seq;
-
-drop sequence if exists question_seq;
-
-drop sequence if exists token_seq;
-
-drop sequence if exists users_seq;
-
-drop sequence if exists user_stats_seq;
+SET FOREIGN_KEY_CHECKS=1;
 
