@@ -1,6 +1,9 @@
 package controllers;
 
+import akka.InstructorWebSocket;
+import akka.UserWebSocket;
 import akka.actor.ActorRef;
+import akka.actor.Props;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.*;
 import play.libs.F;
@@ -8,8 +11,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.WebSocket;
 import views.html.chatRoom;
-import views.html.index;
-import akka.actor.*;
+
 
 public class Chat extends Controller {
 
@@ -35,8 +37,8 @@ public class Chat extends Controller {
         return ok(chatRoom.render((currUser),eventSelected));
     }
 
-    public static Result chatRoomJs(String username) {
-        return ok(views.js.chatRoom.render(username));
+    public static Result chatRoomJs(String username, long eventId) {
+        return ok(views.js.chatRoom.render(username,eventId));
     }
 
     public static Result instructorJs(String username) {
@@ -46,45 +48,24 @@ public class Chat extends Controller {
 
     /**
      * Handle the chat websocket.
-     */
-    public static WebSocket<JsonNode> chat(final String username) {
-        return new WebSocket<JsonNode>() {
+//     */
 
-            // Called when the Websocket Handshake is done.
-            public void onReady(WebSocket.In<JsonNode> in, WebSocket.Out<JsonNode> out){
-                
-                // Join the chat room.
-                try { 
-                    ChatRoomManager.joinChatRoom(username, in, out);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+    //chatRoom.scala.js should handle the error if the websocket connection fails
+    //Or render some error html pages
+    public static WebSocket<JsonNode> chat(final String username, final long eventId) {
+        return WebSocket.withActor(new F.Function<ActorRef, Props>() {
+            public Props apply(ActorRef out) throws Throwable {
+                return UserWebSocket.props(username,eventId,out);
             }
-        };
+        });
     }
 
     public static WebSocket<JsonNode> instructor(final String username) {
-        return new WebSocket<JsonNode>() {
-
-            // Called when the Websocket Handshake is done.
-            public void onReady(WebSocket.In<JsonNode> in, WebSocket.Out<JsonNode> out){
-
-                // Join the chat room.
-                try {
-                    InstructorManager.createInstructor(username, in, out);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+        return WebSocket.withActor(new F.Function<ActorRef, Props>() {
+            public Props apply(ActorRef out) throws Throwable {
+                return InstructorWebSocket.props(username, out);
             }
-        };
+        });
     }
-
-//    public static WebSocket<String> socket() {
-//        return WebSocket.withActor(new F.Function<ActorRef, Props>() {
-//            public Props apply(ActorRef out) throws Throwable {
-//                return Instructor.props(out);
-//            }
-//        });
-//    }
   
 }

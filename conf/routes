@@ -55,8 +55,8 @@ GET     /email/:token               controllers.account.settings.Email.validateE
 
 #Chat related resources
 POST     /room                            controllers.EventController.chatRoom(eventId: Long)
-GET     /room/chat                       controllers.Chat.chat(username)
-GET     /assets/javascripts/chatroom.js  controllers.Chat.chatRoomJs(username)
+GET     /room/chat                       controllers.Chat.chat(username:String, eventId: Long)
+GET     /assets/javascripts/chatroom.js  controllers.Chat.chatRoomJs(username:String, eventId: Long)
 
 #Instructor Feed related resources
 GET     /feed                            controllers.Dashboard.instructorView()

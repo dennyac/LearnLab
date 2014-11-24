@@ -1,26 +1,23 @@
-package models;
+package akka;
 
+import akka.actor.ActorRef;
 import akka.actor.Props;
 import akka.actor.UntypedActor;
 import akka.japi.Creator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.typesafe.plugin.RedisPlugin;
+import play.Logger;
 import play.libs.Akka;
 import play.libs.Json;
-import play.mvc.WebSocket;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
 import scala.concurrent.duration.Duration;
+import akka.messages.*;
 
 
-import javax.persistence.Entity;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import java.util.concurrent.TimeUnit;
-
-import static akka.pattern.Patterns.ask;
 
 /**
  * A chat room is an Actor.
@@ -30,23 +27,25 @@ public class Instructor extends UntypedActor {
 
     // Default room.
     private final String CHANNEL;
-    private final ArrayList<WebSocket.Out<JsonNode>> sockets = new ArrayList<WebSocket.Out<JsonNode>>() ;
+    private static final Logger.ALogger logger = Logger.of(Instructor.class);
+    private final ArrayList<ActorRef> outSockets = new ArrayList<ActorRef>();
 
-    public static Props props(final String instructor, final WebSocket.Out<JsonNode> out) {
+    public static Props props(final String instructor) {
         return Props.create(new Creator<Instructor>() {
             private static final long serialVersionUID = 1L;
 
             @Override
             public Instructor create() throws Exception {
-                return new Instructor(instructor, out);
+                return new Instructor(instructor);
             }
         });
     }
 
-    public Instructor(final String instructor, final WebSocket.Out<JsonNode> socket){
+    public Instructor(final String instructor) {
         CHANNEL = instructor + ".event.*";
-//        System.out.println(CHANNEL);
-        sockets.add(socket);
+        logger.info("Instructor(" + CHANNEL + "):Instructor");
+
+
         //add the robot
 
 
@@ -66,7 +65,7 @@ public class Instructor extends UntypedActor {
                 Duration.create(10, TimeUnit.SECONDS),
                 new Runnable() {
                     public void run() {
-                        new InstructorRobot(getSelf());
+                        Akka.system().actorOf(InstructorRobot.props(getSelf()), instructor + ".Sparky");
                     }
                 },
                 Akka.system().dispatcher()
@@ -84,24 +83,39 @@ public class Instructor extends UntypedActor {
     // Users connected to this node
 
     public void onReceive(Object message) throws Exception {
-        if(message instanceof ChatRoom.Talk)  {
-                // Received a ChatRoom.Talk message
-                ChatRoom.Talk talk = (ChatRoom.Talk)message;
-//               System.out.println("Before Writing to websocket" + talk.eventId);
-                for(WebSocket.Out<JsonNode> socket: sockets)
-                socket.write(Json.toJson(talk));
-//            System.out.println("After Writing to websocket" + talk.eventId);
+        if (message instanceof Join) {
+            // Received a Join message
+            Join join = (Join) message;
+            logger.info("Instructor(" + CHANNEL + "):onReceive:Join:" + join.getUsername());
 
-            }else if(message instanceof ChatRoom.Quit)  {
+            outSockets.add(join.getOutSocket());
+            logger.info("Instructor(" + CHANNEL + "):onReceive:Join:" + join.getUsername() + ": Websocket added to list");
+
+            getSender().tell("OK", getSelf());
+
+        } else if (message instanceof Talk) {
+            // Received a ChatRoom.Talk message
+            Talk talk = (Talk) message;
+            logger.info("Instructor(" + CHANNEL + "):onReceive:Talk:" + talk.getUsername() + ":eventId:" + talk.getEventId() + ":Message:" + talk.getText());
+
+            for (ActorRef outSocket : outSockets)
+                outSocket.tell(Json.toJson(talk), getSelf());
+            logger.info("Instructor(" + CHANNEL + "):onReceive:Talk:" + talk.getUsername() + ":eventId:" + talk.getEventId() + ":Message:" + talk.getText() + ":Sent message to all websockets");
+
+
+        } else if (message instanceof Quit) {
             // Received a Quit message
-            ChatRoom.Quit quit = (ChatRoom.Quit)message;
+            Quit quit = (Quit) message;
+            logger.info("Instructor(" + CHANNEL + "):onReceive:Quit:" + quit.getUsername());
             //Remove the member from this node and the global roster
-            sockets.remove(quit.out);
+
+            outSockets.remove(quit.getOutSocket());
 
         } else {
-                unhandled(message);
-            }
-        } 
+            logger.info("Instructor(" + CHANNEL + "):onReceive:Unhandled");
+            unhandled(message);
+        }
+    }
 
 
     public class MyListener extends JedisPubSub {
@@ -111,16 +125,15 @@ public class Instructor extends UntypedActor {
 
         @Override
         public void onPMessage(String arg0, String arg1, String arg2) {
-//            System.out.println("Recieved Message");
-//            System.out.println("arg0 - " + arg0);
-//            System.out.println("arg1 - " + arg1);
-//            System.out.println("arg2 - " + arg2);
+
             //Process messages from the pub/sub channel
+            logger.info("Instructor(" + CHANNEL + "):MyListener:onPMessage:" + arg0 + ":" + arg1);
             JsonNode parsedMessage = Json.parse(arg2);
             Object message = null;
             String messageType = parsedMessage.get("type").asText();
-            if("talk".equals(messageType)) {
-                message = new ChatRoom.Talk(
+            if ("talk".equals(messageType)) {
+                logger.info("Instructor(" + CHANNEL + "):MyListener:onPMessage:" + arg0 + ":" + arg1 + ":" + messageType + ":" + parsedMessage.get("username").asText() + ":" + parsedMessage.get("eventId").asText() + ":" + parsedMessage.get("text").asText());
+                message = new Talk(
                         parsedMessage.get("username").asText(),
                         Long.parseLong(parsedMessage.get("eventId").asText()),
                         parsedMessage.get("text").asText()
@@ -129,15 +142,19 @@ public class Instructor extends UntypedActor {
             }
 
         }
+
         @Override
         public void onPSubscribe(String arg0, int arg1) {
         }
+
         @Override
         public void onPUnsubscribe(String arg0, int arg1) {
         }
+
         @Override
         public void onSubscribe(String arg0, int arg1) {
         }
+
         @Override
         public void onUnsubscribe(String arg0, int arg1) {
         }

@@ -1,13 +1,13 @@
-@(username: String)
+@(username: String, eventId: Long)
 
 $(function() {
     console.log("Hello");
     var WS = window['MozWebSocket'] ? MozWebSocket : WebSocket
- var chatSocket = new WS("@routes.Chat.chat(username).webSocketURL(request)")
+ var chatSocket = new WS("@routes.Chat.chat(username, eventId).webSocketURL(request)")
 
     var sendMessage = function() {
         chatSocket.send(JSON.stringify(
-            {text: $("#talk").val()}
+            {text: $("#talk").val(), user: '@username', event: '@eventId'}
         ))
         $("#talk").val('')
     }
