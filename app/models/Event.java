@@ -159,6 +159,11 @@ public class Event extends Model{
 
     }*/
 
+    public static List<User> findEventParticipants(Event event) {
+        List<User> participants = find.where().eq("event",event).findUnique().participants;
+        return participants;
+    }
+
     public static String getNumberofCorrectAnswersPhase1(String EventName) {
 
         List<Question> list = findByName(EventName).Questions;

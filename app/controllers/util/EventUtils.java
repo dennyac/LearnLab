@@ -20,8 +20,8 @@ public class EventUtils {
         public String answer;
         public String eventId;
         public String fullName;
-        public String Justification;
-        public List<String> peers;
+        public String justification;
+        public List<String> upVotedPeers;
 
     }
 
@@ -36,6 +36,7 @@ public class EventUtils {
         UserEventStats userEventStats = new UserEventStats();
         return userEventStats;
     }
+
     public static void initEventStage(EventStageform f){
         EventActions e = new EventActions();
         e.Attribute1 =  f.answer;
@@ -50,8 +51,21 @@ public class EventUtils {
         User u = User.findByFullname(f.fullName);
         System.out.println("The user full name was:"+ u.fullname);
         e.user = u;
+        if((f.justification != null)){
+            e.Attribute2 = f.justification;
+            System.out.println("The Justification was:" + e.Attribute2);
+        }
+        if((f.upVotedPeers != null) && (f.upVotedPeers.size() > 0)){
+           for(int i = 0; i<f.upVotedPeers.size(); i++){
+               EventActions e1 = new EventActions();
+               e1.event = e.event;
+               e1.ActionType = "UpVote";
+               e1.user = e.user;
+               e1.Attribute1 = f.upVotedPeers.get(i);
+               e1.TimeOfEventAction = e.TimeOfEventAction;
+               e1.save();
+           }
+        }
         e.save();
     }
-
-
 }
