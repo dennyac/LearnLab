@@ -127,6 +127,20 @@ public class Event extends Model{
         return Event.find.byId(eId);
     }
 
+    public static List<Event> findAllEvents()
+    {
+        return find.findList();
+    }
+
+        public static void testList()
+    {
+        List<Event> u = findAllEvents();
+        for( Event ur : u)
+        {
+            System.out.println(" the name is " + ur.eventName);
+        }
+    }
+
     public static Event findByName(String EventName)
     {
         return find.where().eq("eventName",EventName).findUnique();
@@ -144,6 +158,11 @@ public class Event extends Model{
         return find.where().ge("EventStartTime" , d).lt("EventStartTime" , d1).findList();
 
     }*/
+
+    public static List<User> findEventParticipants(Event event) {
+        List<User> participants = find.where().eq("event",event).findUnique().participants;
+        return participants;
+    }
 
     public static String getNumberofCorrectAnswersPhase1(String EventName) {
 

@@ -24,7 +24,9 @@ public class UserEventStatsWrapper {
 
     public int noOfIndividualInformalMessagesInEvent;
 
-    public int getNoOfIndividualHashTagMessagesInEvent;
+    public int noOfIndividualHashTagMessagesInEvent;
+
+    public double percentageContributionForDiscussionInEvent;
 
     public double scorePhase1InEvent;
 
@@ -34,7 +36,13 @@ public class UserEventStatsWrapper {
 
     public double aggregatedScoreForEvent;
 
+    public int cognitiveAbilityScore;
+
+    public double percentageOfCognitiveAbility;
+
     public double collaborativeIndexForEvent;
+
+    public int noOfUpVotesReceivedForEvent;
 
     //Constructor
     public UserEventStatsWrapper(User user,Event event){
@@ -45,12 +53,14 @@ public class UserEventStatsWrapper {
         this.phase4AnswerInEvent = false;
     }
 
-    public void userEventAggregator(){
+    public void userEventAggregator(EventStatsWrapper eventStatsWrapper){
         this.userAnswerScoreAggregator();
-        this.userMessageAggragator();
+        this.cognitiveAbilityScoreCalculator();
+        this.userMessageAggragator(eventStatsWrapper);
         this.userCollaborativeIndex();
+        this.upVoteCalculator();
         this.userEventStatsSave();
-        this.userStatsUpdate();
+        this.userStatsUpdate(eventStatsWrapper);
     }
 
     public void userAnswerScoreAggregator(){
@@ -61,18 +71,46 @@ public class UserEventStatsWrapper {
         System.out.println("The aggregated score of the user for the event is:"+ this.aggregatedScoreForEvent);
     }
 
-    public void userMessageAggragator() {
+    public void cognitiveAbilityScoreCalculator(){
+        //Got it wrong in phase 1 and 4
+        if(!(this.phase1AnswerInEvent && this.phase4AnswerInEvent)){
+            this.cognitiveAbilityScore = 0;
+            this.percentageOfCognitiveAbility = 0;
+        }
+        //Got it right in phase 1 and wrong in phase 4
+        if(this.phase1AnswerInEvent && !(this.phase4AnswerInEvent)){
+            this.cognitiveAbilityScore = 1;
+            this.percentageOfCognitiveAbility = 50;
+        }
+        //Got it wrong in phase 1 and right in phase 4
+        if(this.phase1AnswerInEvent && !(this.phase4AnswerInEvent)){
+            this.cognitiveAbilityScore = 1;
+            this.percentageOfCognitiveAbility = 50;
+        }
+        //Got it right in both phases
+        if(this.phase1AnswerInEvent && this.phase4AnswerInEvent){
+           this.cognitiveAbilityScore = 2;
+           this.percentageOfCognitiveAbility = 100;
+       }
+    }
+
+    public void userMessageAggragator(EventStatsWrapper e) {
         int noOfMsgs;
-        this.getNoOfIndividualHashTagMessagesInEvent = EventActions.findHashTagMessagesByEventIDUserID(this.user, this.event).size();
+        this.noOfIndividualHashTagMessagesInEvent = EventActions.findHashTagMessagesByEventIDUserID(this.user, this.event).size();
         noOfMsgs = EventActions.findMessagesByEventIDUserID(this.user,this.event).size();
-        this.noOfIndividualInformalMessagesInEvent = noOfMsgs - this.getNoOfIndividualHashTagMessagesInEvent;
+        this.noOfIndividualInformalMessagesInEvent = noOfMsgs - this.noOfIndividualHashTagMessagesInEvent;
+        this.percentageContributionForDiscussionInEvent = ((noOfMsgs*1.0)/((e.noOfHashTagMessgaes+e.noOfInformalMessages)*1.0))*100;
     }
 
     public void userCollaborativeIndex(){
-        //[TODO]: Write Logic for this
-        this.collaborativeIndexForEvent = 0.0;
+        this.collaborativeIndexForEvent = this.percentageContributionForDiscussionInEvent/100;
     }
 
+    public void upVoteCalculator(){
+        int noOfUpVotesRecieved = EventActions.findAllUpvotesForUserByEventID(this.user,this.event).size();
+        System.out.println("This was the noOfUpvotesSizeList----->"+ noOfUpVotesRecieved);
+        this.noOfUpVotesReceivedForEvent = noOfUpVotesRecieved;
+    }
     public void userEventStatsSave(){
         UserEventStats userEventStats = new UserEventStats();
         userEventStats.user = this.user;
@@ -80,18 +118,22 @@ public class UserEventStatsWrapper {
         userEventStats.phase1AnswerInEvent = this.phase1AnswerInEvent;
         userEventStats.phase3AnswerInEvent = this.phase3AnswerInEvent;
         userEventStats.phase4AnswerInEvent = this.phase4AnswerInEvent;
-        userEventStats.getNoOfIndividualHashTagMessagesInEvent = this.getNoOfIndividualHashTagMessagesInEvent;
+        userEventStats.noOfIndividualHashTagMessagesInEvent = this.noOfIndividualHashTagMessagesInEvent;
         userEventStats.noOfIndividualInformalMessagesInEvent = this.noOfIndividualInformalMessagesInEvent;
+        userEventStats.percentageContributionForDiscussionInEvent = this.percentageContributionForDiscussionInEvent;
         userEventStats.scorePhase1InEvent = this.scorePhase1InEvent;
         userEventStats.scorePhase3InEvent = this.scorePhase3InEvent;
         userEventStats.scorePhase4InEvent = this.scorePhase4InEvent;
         userEventStats.aggregatedScoreForEvent = this.aggregatedScoreForEvent;
+        userEventStats.cognitiveAbilityScore = this.cognitiveAbilityScore;
+        userEventStats.percentageOfCognitiveAbility = this.percentageOfCognitiveAbility;
         userEventStats.collaborativeIndexForEvent = this.collaborativeIndexForEvent;
+        userEventStats.noOfUpVotesReceivedForEvent = this.noOfUpVotesReceivedForEvent;
         userEventStats.save();
     }
 
-    public void userStatsUpdate(){
+    public void userStatsUpdate(EventStatsWrapper eventStatsWrapper){
         UserStatsWrapper userStatsWrapper = new UserStatsWrapper(user,this);
-        userStatsWrapper.userStatsUpdate(this);
+        userStatsWrapper.userStatsUpdate(this,eventStatsWrapper);
     }
 }

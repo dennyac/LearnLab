@@ -100,6 +100,21 @@ public class User extends Model {
         return find.where().eq("confirmationToken", token).findUnique();
     }
 
+    //Returns all the users in the table
+    public static List<User> findAllUsers()
+    {
+        return find.findList();
+    }
+
+//    public static void testList()
+//    {
+//        List<User> u = findAllUsers();
+//        for( User ur : u)
+//        {
+//            System.out.println(" the name is " + ur.fullname);
+//        }
+//    }
+
     /**
      * Authenticate a User, from a email and clear password.
      *
@@ -125,6 +140,9 @@ public class User extends Model {
         this.passwordHash = Hash.createPassword(password);
         this.save();
     }
+
+
+
 
     /**
      * Confirms an account.
