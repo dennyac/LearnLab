@@ -36,6 +36,8 @@ public class UserEventStatsWrapper {
 
     public double collaborativeIndexForEvent;
 
+    public int noOfUpVotesReceivedForEvent;
+
     //Constructor
     public UserEventStatsWrapper(User user,Event event){
         this.user = user;
@@ -49,6 +51,7 @@ public class UserEventStatsWrapper {
         this.userAnswerScoreAggregator();
         this.userMessageAggragator();
         this.userCollaborativeIndex();
+        this.upVoteCalculator();
         this.userEventStatsSave();
         this.userStatsUpdate();
     }
@@ -73,6 +76,11 @@ public class UserEventStatsWrapper {
         this.collaborativeIndexForEvent = 0.0;
     }
 
+    public void upVoteCalculator(){
+        int noOfUpVotesRecieved = EventActions.findAllUpvotesForUserByEventID(this.user,this.event).size();
+        System.out.println("This was the noOfUpvotesSizeList----->"+ noOfUpVotesRecieved);
+        this.noOfUpVotesReceivedForEvent = noOfUpVotesRecieved;
+    }
     public void userEventStatsSave(){
         UserEventStats userEventStats = new UserEventStats();
         userEventStats.user = this.user;
@@ -87,6 +95,7 @@ public class UserEventStatsWrapper {
         userEventStats.scorePhase4InEvent = this.scorePhase4InEvent;
         userEventStats.aggregatedScoreForEvent = this.aggregatedScoreForEvent;
         userEventStats.collaborativeIndexForEvent = this.collaborativeIndexForEvent;
+        userEventStats.noOfUpVotesReceivedForEvent = this.noOfUpVotesReceivedForEvent;
         userEventStats.save();
     }
 

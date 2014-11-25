@@ -58,6 +58,10 @@ public class EventActions extends Model{
     public static List<EventActions> findMessagesByEventIDUserID(User user,Event event){
         return find.where().eq("event", event).eq("user",user).eq("ActionType","Message").findList();
     }
+
+    public static List<EventActions> findAllUpvotesForUserByEventID(User user,Event event){
+        return find.where().eq("event", event).eq("Attribute1",user.id).eq("ActionType","UpVote").findList();
+    }
    //number of informal messages
     public static int noOfInformalMessages(String EventName )
     {

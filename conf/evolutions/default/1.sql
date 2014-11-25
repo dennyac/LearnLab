@@ -101,6 +101,7 @@ create table user_event_stats (
   score_phase4in_event      double,
   aggregated_score_for_event double,
   collaborative_index_for_event double,
+  no_of_up_votes_received_for_event integer,
   constraint pk_user_event_stats primary key (user_event_id))
 ;
 

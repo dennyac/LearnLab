@@ -35,7 +35,7 @@ public class UserStatsWrapper {
             userStats.noOfIndividualInformalMessages = userStats.noOfIndividualInformalMessages + userEventStatsWrapper.noOfIndividualInformalMessagesInEvent;
             userStats.noOfIndividualHashTagMessages = userStats.noOfIndividualHashTagMessages + userEventStatsWrapper.getNoOfIndividualHashTagMessagesInEvent;
             //[TODO] Logic For upvotes and conginitive abilities score
-            userStats.upVotes = 0;
+            userStats.upVotes = userStats.upVotes + userEventStatsWrapper.noOfUpVotesReceivedForEvent;
             userStats.cognitiveAbilitiesScore = 0;
             userStats.update();
         } else{

@@ -20,11 +20,13 @@ import views.html.live.liveStats;
 import views.html.live.offlineStats;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import java.util.ArrayList;
 
 import static play.data.Form.form;
+import scala.collection.JavaConverters;
 
 
 @Security.Authenticated(Secured.class)
@@ -51,7 +53,7 @@ public class EventController extends Controller {
         User currUser = User.findByEmail(request().username());
         Event eventSelected = Event.findById(eventId);
         Question question = eventSelected.Questions.get(0);
-        return ok(eventStage3.render((currUser), eventSelected, question, form(EventStageform.class)));
+        return ok(eventStage3.render((currUser), eventSelected, question,form(EventStageform.class)));
     }
 
     public static Result eventStage4(long eventId){
@@ -63,13 +65,18 @@ public class EventController extends Controller {
         User currUser = User.findByEmail(request().username());
         Event eventSelected = Event.findById(eventId);
         Question question = eventSelected.Questions.get(1);
-        return ok(eventStage4.render((currUser), eventSelected, question, form(EventStageform.class)));
+        List<User> userParticipants = eventSelected.participants;
+        return ok(eventStage4.render((currUser), eventSelected, question,userParticipants ,form(EventStageform.class)));
     }
 
     public static Result eventResult(){
         Form<EventStageform> form4 = form(EventStageform.class);
         EventStageform f = form4.bindFromRequest().get();
         f.eventAction = "Stage4";
+        f.upVotedPeers.removeAll(Collections.singleton(null));
+        for(String t: f.upVotedPeers){
+            System.out.println("Peer Chosen for upvote:" + t);
+        }
         EventUtils.initEventStage(f);
         EventStatsWrapper eventStatsWrapper = EventUtils.EventAggregator(Event.findById(Long.parseLong(f.eventId)), User.findByFullname(f.fullName));
         ;

@@ -34,10 +34,10 @@ public class UserStats extends Model{
     @Formats.NonEmpty
     public int noOfIndividualHashTagMessages;
 
-    //aggregate score
+    //[TODO]aggregate score
     //public int aggregateScore
 
-    //percentage of his individual discussion
+    //[TODO]percentage of his individual discussion
 
     @Formats.NonEmpty
     public float cognitiveAbilitiesScore;

@@ -43,4 +43,5 @@ public class UserEventStats extends Model{
 
     public double collaborativeIndexForEvent;
 
+    public int noOfUpVotesReceivedForEvent;
 }

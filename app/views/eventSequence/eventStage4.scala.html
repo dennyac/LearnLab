@@ -1,4 +1,4 @@
-@(user: User, event: Event, question: Question, form3: Form[util.EventUtils.EventStageform])
+@(user: User, event: Event, question: Question, participants: List[User],form3: Form[util.EventUtils.EventStageform])
 @import helper._
 
 @mainStudent(user) {
@@ -65,42 +65,17 @@
                     <input type="radio" name="answer" value="Option4" id="q2d"><label for="q2d">  @question.Option4</label><br/>
                     <input type="hidden" name="eventId" value=@event.eventId />
                     <input type="hidden" name="fullName" value=@user.fullname />
+                    <p><b><br> Who helped me: <br> </b></p>
+                    @for((participantUser,index) <- participants.zipWithIndex){
+                        @if( user.id != participantUser.id){
+                            <input type="checkbox" name="upVotedPeers[@index]" value = @participantUser.id> @participantUser.fullname <br>
+                        }
+                    }
+                    <div class="pull-right">
+                        <input type="submit" name="Submit" value= "Submit" class="btn btn-success">
+                    </div>
                 </ul>
             </div>
-
-            <div class="well">
-                <div class="radio">
-                    <p><b>Evaluate your peers. Let us know who helped you!</b></p>
-                    <label>
-                        <input type="checkbox" id="inlineCheckbox1" value="Anil"> Anil
-                    </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="checkbox" id="inlineCheckbox2" value="Denny"> Denny
-                    </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="checkbox" id="inlineCheckbox3" value="Dhanyatha"> Dhanyatha
-                    </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="checkbox" id="inlineCheckbox4" value="Shruthi"> Shruthi
-                    </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="checkbox" id="inlineCheckbox5" value="Supriya"> Supriya
-                    </label>
-                </div>
-
-                <div class="pull-right">
-                    <input type="submit" name="Submit" value= "Submit" class="btn btn-success">
-                </div>
-            </div>
-
         }
 </div>
 </div>
