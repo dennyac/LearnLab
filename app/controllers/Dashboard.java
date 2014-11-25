@@ -1,6 +1,6 @@
 package controllers;
 
-import jdk.nashorn.internal.ir.ObjectNode;
+//import jdk.nashorn.internal.ir.ObjectNode;
 import models.Event;
 import models.Question;
 import models.User;
@@ -66,6 +66,9 @@ public class Dashboard extends Controller {
         User currentUser = User.findByEmail(request().username());
         Event eventSelected = Event.findEvent();
         return ok(manageEvents.render(currentUser,eventSelected,form(CreateEventForm.class)));
+    }
+    public static Result listUserJs(String instructorUsername) {
+        return ok(views.js.listUser.render(instructorUsername));
     }
 
     public static Result createEvent() {

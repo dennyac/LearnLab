@@ -8,6 +8,7 @@ GET     /dashboard                              controllers.Dashboard.index()
 GET     /dashboard/manageEvents                 controllers.Dashboard.manageEvents()
 GET     /dashboard/getEvents                    controllers.Dashboard.getEventstoActivate()
 GET     /dashboard/getEvents/activate           controllers.Dashboard.activateEvent(eventId: String)
+GET     /assets/javascripts/listUser.js         controllers.Dashboard.listUserJs(instructorUsername:String)
 
 
 GET    /dashboard/createEvent                  controllers.Dashboard.createEvent()
