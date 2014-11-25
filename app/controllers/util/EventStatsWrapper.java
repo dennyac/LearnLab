@@ -86,7 +86,7 @@ public class EventStatsWrapper {
                     correctInPhase4++;
                     userEventStatsWrapper.phase4AnswerInEvent = true;
                 }
-                userEventStatsWrapper.userEventAggregator();
+                userEventStatsWrapper.userEventAggregator(this);
             }
         }
         System.out.println(" CorrectInPhase1:"+correctInPhase1+ " CorrectInPhase3:"+ correctInPhase3 + "CorrectInPhase4:"+ correctInPhase4);

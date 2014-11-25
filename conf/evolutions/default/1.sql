@@ -95,11 +95,14 @@ create table user_event_stats (
   phase3answer_in_event     tinyint(1) default 0,
   phase4answer_in_event     tinyint(1) default 0,
   no_of_individual_informal_messages_in_event integer,
-  get_no_of_individual_hash_tag_messages_in_event integer,
+  no_of_individual_hash_tag_messages_in_event integer,
+  percentage_contribution_for_discussion_in_event double,
   score_phase1in_event      double,
   score_phase3in_event      double,
   score_phase4in_event      double,
   aggregated_score_for_event double,
+  cognitive_ability_score   integer,
+  percentage_of_cognitive_ability double,
   collaborative_index_for_event double,
   no_of_up_votes_received_for_event integer,
   constraint pk_user_event_stats primary key (user_event_id))
@@ -111,7 +114,11 @@ create table user_stats (
   no_of_events_participated_in integer,
   no_of_individual_informal_messages integer,
   no_of_individual_hash_tag_messages integer,
-  cognitive_abilities_score float,
+  no_of_messages_exchanged_by_all_in_all_events_user_participated integer,
+  percentage_contribution_for_discussion double,
+  aggregate_score           double,
+  cognitive_abilities_score integer,
+  percentage_of_cognitive_ability double,
   up_votes                  integer,
   constraint pk_user_stats primary key (id))
 ;

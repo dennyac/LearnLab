@@ -31,7 +31,9 @@ public class UserEventStats extends Model{
 
     public int noOfIndividualInformalMessagesInEvent;
 
-    public int getNoOfIndividualHashTagMessagesInEvent;
+    public int noOfIndividualHashTagMessagesInEvent;
+
+    public double percentageContributionForDiscussionInEvent;
 
     public double scorePhase1InEvent;
 
@@ -40,6 +42,10 @@ public class UserEventStats extends Model{
     public double scorePhase4InEvent;
 
     public double aggregatedScoreForEvent;
+
+    public int cognitiveAbilityScore;
+
+    public double percentageOfCognitiveAbility;
 
     public double collaborativeIndexForEvent;
 

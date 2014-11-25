@@ -32,10 +32,10 @@ INSERT INTO event_users VALUES (2,5);
 INSERT INTO event_users VALUES (2,6);
 
 
-INSERT INTO user_stats VALUES(1,1,0,0,0,0,0);
-INSERT INTO user_stats VALUES(2,4,0,0,0,0,0);
-INSERT INTO user_stats VALUES(3,5,0,0,0,0,0);
-INSERT INTO user_stats VALUES(4,6,0,0,0,0,0);
+INSERT INTO user_stats VALUES(1,1,0,0,0,0,0,0,0,0,0);
+INSERT INTO user_stats VALUES(2,4,0,0,0,0,0,0,0,0,0);
+INSERT INTO user_stats VALUES(3,5,0,0,0,0,0,0,0,0,0);
+INSERT INTO user_stats VALUES(4,6,0,0,0,0,0,0,0,0,0);
 
 # --- !Downs
 DELETE FROM event_users;
