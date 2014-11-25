@@ -1,6 +1,6 @@
 package controllers;
 
-import jdk.nashorn.internal.ir.ObjectNode;
+//import jdk.nashorn.internal.ir.ObjectNode;
 import models.Event;
 import models.Question;
 import models.User;
@@ -16,9 +16,11 @@ import views.html.dashboard.manageEvents;
 import views.html.dashboard.createEventConfirmation;
 import views.html.dashboard.deleteEventConfirmation;
 import views.html.dashboard.updateEventConfirmation;
+import views.html.dashboard.report;
 import views.html.chatRoom;
 import views.html.eventSequence.eventStage1;
 import views.html.instructorView;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
@@ -179,6 +181,15 @@ public class Dashboard extends Controller {
     public static Result getEventstoActivate(){
         String s = "[{\"eventId\":\"jhhj\",\"eventName\":\"hjkghsjk\",\"Date\":\"jkdghs jkhsg\"}]";
         return ok(s);
+    }
+
+    //public static Result generateReports(String name)
+    public static Result generateReports()
+    {
+        User reportUser = User.findByEmail(request().username());
+       // Event reportEvent = Event.findByName(name);
+        Event reportEvent = Event.findEvent();
+        return ok(report.render(reportUser, reportEvent));
     }
 
     public static Result activateEvent(String eventId){

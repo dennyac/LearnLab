@@ -127,6 +127,20 @@ public class Event extends Model{
         return Event.find.byId(eId);
     }
 
+    public static List<Event> findAllEvents()
+    {
+        return find.findList();
+    }
+
+        public static void testList()
+    {
+        List<Event> u = findAllEvents();
+        for( Event ur : u)
+        {
+            System.out.println(" the name is " + ur.eventName);
+        }
+    }
+
     public static Event findByName(String EventName)
     {
         return find.where().eq("eventName",EventName).findUnique();
