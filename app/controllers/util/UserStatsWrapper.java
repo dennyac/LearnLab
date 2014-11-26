@@ -36,15 +36,21 @@ public class UserStatsWrapper {
         this.userEventStatsWrapper = userEventStatsWrapper;
     }
 
-    public double getPercentageContributionForDiscussion(int noOfMessagesExchangedByAllInAllEventsUserParticipated,int totalMsgs){
-        double percentageContribution = ((totalMsgs*1.0)/(noOfMessagesExchangedByAllInAllEventsUserParticipated*1.0))*100;
+    public double getPercentageContributionForDiscussion(int noOfMessagesExchangedByAllInAllEventsUserParticipated,int totalMsgs) {
+        double percentageContribution = 0;
+        if (noOfMessagesExchangedByAllInAllEventsUserParticipated != 0){
+            percentageContribution = ((totalMsgs * 1.0) / (noOfMessagesExchangedByAllInAllEventsUserParticipated * 1.0)) * 100;
+         }
         return percentageContribution;
     }
 
-    public double getPercentageOfCognitiveAbility(int eventsParticipated, int cognitiveScore){
-            // the no of answers he got right in phase 1 and 4 divided by the total number of cognitive questions peresent.
-           double percentageOfCognitiveAbility = ((cognitiveScore*1.0)/(eventsParticipated*2.0))*100;
-           return percentageOfCognitiveAbility;
+    public double getPercentageOfCognitiveAbility(int eventsParticipated, int cognitiveScore) {
+        // the no of answers he got right in phase 1 and 4 divided by the total number of cognitive questions peresent.
+        double percentageOfCognitiveAbility = 0;
+        if(eventsParticipated != 0){
+            percentageOfCognitiveAbility = ((cognitiveScore * 1.0) / (eventsParticipated * 2.0)) * 100;
+        }
+        return percentageOfCognitiveAbility;
     }
 
     public void userStatsUpdate(UserEventStatsWrapper userEventStatsWrapper,EventStatsWrapper eventStatsWrapper){

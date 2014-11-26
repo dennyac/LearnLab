@@ -98,11 +98,15 @@ public class UserEventStatsWrapper {
     }
 
     public void userMessageAggragator(EventStatsWrapper e) {
-        int noOfMsgs;
+        int noOfMsgs,totalMsgs;
+        this.percentageContributionForDiscussionInEvent = 0;
         this.noOfIndividualHashTagMessagesInEvent = EventActions.findHashTagMessagesByEventIDUserID(this.user, this.event).size();
         noOfMsgs = EventActions.findMessagesByEventIDUserID(this.user,this.event).size();
         this.noOfIndividualInformalMessagesInEvent = noOfMsgs - this.noOfIndividualHashTagMessagesInEvent;
-        this.percentageContributionForDiscussionInEvent = ((noOfMsgs*1.0)/((e.noOfHashTagMessgaes+e.noOfInformalMessages)*1.0))*100;
+        totalMsgs = e.noOfHashTagMessgaes+e.noOfInformalMessages;
+        if(totalMsgs != 0) {
+            this.percentageContributionForDiscussionInEvent = ((noOfMsgs * 1.0) / (totalMsgs * 1.0)) * 100;
+        }
     }
 
     public void userCollaborativeIndex(){
@@ -133,6 +137,14 @@ public class UserEventStatsWrapper {
         userEventStats.percentageOfCognitiveAbility = this.percentageOfCognitiveAbility;
         userEventStats.collaborativeIndexForEvent = this.collaborativeIndexForEvent;
         userEventStats.noOfUpVotesReceivedForEvent = this.noOfUpVotesReceivedForEvent;
+//        System.out.println("USer ID and :"+this.user.id + "|" + this.event.eventId);
+//        System.out.println("Phase 1,3 and 4 in event:"+ this.phase1AnswerInEvent + "|"+ this.phase3AnswerInEvent + "|" + this.phase4AnswerInEvent);
+//        System.out.println("No Of induvidual hash and informal msgs:"+ this.noOfIndividualHashTagMessagesInEvent + "|" + this.noOfIndividualInformalMessagesInEvent);
+//        System.out.println("percentage:"+this.percentageContributionForDiscussionInEvent);
+//        System.out.println("scores in phase event 1,3,4 and aggregated score:" + this.scorePhase1InEvent + "|" + this.scorePhase3InEvent + "|" + this.scorePhase4InEvent + "|" + this.aggregatedScoreForEvent);
+//        System.out.println("cognitive ability score "+ this.cognitiveAbilityScore + " percentageOfcognitveability" + this.percentageOfCognitiveAbility);
+//        System.out.println("collaborative index:" + this.collaborativeIndexForEvent + " noOfUpVotesRecieved:" + this.noOfUpVotesReceivedForEvent);
+//        System.out.println("JUST BEFORE SAVING");
         userEventStats.save();
     }
 
