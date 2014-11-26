@@ -64,14 +64,17 @@ public class UserEventStatsWrapper {
     }
 
     public void userAnswerScoreAggregator(){
-        if(this.phase1AnswerInEvent) this.scorePhase1InEvent = 35;
-        if(this.phase3AnswerInEvent) this.scorePhase3InEvent = 25;
-        if(this.phase4AnswerInEvent) this.scorePhase4InEvent = 40;
+        if(this.phase1AnswerInEvent) this.scorePhase1InEvent = 35; else this.scorePhase1InEvent = 0;
+        if(this.phase3AnswerInEvent) this.scorePhase3InEvent = 25; else this.scorePhase3InEvent = 0;
+        if(this.phase4AnswerInEvent) this.scorePhase4InEvent = 40; else this.scorePhase4InEvent = 0;
         this.aggregatedScoreForEvent = this.scorePhase1InEvent + this.scorePhase3InEvent + this.scorePhase4InEvent;
         System.out.println("The aggregated score of the user for the event is:"+ this.aggregatedScoreForEvent);
     }
 
     public void cognitiveAbilityScoreCalculator(){
+        //Initialize
+        this.cognitiveAbilityScore = 0;
+        this.percentageOfCognitiveAbility = 0;
         //Got it wrong in phase 1 and 4
         if(!(this.phase1AnswerInEvent && this.phase4AnswerInEvent)){
             this.cognitiveAbilityScore = 0;
@@ -107,7 +110,8 @@ public class UserEventStatsWrapper {
     }
 
     public void upVoteCalculator(){
-        int noOfUpVotesRecieved = EventActions.findAllUpvotesForUserByEventID(this.user,this.event).size();
+        int noOfUpVotesRecieved = 0;
+        noOfUpVotesRecieved = EventActions.findAllUpvotesForUserByEventID(this.user,this.event).size();
         System.out.println("This was the noOfUpvotesSizeList----->"+ noOfUpVotesRecieved);
         this.noOfUpVotesReceivedForEvent = noOfUpVotesRecieved;
     }
