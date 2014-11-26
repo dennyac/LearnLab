@@ -10,7 +10,7 @@ GET     /dashboard/getEvents                    controllers.Dashboard.getEventst
 GET     /dashboard/report                       controllers.Dashboard.generateReports()
 GET     /dashboard/getEvents/activate           controllers.Dashboard.activateEvent(eventId: String)
 GET     /assets/javascripts/listUser.js         controllers.Dashboard.listUserJs(instructorUsername:String)
-
+GET     /assets/javascripts/listEvent.js        controllers.Dashboard.listEventJs(instructorUsername:String)
 
 GET    /dashboard/createEvent                  controllers.Dashboard.createEvent()
 

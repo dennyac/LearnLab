@@ -80,6 +80,17 @@ public class Dashboard extends Controller {
         return ok(views.js.listUser.render(instructorUsername,output));
     }
 
+    public static Result listEventJs(String instructorUsername) {
+        List<Event> eventList=Event.findAllEvents();
+        String output="";
+        for(Event e: eventList)
+        {
+            System.out.println(output);
+            output+=e.eventName+"|";
+        }
+        return ok(views.js.listEvent.render(instructorUsername,output));
+    }
+
     public static Result createEvent() {
         User instructor = User.findByEmail(request().username());
         Form<CreateEventForm> form2 = form(CreateEventForm.class);

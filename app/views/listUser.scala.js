@@ -2,8 +2,8 @@
 var insname = '@instructorUsername';
 var usrList = '@userList';
 $(document).ready(function() {
-        //var el="Hello there!!!"
-        //$('#dummy').append(el)
+        var el="Hello there!!!"
+        $('#dummy').append(el)
         var select = document.getElementById("participant1");
         window.alert(insname);
         var userFullNameArray = usrList.split('|');
