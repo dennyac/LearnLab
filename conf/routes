@@ -9,8 +9,8 @@ GET     /dashboard/manageEvents                 controllers.Dashboard.manageEven
 GET     /dashboard/getEvents                    controllers.Dashboard.getEventstoActivate()
 GET     /dashboard/report                       controllers.Dashboard.generateReports()
 GET     /dashboard/getEvents/activate           controllers.Dashboard.activateEvent(eventId: String)
-GET     /assets/javascripts/listUser.js         controllers.Dashboard.listUserJs(instructorUsername:String)
-GET     /assets/javascripts/listEvent.js        controllers.Dashboard.listEventJs(instructorUsername:String)
+GET     /assets/javascripts/listUser.js         controllers.Dashboard.listUserJs(divID:String)
+GET     /assets/javascripts/listEvent.js        controllers.Dashboard.listEventJs(divID:String)
 
 GET    /dashboard/createEvent                  controllers.Dashboard.createEvent()
 
