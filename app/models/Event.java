@@ -184,4 +184,10 @@ public class Event extends Model{
         tags.add("#Examples");
         return e;
     }
+
+    public static List<Event> findAllCompletedEvents()
+    {
+        List<Event> completedEventList = find.where().eq("active",2).findList();
+        return completedEventList;
+    }
 }
