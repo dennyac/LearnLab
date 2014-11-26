@@ -5,6 +5,8 @@ import models.EventActions;
 import models.EventStats;
 import models.User;
 
+import java.util.*;
+
 /**
  * Created by Supriya on 22/11/2014.
  */
@@ -28,11 +30,14 @@ public class EventStatsWrapper {
 
     public double positiveCollaborationScore;
 
-    public float negativeCollaborationScore;
+    public double negativeCollaborationScore;
+
+    public HashMap<User,List<Boolean>> tempUserAnswerRecorder;
 
     public EventStatsWrapper(Event event1){
         this.event = event1;
         this.noOfPraticipants = event1.participants.size();
+        this.tempUserAnswerRecorder = new HashMap<User,List<Boolean>>();
     }
 
     public void eventStatsAggregator(){
@@ -66,7 +71,9 @@ public class EventStatsWrapper {
             if(EventActions.hasAUserParticipatedInAnEvent(this.event,user)) {
                 //Aggregating Each Users Individual Performance;
                 UserEventStatsWrapper userEventStatsWrapper = new UserEventStatsWrapper(user,this.event);
-
+                List<Boolean> answerRecorder = new ArrayList<Boolean>(2);
+                answerRecorder.add(false);
+                answerRecorder.add(false);
                 EventActions eaStage1 = EventActions.findByEventIDUserIDActionType(this.event, user, "Stage1");
                 System.out.println("Event Stage aggregator" + eaStage1.id);
                 String answer1 = this.event.Questions.get(0).Answer;
@@ -75,17 +82,20 @@ public class EventStatsWrapper {
                 if (eaStage1.Attribute1.equalsIgnoreCase(this.event.Questions.get(0).Answer)) {
                     correctInPhase1++;
                     userEventStatsWrapper.phase1AnswerInEvent = true;
+                    answerRecorder.set(0,true);
                 }
                 EventActions eaStage3 = EventActions.findByEventIDUserIDActionType(this.event, user, "Stage3");
                 if (eaStage3.Attribute1.equalsIgnoreCase(this.event.Questions.get(0).Answer)) {
                     correctInPhase3++;
                     userEventStatsWrapper.phase3AnswerInEvent = true;
+                    answerRecorder.set(1,true);
                 }
                 EventActions eaStage4 = EventActions.findByEventIDUserIDActionType(this.event, user, "Stage4");
                 if (eaStage4.Attribute1.equalsIgnoreCase(this.event.Questions.get(1).Answer)) {
                     correctInPhase4++;
                     userEventStatsWrapper.phase4AnswerInEvent = true;
                 }
+                this.tempUserAnswerRecorder.put(user,answerRecorder);
                 userEventStatsWrapper.userEventAggregator(this);
             }
         }
@@ -99,9 +109,41 @@ public class EventStatsWrapper {
     }
 
     public void eventCollaborationScoreAggregator(){
-        //[TODO]: Add Logic for callculating these scroes
+        //Local Variables to calculate the collaboration score
+        int noWhoGotItRightInPhase1 = 0;
+        int noWhoGotItWrongInPhase1 = 0;
+        int noWhoGotItRightInPhase1WrongInPhase3 = 0;
+        int noWhoGotItWrongInPhase1RightInPhase3 = 0;
         this.positiveCollaborationScore = 0;
         this.negativeCollaborationScore = 0;
+        for(Map.Entry<User, List<Boolean>> entry : this.tempUserAnswerRecorder.entrySet()){
+            List<Boolean> answers= entry.getValue();
+            if(answers.get(0) == false){
+                noWhoGotItWrongInPhase1++;
+                        if(answers.get(1) == true){
+                            noWhoGotItWrongInPhase1RightInPhase3++;
+                        }
+            }else{
+                //who got it right in phase1
+                noWhoGotItRightInPhase1++;
+                if(answers.get(1)== false){
+                    noWhoGotItRightInPhase1WrongInPhase3++;
+                }
+            }
+        }
+        if(noWhoGotItWrongInPhase1 != 0) {
+            System.out.println("Wrong in Phase1 and Right in phase 3");
+            this.positiveCollaborationScore = (noWhoGotItWrongInPhase1RightInPhase3 * 1.0) / (noWhoGotItWrongInPhase1 * 1.0);
+        } else{
+            this.positiveCollaborationScore = 0;
+        }
+        if(noWhoGotItRightInPhase1 != 0){
+            System.out.println("Right in Phase1 and Wrong in phase 3");
+            this.negativeCollaborationScore = (noWhoGotItRightInPhase1WrongInPhase3*1.0)/(noWhoGotItRightInPhase1*1.0);
+        } else{
+            this.negativeCollaborationScore = 0;
+        }
+
     }
 
     public void eventStatsSave(){

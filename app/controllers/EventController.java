@@ -73,9 +73,11 @@ public class EventController extends Controller {
         Form<EventStageform> form4 = form(EventStageform.class);
         EventStageform f = form4.bindFromRequest().get();
         f.eventAction = "Stage4";
-        f.upVotedPeers.removeAll(Collections.singleton(null));
-        for(String t: f.upVotedPeers){
-            System.out.println("Peer Chosen for upvote:" + t);
+        if(f.upVotedPeers != null) {
+            f.upVotedPeers.removeAll(Collections.singleton(null));
+            for (String t : f.upVotedPeers) {
+                System.out.println("Peer Chosen for upvote:" + t);
+            }
         }
         EventUtils.initEventStage(f);
         EventStatsWrapper eventStatsWrapper = EventUtils.EventAggregator(Event.findById(Long.parseLong(f.eventId)), User.findByFullname(f.fullName));
