@@ -70,7 +70,14 @@ public class Dashboard extends Controller {
         return ok(manageEvents.render(currentUser,eventSelected,form(CreateEventForm.class)));
     }
     public static Result listUserJs(String instructorUsername) {
-        return ok(views.js.listUser.render(instructorUsername));
+        List<User> userList=User.findAllUsers();
+        String output="";
+        for(User u: userList)
+        {
+            System.out.println(output);
+            output+=u.fullname+"|";
+        }
+        return ok(views.js.listUser.render(instructorUsername,output));
     }
 
     public static Result createEvent() {
