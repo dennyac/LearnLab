@@ -19,9 +19,10 @@ public class EventUtils {
         public String eventAction;
         public String answer;
         public String eventId;
-        public String fullName;
+//        public String fullName;
         public String justification;
         public List<String> upVotedPeers;
+        public Long userId;
 
     }
 
@@ -47,8 +48,9 @@ public class EventUtils {
         long eventid = Long.parseLong(f.eventId);
         System.out.println("After parsing, the long event id was:"+ eventid);
         e.event =  Event.findById(eventid);
-        System.out.println("After parsing, the STRING user id was:"+ f.fullName);
-        User u = User.findByFullname(f.fullName);
+//        System.out.println("After parsing, the STRING user id was:"+ f.fullName);
+//        User u = User.findByFullname(f.fullName);
+        User u = User.findById(f.userId);
         System.out.println("The user full name was:"+ u.fullname);
         e.user = u;
         if((f.justification != null)){

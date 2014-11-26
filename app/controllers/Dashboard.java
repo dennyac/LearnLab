@@ -21,6 +21,7 @@ import views.html.chatRoom;
 import views.html.eventSequence.eventStage1;
 import views.html.instructorView;
 import java.util.Collections;
+import views.html.pastEvents.pastEventsForInstructors;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
@@ -225,6 +226,13 @@ public class Dashboard extends Controller {
 //        System.out.println("Request().username:"+ currUser.fullname);
 //        System.out.println("User email id is " + currUser.email);
         return ok(instructorView.render(currUser));
+    }
+
+    public static Result instructorPastEvents()
+    {
+        List<Event> completedEvents = Event.findAllCompletedEvents();
+        User reportUser = User.findByEmail(request().username());
+        return ok(pastEventsForInstructors.render(reportUser,completedEvents));
     }
 
     public static class CreateEventForm {
