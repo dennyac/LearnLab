@@ -1,9 +1,58 @@
-@(user: User)
-
+@(user: User, event: Event,events: List[Event])
 @mainInstructor(user){
+    <fieldset class="fieldSetLegend">
+        <legend class="fieldSetLegend"><h5><b>Report Summary</b></h5></legend>
+                <div class="form-group">
+                    <label for="individualEvent" class="col-sm-2 control-label">Select Event</label>
+                        <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                            <select class="form-control" name="events" id="individualEvent">
+                                <option value="Select Event">Select Event</option>
+                                @for((individualEvent,index) <- events.zipWithIndex){
+                                <option value="@individualEvent.eventName">@individualEvent.eventName</option>
+                                }
+                            </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-3 col-sm-4 col-xs-12" id="tabid">
+                </div>
+    </fieldset>
 
-<div class="form-group col-md-3 col-sm-4 col-xs-12">
-    <select class="form-control" name="events" id="eventlist"></select>
-</div>
+    <script>
+    $("#tabid").hide();
+        $("select").change(function () {
+            $("#tabid").hide();
+            var eventName = " ";
+
+            $( "select option:selected" ).each(function() {
+                eventName  = $( this ).text();
+                if(eventName!="Select Event") {
+                    getEventData(eventName);
+                }
+                else{
+                    $("#tabid").hide();
+                }
+            });
+        }).change();
+
+        function getEventData(eventName)
+        {
+            $("#tabid").show();
+
+            //Populate data by AJAX call here
+            alert("Activating"+eventName);
+                $.ajax({
+                    url: "/dashboard/getSummary/individualEventSummary",
+                    type: 'GET',
+                    data: { eventName: eventName } ,
+                    success: function (response) {
+                        $("#tabid").append("<p>"+ response +"</p>");
+                    },
+                    error: function () {
+                    //your error code
+                    }
+                });
+        }
+
+    </script>
 
 }

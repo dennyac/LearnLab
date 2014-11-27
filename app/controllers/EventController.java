@@ -80,7 +80,7 @@ public class EventController extends Controller {
             }
         }
         EventUtils.initEventStage(f);
-        EventStatsWrapper eventStatsWrapper = EventUtils.EventAggregator(Event.findById(Long.parseLong(f.eventId)), User.findByFullname(f.fullName));
+        EventStatsWrapper eventStatsWrapper = EventUtils.EventAggregator(Event.findById(Long.parseLong(f.eventId)), User.findById(f.userId));
         ;
         return ok(eventResult.render((User.findByEmail(request().username())), Event.findEvent(),eventStatsWrapper));
     }

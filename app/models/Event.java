@@ -55,10 +55,10 @@ public class Event extends Model{
     @Formats.NonEmpty
     public String endTime;
 
-    //@Constraints.Required
-    //@Formats.NonEmpty
+    @Constraints.Required
+    @Formats.NonEmpty
     @Column(columnDefinition = "TEXT")
-    public String script;
+    public String description;
 
     @Constraints.Required
     @Formats.NonEmpty
@@ -75,8 +75,8 @@ public class Event extends Model{
     @Column(columnDefinition = "TEXT")
     public String scriptPhase3;
 
-    //@Constraints.Required
-    //@Formats.NonEmpty
+    @Constraints.Required
+    @Formats.NonEmpty
     @Column(columnDefinition = "TEXT")
     public String scriptPhase4;
 
@@ -172,6 +172,16 @@ public class Event extends Model{
         return list.get(1).Answer;
     }
 
+    public String[] getHashTags()
+    {
+        String[] hashtags=this.hashes.split("#");
+        for(String s: hashtags)
+        {
+            System.out.println("hashtag :"+ s);
+        }
+        return hashtags;
+    }
+
     public static Event findEvent(){
         Event e = new Event();
         HashSet<String> tags = new HashSet<String>();
@@ -179,5 +189,11 @@ public class Event extends Model{
         tags.add("#Justification");
         tags.add("#Examples");
         return e;
+    }
+
+    public static List<Event> findAllCompletedEvents()
+    {
+        List<Event> completedEventList = find.where().eq("active",2).findList();
+        return completedEventList;
     }
 }

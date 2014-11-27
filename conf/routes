@@ -3,20 +3,25 @@
 # ~~~~
 
 # Home page
-GET     /                                       controllers.Application.index()
-GET     /dashboard                              controllers.Dashboard.index()
-GET     /dashboard/manageEvents                 controllers.Dashboard.manageEvents()
-GET     /dashboard/getEvents                    controllers.Dashboard.getEventstoActivate()
-GET     /dashboard/report                       controllers.Dashboard.generateReports()
-GET     /dashboard/getEvents/activate           controllers.Dashboard.activateEvent(eventId: String)
-GET     /assets/javascripts/listUser.js         controllers.Dashboard.listUserJs(instructorUsername:String)
-GET     /assets/javascripts/listEvent.js        controllers.Dashboard.listEventJs(instructorUsername:String)
+GET     /                                                      controllers.Application.index()
+GET     /dashboard                                             controllers.Dashboard.index()
+GET     /dashboard/manageEvents                                controllers.Dashboard.manageEvents()
+GET     /dashboard/getEvents                                   controllers.Dashboard.getEventstoActivate()
+GET     /dashboard/report                                      controllers.Dashboard.generateReports()
+GET     /dashboard/getEvents/activate                          controllers.Dashboard.activateEvent(eventId: String)
+GET     /dashboard/getSummary/individualEventSummary           controllers.Dashboard.generateIndividualEventSummary(eventName: String)
+GET     /assets/javascripts/listUser.js                        controllers.Dashboard.listUserJs(divID:String)
+GET     /assets/javascripts/listEvent.js                       controllers.Dashboard.listEventJs(divID:String)
 
 GET    /dashboard/createEvent                  controllers.Dashboard.createEvent()
 
 POST    /dashboard/deleteEvent                  controllers.Dashboard.deleteEvent()
 POST    /dashboard/updateEvent                  controllers.Dashboard.updateEvent()
-POST    /dashboard/report                       controllers.Dashboard.generateReportsForEvent(eventName:String)
+
+
+GET     /dashboard/pastEvents                   controllers.Dashboard.instructorPastEvents()
+GET     /pastEvents/view                        controllers.PastEventController.pastEventsViewer(eventId: Long)
+
 
 #Student Home Page Specific
 GET     /leaderBoard                controllers.Application.leaderBoard()

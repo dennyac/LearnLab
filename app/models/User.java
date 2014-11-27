@@ -80,6 +80,11 @@ public class User extends Model {
         return find.where().eq("email", email).findUnique();
     }
 
+    public static User findById(Long id) {
+        return find.where().eq("id", id).findUnique();
+    }
+
+
     /**
      * Retrieve a user from a fullname.
      *
