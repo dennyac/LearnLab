@@ -204,13 +204,27 @@ public class Dashboard extends Controller {
         return ok(s);
     }
 
-    //public static Result generateReports(String name)
     public static Result generateReports()
+    //public static Result generateReports()
     {
         User reportUser = User.findByEmail(request().username());
-       // Event reportEvent = Event.findByName(name);
-        Event reportEvent = Event.findEvent();
-        return ok(report.render(reportUser, reportEvent));
+        //Event reportEvent = Event.findEvent();
+        return ok(report.render(reportUser));
+    }
+
+    public static Result generateReportsForEvent(String name)
+    //public static Result generateReports()
+    {
+//        User instructor = User.findByEmail(request().username());
+//        Form<CreateEventForm> form2 = form(CreateEventForm.class);
+//        CreateEventForm f = form2.bindFromRequest().get();
+//
+        System.out.println(" event name is " + name );
+        User reportUser = User.findByEmail(request().username());
+        Event reportEvent = Event.findByName(name);
+        Form<CreateEventForm> form2 = form(CreateEventForm.class);
+        //Event reportEvent = Event.findEvent();
+        return ok(report.render(reportUser));
     }
 
     public static Result activateEvent(String eventId){
@@ -302,6 +316,12 @@ public class Dashboard extends Controller {
         @Constraints.Required
         public String participant4;
 
+    }
+
+    public static class reportForEvent
+    {
+        @Constraints.Required
+        public String event;
     }
 }
 //        public static Result index() {

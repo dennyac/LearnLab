@@ -1,9 +1,9 @@
-@(user: User, event: Event)
+@(user: User)
 
 @mainInstructor(user){
 
 <div class="form-group col-md-3 col-sm-4 col-xs-12">
     <select class="form-control" name="events" id="eventlist"></select>
 </div>
-<script type="text/javascript" charset="utf-8" src="@routes.Dashboard.listEventJs(user.email)"></script>
+
 }

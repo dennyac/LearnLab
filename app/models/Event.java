@@ -132,19 +132,15 @@ public class Event extends Model{
         return find.findList();
     }
 
-        public static void testList()
-    {
-        List<Event> u = findAllEvents();
-        for( Event ur : u)
-        {
-            System.out.println(" the name is " + ur.eventName);
-        }
-    }
-
     public static Event findByName(String EventName)
     {
         return find.where().eq("eventName",EventName).findUnique();
     }
+
+//    public static EventStats findEventStats(Event event)
+//    {
+//        return find.where().eq("eventID", )
+//    }
 
 
    /* public static List<Event> getActiveEventNameList()

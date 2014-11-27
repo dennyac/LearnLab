@@ -16,6 +16,7 @@ GET    /dashboard/createEvent                  controllers.Dashboard.createEvent
 
 POST    /dashboard/deleteEvent                  controllers.Dashboard.deleteEvent()
 POST    /dashboard/updateEvent                  controllers.Dashboard.updateEvent()
+POST    /dashboard/report                       controllers.Dashboard.generateReportsForEvent(eventName:String)
 
 #Student Home Page Specific
 GET     /leaderBoard                controllers.Application.leaderBoard()
