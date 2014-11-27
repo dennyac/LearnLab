@@ -210,12 +210,17 @@ public class Dashboard extends Controller {
         User reportUser = User.findByEmail(request().username());
        // Event reportEvent = Event.findByName(name);
         Event reportEvent = Event.findEvent();
-        return ok(report.render(reportUser, reportEvent));
+        return ok(report.render(reportUser, reportEvent,Event.findAllEvents()));
     }
 
     public static Result activateEvent(String eventId){
         return ok(eventId+" activated");
     }
+
+    public static Result generateIndividualEventSummary(String eventName){
+        return ok(eventName+" report generated");
+    }
+
 
     public static Result instructorView() {
 //        if(username == null || username.trim().equals("")) {
