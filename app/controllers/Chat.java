@@ -14,6 +14,9 @@ import play.mvc.WebSocket;
 import views.html.chatRoom;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import static play.data.Form.form;
 
 public class Chat extends Controller {
@@ -40,9 +43,11 @@ public class Chat extends Controller {
 
         User currUser = User.findByEmail(request().username());
         Event eventSelected = Event.findById(eventId);
+        String[] hashTagsFromEvent = eventSelected.getHashTags();
+        List<String> hashTags = Arrays.asList(hashTagsFromEvent);
 //        System.out.println("Request().username:"+ currUser.fullname);
 //        System.out.println("User email id is " + currUser.email);
-        return ok(chatRoom.render((currUser),eventSelected));
+        return ok(chatRoom.render((currUser),eventSelected,hashTags));
     }
 
     public static Result chatRoomJs(String username, long eventId) {

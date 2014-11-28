@@ -1,4 +1,4 @@
-@(user: User, event: Event, question: Question, participants: List[User],form3: Form[util.EventUtils.EventStageform])
+@(user: User, event: Event,hashTags: List[String], question: Question, participants: List[User],form3: Form[util.EventUtils.EventStageform])
 @import helper._
 
 @mainStudent(user) {
@@ -13,28 +13,22 @@
                     <ol class="nav">
                         <li><font color="blue">Sample HashTags:</font>
                             <ul>
-                                <li><font color="DodgerBlue">#Concept</font></li>
-                                <li><font color="DodgerBlue">#Justification</font></li>
-                                <li><font color="DodgerBlue">#Example</font></li>
+                                @for(hashTag <- hashTags){
+                                <li><font color="DodgerBlue">@hashTag</font></li>
+                                }
                             </ul>
                         </li>
+
                         <br>
+                        <br>
+
                         <li><font color="blue">Event Members:</font>
-                            <ul>
-                                <li><font color="DodgerBlue">Anil</font></li>
-                                <li><font color="DodgerBlue">Denny</font></li>
-                                <li><font color="DodgerBlue">Dhanyatha</font></li>
-                                <li><font color="DodgerBlue">Shruthi</font></li>
-                                <li><font color="DodgerBlue">Supriya</font></li>
-                            </ul>
-                        </li>
-                        <br>
-                        <li>
-                            <div class="text-left">
-                                <a href="#">Event Script<i class="fa fa-arrow-circle-right"></i></a>
-                            </div>
-                        </li>
-                    </ol>
+                            <ol>
+                                @for(eventMember <- event.participants){
+                                <li><font color="DodgerBlue">@eventMember.fullname</font></li>
+                                }
+                                <br>
+                            </ol>
                 </div>
                 <!--/.well -->
             </div>
