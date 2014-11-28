@@ -24,7 +24,7 @@ GET     /pastEvents/view                        controllers.PastEventController.
 
 
 #Student Home Page Specific
-GET     /leaderBoard                controllers.Application.leaderBoard()
+GET     /leaderBoard                controllers.Application.leaderBoard(userId: Long)
 GET     /profile                    controllers.Application.profile()
 GET     /pastEventDiscussion        controllers.Application.pastEventDiscussion()
 
