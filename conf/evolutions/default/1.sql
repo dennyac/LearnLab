@@ -19,8 +19,8 @@ create table event (
   phase1duration            bigint,
   phase2duration            bigint,
   phase3duration            bigint,
-  active                    tinyint(1) default 0,
-  event_stats_id            bigint,
+  active                    integer,
+  event_FK                  bigint,
   constraint pk_event primary key (event_id))
 ;
 
@@ -138,8 +138,8 @@ create table event_question (
 ;
 alter table event add constraint fk_event_instructor_1 foreign key (instructor_id) references users (id) on delete restrict on update restrict;
 create index ix_event_instructor_1 on event (instructor_id);
-alter table event add constraint fk_event_eventStats_2 foreign key (event_stats_id) references event_stats (id) on delete restrict on update restrict;
-create index ix_event_eventStats_2 on event (event_stats_id);
+alter table event add constraint fk_event_eventStats_2 foreign key (event_FK) references event_stats (id) on delete restrict on update restrict;
+create index ix_event_eventStats_2 on event (event_FK);
 alter table event_actions add constraint fk_event_actions_event_3 foreign key (event_event_id) references event (event_id) on delete restrict on update restrict;
 create index ix_event_actions_event_3 on event_actions (event_event_id);
 alter table event_actions add constraint fk_event_actions_user_4 foreign key (user_id) references users (id) on delete restrict on update restrict;
