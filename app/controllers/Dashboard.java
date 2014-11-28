@@ -212,11 +212,16 @@ public class Dashboard extends Controller {
         //Event e=Event.findByName(eventName);
         System.out.println("going to call report analytics function...");
         ra.analyze(eventName);
+        System.out.println("Report Analytics Max Percent Phase:"+ ra.getMaxPercentPhase());
+        System.out.println("Report Analytics Hash Messages:"+ ra.getHashMsgs());
+        System.out.println("Report Analytics collabMsg:"+ ra.getCollabMsg());
+
+        String output=ra.getMaxPercentPhase()+"|"+ra.getHashMsgs()+"|"+ra.getCollabMsg();
         //System.out.println("Event name "+e.eventName);
         //Finding the user with highest upvotes
         List<UserEventStats> usrEventStatsList=UserEventStats.findAllUserEventStats();
 
-        return ok(eventName+" report generated");
+        return ok(output);
     }
 
     public static Result instructorView() {

@@ -64,8 +64,8 @@ public class ReportAnalytics {
         //Check if the event is successfull
         if(e.active==2) {
             //Find event stats by event id
-            //EventStats stat = EventStats.findByEventName(eventName);
-            EventStats stat = EventStats.findByEvent(e);
+            EventStats stat = EventStats.findByEventName(eventName);
+            //EventStats stat = EventStats.findByEvent(e);
             System.out.println("creation of stats object successful " + stat.id);
             double phase1 = stat.percentageCorrectInPhase1;
             double phase3 = stat.percentageCorrectInPhase3;
@@ -100,8 +100,12 @@ public class ReportAnalytics {
                 this.setCollabMsg("Most of the participants who got the answer wrong initially changed their answers to the right one after colloboration in the group chat ");
             }
 
-            if (stat.negativeCollaborationScore > 0.6) {
+            else if (stat.negativeCollaborationScore > 0.6) {
                 this.setCollabMsg("Most of the participants who got the answer right initially changed their answers to the wrong one after colloborating in the group chat");
+            }
+            else
+            {
+                this.setCollabMsg("Participants did not benefit from collaboration");
             }
         }
         else

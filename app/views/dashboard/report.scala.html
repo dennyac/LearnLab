@@ -45,7 +45,11 @@
                     type: 'GET',
                     data: { eventName: eventName } ,
                     success: function (response) {
-                        $("#tabid").append("<p>"+ response +"</p>");
+                        var messageArray = response.split('|');
+                        var arrayLength=messageArray.length;
+                        for(var i = 0;i<arrayLength;i++) {
+                         $("#tabid").append("<br><p>"+ messageArray[i] +"</p></br>");
+                        }
                     },
                     error: function () {
                     //your error code
