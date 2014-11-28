@@ -8,10 +8,7 @@ import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import models.utils.AppException;
@@ -190,4 +187,7 @@ public class Event extends Model{
         List<Event> completedEventList = find.where().eq("active",2).findList();
         return completedEventList;
     }
+
+
+
 }

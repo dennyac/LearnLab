@@ -1,7 +1,9 @@
 package controllers;
 
 import models.Event;
+import models.EventActions;
 import models.User;
+import models.UserEventStats;
 import models.utils.AppException;
 import play.Logger;
 import play.data.Form;
@@ -13,8 +15,11 @@ import views.html.index;
 import views.html.user.userProfile;
 import views.html.user.pastEventDiscussion;
 import views.html.user.leaderBoard;
+import views.html.user.pastEventsForUsersView;
 
 import javax.validation.Constraint;
+
+import java.util.List;
 
 import static play.data.Form.form;
 
@@ -159,8 +164,19 @@ public class Application extends Controller {
         return ok(userProfile.render((User.findByEmail(request().username())), Event.findEvent()));
     }
 
-    public static Result pastEventDiscussion(){
-        return ok(pastEventDiscussion.render((User.findByEmail(request().username())), Event.findEvent()));
+    public static Result pastEventDiscussion(Long userid){
+        List<Event> userCompletedEvents = UserEventStats.findUserCompletedEvents(userid);
+        List<Event> otherCompletedEvents = UserEventStats.findOtherCompletedEvents(userid);
+        User u = User.findById(userid);
+        return ok(pastEventDiscussion.render(u, userCompletedEvents, otherCompletedEvents));
+    }
+
+    public static Result pastEventDiscussionView(Long eventId, Long userId){
+        List<String> userwiseMessages = EventActions.getUserwiseHashtagEvents();
+        List<String> eventMessages = EventActions.getHashtagEvents();
+//        User u = User.findByEmail(request().username());
+        User u = User.findById(userId);
+        return ok(pastEventsForUsersView.render(u,eventMessages,userwiseMessages));
     }
 
     public static Result leaderBoard(){

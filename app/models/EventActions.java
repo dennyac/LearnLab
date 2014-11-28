@@ -9,10 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import java.util.ArrayList;
 import java.util.Date;
 import static akka.dispatch.Futures.future;
 import akka.actor.Status;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -114,6 +116,27 @@ public class EventActions extends Model{
         }, Akka.system().dispatcher());
     }
 
+    public static List<String> getHashtagEvents()
+    {
+        List<String> messages = new ArrayList<String>();
+        List<EventActions> hashtagEvents = find.where().eq("action_type","Message").eq("attribute2","hashTag").findList();
+        for(int i=0;i<hashtagEvents.size();i++)
+        {
+            messages.add(hashtagEvents.get(i).Attribute1);
+        }
+        return messages;
+    }
+
+
+    public static List<String> getUserwiseHashtagEvents(){
+        List<String> userwisemessages = new ArrayList<String>();
+        List<EventActions> usermessages = find.where().eq("action_type","Message").eq("attribute2","hashTag").findList();
+        for(int j=0;j<usermessages.size();j++){
+            String temp = usermessages.get(j).user.fullname+"-"+usermessages.get(j).Attribute1;
+            userwisemessages.add(temp);
+        }
+        return userwisemessages;
+    }
 
 //    public getInformalMessageCount( String EventName)
 //    {

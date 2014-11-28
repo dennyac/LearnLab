@@ -14,8 +14,8 @@
             <td>@event.eventName</td>
             <td>@event.participants.size</td>
             <td>
-                <form  method="POST" name="joinEvent" action="@routes.EventController.eventStage1(event.eventId)">
-                    <input type="submit" name="Join" value= "View Details" class="btn btn-success">
+                <form  method="POST" name="joinEvent" action="@routes.PastEventController.pastEventsViewer(event.eventId)">
+                    <input type="submit" name="Join" value= "Details" class="btn btn-success">
                 </form>
         </tr>
         }
