@@ -37,6 +37,7 @@ create table event_actions (
 
 create table event_stats (
   id                        bigint auto_increment not null,
+  event_id                  bigint,
   no_of_praticipants        integer,
   total_no_of_messages      integer,
   no_of_hash_tag_messgaes   integer,
