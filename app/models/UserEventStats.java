@@ -3,7 +3,7 @@ package models;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
+import java.util.List;
 import play.db.ebean.Model;
 /**
  * Created by Supriya on 22/11/2014.
@@ -50,4 +50,10 @@ public class UserEventStats extends Model{
     public double collaborativeIndexForEvent;
 
     public int noOfUpVotesReceivedForEvent;
+
+    public static Model.Finder<Long, UserEventStats> find = new Model.Finder<Long, UserEventStats>(Long.class, UserEventStats.class);
+
+    public static List<UserEventStats> findAllUserEventStats() {
+        return find.findList();
+    }
 }

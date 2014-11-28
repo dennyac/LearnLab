@@ -5,6 +5,8 @@ import models.Event;
 import models.Question;
 import models.User;
 import models.UserStats;
+import models.UserEventStats;
+import models.ReportAnalytics;
 import play.data.validation.Constraints;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -34,22 +36,9 @@ import java.util.HashSet;
 import static play.data.Form.form;
 import java.text.*;
 
-
-/**
- * User: yesnault
- * Date: 22/01/12
- */
 @Security.Authenticated(Secured.class)
 public class Dashboard extends Controller {
 
-//    public static Result START_CHAT = redirect(
-//            routes.Chat.chatRoom()
-//    );
-//public static Result index() {
-//    User currUser = User.findByEmail(request().username());
-//    System.out.println("User email id is " + currUser.email);
-//    return ok(chatRoom.render(currUser));
-//}
     public static Result index() {
         User currentUser = User.findByEmail(request().username());
         boolean isInstructor = currentUser.isInstructor;
@@ -105,9 +94,7 @@ public class Dashboard extends Controller {
             System.out.println("Error in saving the event");
             ex.printStackTrace();
         }
-
         return ok(createEventConfirmation.render((User.findByEmail(request().username())), Event.findEvent()));
-
     }
     private static void initEventStage(Dashboard.CreateEventForm createEventForm,User instructorUser) throws AppException,MalformedURLException,ParseException {
         Event event = new Event();
@@ -186,6 +173,8 @@ public class Dashboard extends Controller {
         event.phase2Duration=15L;
         event.phase3Duration=15L;
 
+        //event active status
+        event.active=2;
         //save the event
         event.save();
 
@@ -205,23 +194,6 @@ public class Dashboard extends Controller {
         return ok(s);
     }
 
-
-//    public static Result generateReportsForEvent(String name)
-//    //public static Result generateReports()
-//    {
-////        User instructor = User.findByEmail(request().username());
-////        Form<CreateEventForm> form2 = form(CreateEventForm.class);
-////        CreateEventForm f = form2.bindFromRequest().get();
-////
-//        System.out.println(" event name is " + name);
-//        User reportUser = User.findByEmail(request().username());
-//        Event reportEvent = Event.findByName(name);
-//        Form<CreateEventForm> form2 = form(CreateEventForm.class);
-//        //Event reportEvent = Event.findEvent();
-//        return ok(report.render(reportUser));
-//    }
-
-
     public static Result generateReports() {
         User reportUser = User.findByEmail(request().username());
        // Event reportEvent = Event.findByName(name);
@@ -235,9 +207,17 @@ public class Dashboard extends Controller {
     }
 
     public static Result generateIndividualEventSummary(String eventName){
+        //Report Analytics
+        ReportAnalytics ra=new ReportAnalytics();
+        //Event e=Event.findByName(eventName);
+        System.out.println("going to call report analytics function...");
+        ra.analyze(eventName);
+        //System.out.println("Event name "+e.eventName);
+        //Finding the user with highest upvotes
+        List<UserEventStats> usrEventStatsList=UserEventStats.findAllUserEventStats();
+
         return ok(eventName+" report generated");
     }
-
 
     public static Result instructorView() {
 //        if(username == null || username.trim().equals("")) {
@@ -250,8 +230,7 @@ public class Dashboard extends Controller {
         return ok(instructorView.render(currUser));
     }
 
-    public static Result instructorPastEvents()
-    {
+    public static Result instructorPastEvents() {
         List<Event> completedEvents = Event.findAllCompletedEvents();
         User reportUser = User.findByEmail(request().username());
         return ok(pastEventsForInstructors.render(reportUser,completedEvents));
@@ -329,13 +308,10 @@ public class Dashboard extends Controller {
         public List<String> participants;
     }
 
-    public static class reportForEvent
-    {
+    public static class reportForEvent {
         @Constraints.Required
         public String event;
     }
 }
-//        public static Result index() {
-//        return START_CHAT;
-//    }
+
 

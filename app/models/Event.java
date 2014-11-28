@@ -106,12 +106,23 @@ public class Event extends Model{
     @Formats.NonEmpty
     public long phase3Duration;
 
+    public int active;  //flag to check if the event is an ongoing event.
 
 
-    public boolean active;  //flag to check if the event is an ongoing event.
 
-    @OneToOne
+    //@OneToOne(mappedBy="event",cascade=CascadeType.ALL)
+
     public EventStats eventStats;
+
+    @OneToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+    @JoinColumn(name="event_FK")
+    public EventStats getEventStats() {
+        return eventStats;
+    }
+
+    public void setEventStats(EventStats eventStats) {
+        this.eventStats = eventStats;
+    }
 
     @OneToMany(mappedBy = "event")
     public List<EventActions> eventActions;
@@ -136,6 +147,13 @@ public class Event extends Model{
     {
         return find.where().eq("eventName",EventName).findUnique();
     }
+
+    public void updateEventStatus()
+    {
+        //marks the event as completed.
+        this.active=2;
+    }
+    //Find event stats for a particular event
 
 //    public static EventStats findEventStats(Event event)
 //    {

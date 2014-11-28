@@ -27,6 +27,10 @@ public class EventUtils {
     }
 
     public static EventStatsWrapper EventAggregator(Event event,User user){
+        //Mark the active status of the event to 2 (Completed)
+        event.updateEventStatus();
+        //Update the event
+        event.update();
         EventStatsWrapper eventStatsWrapper = new EventStatsWrapper(event);
         System.out.println("In the eventAggregator Function");
         eventStatsWrapper.eventStatsAggregator();
