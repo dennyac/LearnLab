@@ -10,7 +10,7 @@ create table event (
   event_date                datetime,
   start_time                varchar(255),
   end_time                  varchar(255),
-  script                    TEXT,
+  description               TEXT,
   script_phase1             TEXT,
   script_phase2             TEXT,
   script_phase3             TEXT,
@@ -19,8 +19,8 @@ create table event (
   phase1duration            bigint,
   phase2duration            bigint,
   phase3duration            bigint,
-  active                    tinyint(1) default 0,
-  event_stats_id            bigint,
+  active                    integer,
+  event_FK                  bigint,
   constraint pk_event primary key (event_id))
 ;
 
@@ -37,6 +37,7 @@ create table event_actions (
 
 create table event_stats (
   id                        bigint auto_increment not null,
+  event_id                  bigint,
   no_of_praticipants        integer,
   total_no_of_messages      integer,
   no_of_hash_tag_messgaes   integer,
@@ -46,6 +47,7 @@ create table event_stats (
   percentage_correct_in_phase4 double,
   positive_collaboration_score double,
   negative_collaboration_score double,
+  constraint uq_event_stats_event_id unique (event_id),
   constraint pk_event_stats primary key (id))
 ;
 
@@ -137,8 +139,8 @@ create table event_question (
 ;
 alter table event add constraint fk_event_instructor_1 foreign key (instructor_id) references users (id) on delete restrict on update restrict;
 create index ix_event_instructor_1 on event (instructor_id);
-alter table event add constraint fk_event_eventStats_2 foreign key (event_stats_id) references event_stats (id) on delete restrict on update restrict;
-create index ix_event_eventStats_2 on event (event_stats_id);
+alter table event add constraint fk_event_eventStats_2 foreign key (event_FK) references event_stats (id) on delete restrict on update restrict;
+create index ix_event_eventStats_2 on event (event_FK);
 alter table event_actions add constraint fk_event_actions_event_3 foreign key (event_event_id) references event (event_id) on delete restrict on update restrict;
 create index ix_event_actions_event_3 on event_actions (event_event_id);
 alter table event_actions add constraint fk_event_actions_user_4 foreign key (user_id) references users (id) on delete restrict on update restrict;

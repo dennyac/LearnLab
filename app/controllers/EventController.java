@@ -19,9 +19,7 @@ import views.html.live.liveFeeds;
 import views.html.live.liveStats;
 import views.html.live.offlineStats;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import java.util.ArrayList;
 
@@ -35,8 +33,10 @@ public class EventController extends Controller {
     public static Result eventStage1(long eventId) {
         User currentUser = User.findByEmail(request().username());
         Event eventSelected = Event.findById(eventId);
+        String[] hashTagsFromEvent = eventSelected.getHashTags();
+        List<String> hashTags = Arrays.asList(hashTagsFromEvent);
         Question question =  eventSelected.Questions.get(0);
-        return ok(eventStage1.render((currentUser), eventSelected, question,form(EventStageform.class)));
+        return ok(eventStage1.render((currentUser), eventSelected, hashTags , question,form(EventStageform.class)));
     }
 
     public static Result chatRoom(long eventId) {
@@ -46,14 +46,18 @@ public class EventController extends Controller {
         EventUtils.initEventStage(f);
         User currUser = User.findByEmail(request().username());
         Event eventSelected = Event.findById(eventId);
-        return ok(chatRoom.render((currUser),eventSelected));
+        String[] hashTagsFromEvent = eventSelected.getHashTags();
+        List<String> hashTags = Arrays.asList(hashTagsFromEvent);
+        return ok(chatRoom.render((currUser),eventSelected,hashTags));
     }
 
     public static Result eventStage3(long eventId) {
         User currUser = User.findByEmail(request().username());
         Event eventSelected = Event.findById(eventId);
+        String[] hashTagsFromEvent = eventSelected.getHashTags();
+        List<String> hashTags = Arrays.asList(hashTagsFromEvent);
         Question question = eventSelected.Questions.get(0);
-        return ok(eventStage3.render((currUser), eventSelected, question,form(EventStageform.class)));
+        return ok(eventStage3.render((currUser), eventSelected,hashTags, question,form(EventStageform.class)));
     }
 
     public static Result eventStage4(long eventId){
@@ -64,9 +68,11 @@ public class EventController extends Controller {
 
         User currUser = User.findByEmail(request().username());
         Event eventSelected = Event.findById(eventId);
+        String[] hashTagsFromEvent = eventSelected.getHashTags();
+        List<String> hashTags = Arrays.asList(hashTagsFromEvent);
         Question question = eventSelected.Questions.get(1);
         List<User> userParticipants = eventSelected.participants;
-        return ok(eventStage4.render((currUser), eventSelected, question,userParticipants ,form(EventStageform.class)));
+        return ok(eventStage4.render((currUser), eventSelected, hashTags, question,userParticipants ,form(EventStageform.class)));
     }
 
     public static Result eventResult(){

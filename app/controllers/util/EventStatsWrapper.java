@@ -14,6 +14,8 @@ public class EventStatsWrapper {
 
     public Event event;
 
+    public Long eventId;
+
     public int noOfPraticipants;
 
     public int totalNoOfMessages;
@@ -149,6 +151,7 @@ public class EventStatsWrapper {
     public void eventStatsSave(){
         EventStats eventStats = new EventStats();
         eventStats.event = this.event;
+        eventStats.eventId = this.event.eventId;
         eventStats.noOfPraticipants = this.noOfPraticipants;
         eventStats.noOfHashTagMessgaes = this.noOfHashTagMessgaes;
         eventStats.noOfInformalMessages = this.noOfInformalMessages;

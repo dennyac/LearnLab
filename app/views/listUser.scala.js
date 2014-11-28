@@ -1,11 +1,8 @@
-@(instructorUsername: String,userList: String)
-var insname = '@instructorUsername';
+@(divID: String,userList: String)
+var divid = '@divID';
 var usrList = '@userList';
 $(document).ready(function() {
-        var el="Hello there!!!"
-        $('#dummy').append(el)
-        var select = document.getElementById("participant1");
-        window.alert(insname);
+        var select = document.getElementById(divid);
         var userFullNameArray = usrList.split('|');
         var arrayLength=userFullNameArray.length;
         for(var i = 0;i<arrayLength;i++) {

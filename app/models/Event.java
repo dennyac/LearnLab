@@ -52,10 +52,10 @@ public class Event extends Model{
     @Formats.NonEmpty
     public String endTime;
 
-    //@Constraints.Required
-    //@Formats.NonEmpty
+    @Constraints.Required
+    @Formats.NonEmpty
     @Column(columnDefinition = "TEXT")
-    public String script;
+    public String description;
 
     @Constraints.Required
     @Formats.NonEmpty
@@ -72,8 +72,8 @@ public class Event extends Model{
     @Column(columnDefinition = "TEXT")
     public String scriptPhase3;
 
-    //@Constraints.Required
-    //@Formats.NonEmpty
+    @Constraints.Required
+    @Formats.NonEmpty
     @Column(columnDefinition = "TEXT")
     public String scriptPhase4;
 
@@ -103,12 +103,23 @@ public class Event extends Model{
     @Formats.NonEmpty
     public long phase3Duration;
 
+    public int active;  //flag to check if the event is an ongoing event.
 
 
-    public boolean active;  //flag to check if the event is an ongoing event.
 
-    @OneToOne
+    //@OneToOne(mappedBy="event",cascade=CascadeType.ALL)
+
     public EventStats eventStats;
+
+    @OneToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+    @JoinColumn(name="event_FK")
+    public EventStats getEventStats() {
+        return eventStats;
+    }
+
+    public void setEventStats(EventStats eventStats) {
+        this.eventStats = eventStats;
+    }
 
     @OneToMany(mappedBy = "event")
     public List<EventActions> eventActions;
@@ -129,19 +140,22 @@ public class Event extends Model{
         return find.findList();
     }
 
-        public static void testList()
-    {
-        List<Event> u = findAllEvents();
-        for( Event ur : u)
-        {
-            System.out.println(" the name is " + ur.eventName);
-        }
-    }
-
     public static Event findByName(String EventName)
     {
         return find.where().eq("eventName",EventName).findUnique();
     }
+
+    public void updateEventStatus()
+    {
+        //marks the event as completed.
+        this.active=2;
+    }
+    //Find event stats for a particular event
+
+//    public static EventStats findEventStats(Event event)
+//    {
+//        return find.where().eq("eventID", )
+//    }
 
 
    /* public static List<Event> getActiveEventNameList()
@@ -173,6 +187,16 @@ public class Event extends Model{
         return list.get(1).Answer;
     }
 
+    public String[] getHashTags()
+    {
+        String[] hashtags=this.hashes.split("#");
+        for(String s: hashtags)
+        {
+            System.out.println("hashtag :"+ s);
+        }
+        return hashtags;
+    }
+
     public static Event findEvent(){
         Event e = new Event();
         HashSet<String> tags = new HashSet<String>();
@@ -188,6 +212,10 @@ public class Event extends Model{
         return completedEventList;
     }
 
+    public static List<Event> getAllEventsToActivate(){
+        List<Event> eventsToActivateList = find.where().eq("active",0).findList();
+        return eventsToActivateList;
+    }
 
 
 }

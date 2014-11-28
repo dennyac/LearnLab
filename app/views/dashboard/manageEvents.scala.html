@@ -1,4 +1,4 @@
-@(user: User, event: Event, createEveForm: Form[Dashboard.CreateEventForm])
+@(user: User, event: Event, createEveForm: Form[Dashboard.CreateEventForm],participants: List[User])
 @import helper._
 @import play.api.mvc._
 @mainInstructor(user) {
@@ -19,27 +19,39 @@
                   <fieldset class="fieldSetLegend">
                       <legend class="fieldSetLegend"><h5><b>Event and Scripts</b></h5></legend>
                             <div class="row">
-                                <div class="form-group col-md-3 col-sm-4 col-xs-12">
+                                <div class="form-group col-md-6 col-sm-4 col-xs-12">
                                     <label for="eventName">Event Name</label>
                                     <input name="eventName" type="text" class="form-control" id="eventName">
                                 </div>
-                                <div class="form-group col-md-7 col-sm-4 col-xs-12">
+                                <div class="form-group col-md-6 col-sm-4 col-xs-12">
                                     <label for="eventDescription">Event Description</label>
-                                    <input name="eventDescription" type="text" class="form-control" id="eventDescription">
+                                    <textarea name="eventDescription" type="text" class="form-control" id="eventDescription"></textarea>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-md-3.3 col-sm-4 col-xs-12">
+                                <div class="form-group col-md-12 col-sm-4 col-xs-12">
+                                    <label for="hashTags">HashTags</label>
+                                    <input name="hashes" type="text" class="form-control" id="hashTags">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6 col-sm-4 col-xs-12">
                                     <label for="Script1">Phase 1 Script</label>
                                     <textarea name="script1" type="text" class="form-control" id="Script1" rows="2"></textarea>
                                 </div>
-                                <div class="form-group col-md-3.3 col-sm-4 col-xs-12">
+                                <div class="form-group col-md-6 col-sm-4 col-xs-12">
                                     <label for="Script2">Phase 2 Script</label>
                                     <textarea name="script2" type="text" class="form-control" id="Script2" rows="2"></textarea>
                                 </div>
-                                <div class="form-group col-md-3.3 col-sm-4 col-xs-12">
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6 col-sm-4 col-xs-12">
                                     <label for="Script3">Phase 3 Script</label>
                                     <textarea name="script3" type="text" class="form-control" id="Script3" rows="2"></textarea>
+                                </div>
+                                <div class="form-group col-md-6 col-sm-4 col-xs-12">
+                                    <label for="Script4">Phase 4 Script</label>
+                                    <textarea name="script4" type="text" class="form-control" id="Script4" rows="2"></textarea>
                                 </div>
                             </div>
                   </fieldset>
@@ -110,30 +122,12 @@
                         <legend class="fieldSetLegend"><h5><b>Event Participants and Schedule</b></h5></legend>
                         <div class="row">
                             <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                                <select class="form-control" name="participant1" id="participant1"></select>
-                            </div>
-                            <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                                <select class="form-control" name="participant2" id="participant2">
-                                    <option value="Dhanyatha">Dhanyatha</option>
-                                    <option value="Shruthi">Shruthi</option>
-                                    <option value="Denny">Denny</option>
-                                    <option value="Supriya">Supriya</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                                <select class="form-control" name="participant3" id="participant3">
-                                    <option value="Dhanyatha">Dhanyatha</option>
-                                    <option value="Shruthi">Shruthi</option>
-                                    <option value="Denny">Denny</option>
-                                    <option value="Supriya">Supriya</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                                <select class="form-control" name="participant4" id="participant4">
-                                    <option value="Dhanyatha">Dhanyatha</option>
-                                    <option value="Shruthi">Shruthi</option>
-                                    <option value="Denny">Denny</option>
-                                    <option value="Supriya">Supriya</option>
+                                <select name="participants" multiple="multiple" size="4">
+                                @for((participantUser,index) <- participants.zipWithIndex){
+                                @if( user.id != participantUser.id){
+                                <option value="@participantUser.fullname">@participantUser.fullname</option>
+                                }
+                                }
                                 </select>
                             </div>
                             <div class="form-group col-md-3 col-sm-4 col-xs-12">
@@ -220,6 +214,37 @@
         </div>
         </div>
 </div>
-<!--/span-->
-<script type="text/javascript" charset="utf-8" src="@routes.Dashboard.listUserJs(user.email)"></script>
+
+<script>
+            function getSelectedOptions()
+                {
+                    var selectedValues = $('#participantSelect').val();
+                    console.log("Inside javascript");
+                    return selectedValues;
+                }
+            function activate(eventId){
+                $.ajax({
+                    url: "/dashboard/getEvents/activate",
+                    type: 'GET',
+                    data: { eventId: eventId } ,
+                    success: function (response) {
+                        $("#"+eventId).html(response);
+                    },
+                    error: function () {
+                    //your error code
+                    }
+                });
+            }
+            function loadData(){
+                var activateUrl = "/dashboard/getEvents/activate"
+                var table = $("#eventViewId tbody");
+                $.ajax({url:"/dashboard/getEvents",success:function(result){
+                        console.log(result);
+                        var data = jQuery.parseJSON(result);
+                        $.each(data, function(idx, elem){
+                        table.append("<tr><td>"+elem.eventId+"</td><td>"+elem.eventName+"</td><td id="+elem.eventId+"><a href='javascript:;' onclick='activate(\""+elem.eventId+"\")'>"+'Activate'+"</a></td></tr>");
+                        });
+                }});
+            }
+        </script>
 }

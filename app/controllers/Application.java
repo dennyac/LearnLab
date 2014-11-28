@@ -1,9 +1,11 @@
 package controllers;
 
+import controllers.util.LeaderListElementWrapper;
 import models.Event;
 import models.EventActions;
 import models.User;
 import models.UserEventStats;
+import models.UserStats;
 import models.utils.AppException;
 import play.Logger;
 import play.data.Form;
@@ -18,6 +20,8 @@ import views.html.user.leaderBoard;
 import views.html.user.pastEventsForUsersView;
 
 import javax.validation.Constraint;
+import scala.collection.JavaConverters;
+import java.util.List;
 
 import java.util.List;
 
@@ -179,8 +183,15 @@ public class Application extends Controller {
         return ok(pastEventsForUsersView.render(u,eventMessages,userwiseMessages));
     }
 
-    public static Result leaderBoard(){
-        return ok(leaderBoard.render((User.findByEmail(request().username())), Event.findEvent()));
+    public static Result leaderBoard(Long userId){
+        //retrieve userStats and the side pane
+        User currentUser = User.findById(userId);
+        UserStats userStats = UserStats.findUserStatsByUser(currentUser);
+
+        //retrieve the leader list from the wrapper
+        LeaderListElementWrapper le = new LeaderListElementWrapper();
+        List<LeaderListElementWrapper> leaderList = le.prepareLeaderList();
+        return ok(leaderBoard.render(currentUser,userStats, Event.findEvent(),leaderList));
     }
 
 }
