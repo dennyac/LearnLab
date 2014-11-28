@@ -1,5 +1,43 @@
-@(user: User, event: Event)
+@(user: User, userStats: UserStats , event: Event, leaderList: List[controllers.util.LeaderListElementWrapper])
 
 @mainStudent(user) {
-        <h4>Leader Board</h4>
+<div id="wrapper">
+    <div class="col-md-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title"> @user.fullname 's Profile</h3>
+            </div>
+            <div class="panel-body">
+                <ol class="nav">
+                    <li>Student ID: @user.id</li>
+                    <br>
+                    <li>Events Participated In: @userStats.noOfEventsParticipatedIn </li>
+                    <br>
+                    <li>Hash Tag Contribution: @userStats.noOfIndividualHashTagMessages </li>
+                    <br>
+                    <li>Peers who you have helped: @userStats.upVotes</li>
+                    <br>
+                    <li><a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+<div class="col-md-9">
+<h4>Leader Board</h4>
+<table class="table table-striped">
+    <tr>
+        <th>Rank</th>
+        <th>Name</th>
+        <th>AggregateScore</th>
+    </tr>
+    @for(leaderListElement <- leaderList){
+    <tr>
+        <td>@leaderListElement.rank</td>
+        <td>@leaderListElement.userStats.user.fullname</td>
+        <td>@leaderListElement.userStats.aggregateScore</td>
+    </tr>
+    }
+</table>
+</div>
+</div>
 }

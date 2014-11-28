@@ -4,6 +4,7 @@ import play.data.format.Formats;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
+import javax.persistence.criteria.Order;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,5 +57,15 @@ public class UserStats extends Model{
 
     public static UserStats findUserStatsByUser(User user){
         return find.where().eq("user", user).findUnique();
+    }
+
+    public static List<UserStats> findLeaderList() {
+         List<UserStats> leaderList = find.orderBy("aggregateScore desc").findList();
+        System.out.println("Leader List:");
+        for(UserStats u: leaderList){
+            System.out.println(u.user.fullname + " Has score:" + u.aggregateScore);
+        }
+        return leaderList;
+
     }
 }
