@@ -220,7 +220,25 @@ public class Dashboard extends Controller {
         //System.out.println("Event name "+e.eventName);
         //Finding the user with highest upvotes
         List<UserEventStats> usrEventStatsList=UserEventStats.findAllUserEventStats();
-
+        System.out.println("The user event statistics...");
+        int maxUpvotes=Integer.MIN_VALUE;
+        User mostUpvotedUser=new User();
+        for(int i=0;i<usrEventStatsList.size();i++)
+        {
+            int currentUserUpvoteCount=usrEventStatsList.get(i).noOfUpVotesReceivedForEvent;
+            System.out.println("current user upvotes... "+currentUserUpvoteCount);
+            System.out.println("Fetching the current user..");
+            User currentUser=usrEventStatsList.get(i).user;
+            System.out.println("current user name.."+currentUser.fullname);
+            if(currentUserUpvoteCount>maxUpvotes) {
+                maxUpvotes = currentUserUpvoteCount;
+                mostUpvotedUser=currentUser;
+            }
+        }
+        if(maxUpvotes>0)
+            output+="|"+" The most upvoted student for this event is "+mostUpvotedUser.fullname+" with "+maxUpvotes+ " votes.";
+        else
+            output+="|"+" None of the students in this event was upvoted by his/her peers. ";
         return ok(output);
     }
 
