@@ -20,6 +20,9 @@ public class EventStats extends Model {
     @OneToOne(mappedBy = "eventStats")
     public Event event;
 
+    /*Work around for oneToOne mapping*/
+    public Long eventId;
+
     public int noOfPraticipants;
 
     public int totalNoOfMessages;
