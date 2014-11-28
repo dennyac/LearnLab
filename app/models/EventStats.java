@@ -1,11 +1,9 @@
 package models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.CascadeType;
+import javax.persistence.*;
 import javax.validation.Constraint;
 import models.Event;
+import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
@@ -21,6 +19,9 @@ public class EventStats extends Model {
     public Event event;
 
     /*Work around for oneToOne mapping*/
+    @Constraints.Required
+    @Formats.NonEmpty
+    @Column(unique = true)
     public Long eventId;
 
     @OneToOne(mappedBy = "eventStats", cascade=CascadeType.ALL)

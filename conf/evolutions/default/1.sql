@@ -47,6 +47,7 @@ create table event_stats (
   percentage_correct_in_phase4 double,
   positive_collaboration_score double,
   negative_collaboration_score double,
+  constraint uq_event_stats_event_id unique (event_id),
   constraint pk_event_stats primary key (id))
 ;
 
