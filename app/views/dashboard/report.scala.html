@@ -1,7 +1,7 @@
 @(user: User, event: Event,events: List[Event])
 @mainInstructor(user){
     <fieldset class="fieldSetLegend">
-        <legend class="fieldSetLegend"><h5><b>Report Summary</b></h5></legend>
+        <legend class="fieldSetLegend"><h5><b>Select Event</b></h5></legend>
                 <div class="form-group">
                     <label for="individualEvent" class="col-sm-2 control-label">Select Event</label>
                         <div class="form-group col-md-3 col-sm-4 col-xs-12">
@@ -13,10 +13,14 @@
                             </select>
                         </div>
                 </div>
-                <div class="form-group col-md-3 col-sm-4 col-xs-12" id="tabid">
-                </div>
     </fieldset>
-
+    <fieldset class="fieldSetLegend">
+    <legend class="fieldSetLegend"><h5><b>Event Summary</b></h5></legend>
+    <div class="row">
+        <div class="form-group col-md-3 col-sm-4 col-xs-12" id="tabid">
+        </div>
+    </div>
+    </fieldset>
     <script>
     $("#tabid").hide();
         $("select").change(function () {
@@ -39,7 +43,7 @@
             $("#tabid").show();
 
             //Populate data by AJAX call here
-            alert("Activating"+eventName);
+            //alert("Activating"+eventName);
                 $.ajax({
                     url: "/dashboard/getSummary/individualEventSummary",
                     type: 'GET',
@@ -47,6 +51,8 @@
                     success: function (response) {
                         var messageArray = response.split('|');
                         var arrayLength=messageArray.length;
+                        document.getElementById("tabid").innerHTML = " ";
+                            
                         for(var i = 0;i<arrayLength;i++) {
                          $("#tabid").append("<br><p>"+ messageArray[i] +"</p></br>");
                         }
