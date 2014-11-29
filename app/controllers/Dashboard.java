@@ -174,7 +174,7 @@ public class Dashboard extends Controller {
         event.phase3Duration=15L;
 
         //event active status
-        event.active=2;
+        event.active=0;
         //save the event
         event.save();
 
