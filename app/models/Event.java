@@ -190,11 +190,18 @@ public class Event extends Model{
     public String[] getHashTags()
     {
         String[] hashtags=this.hashes.split("#");
-        for(String s: hashtags)
+        String[] hashTagsWithoutSpaces=new String[hashtags.length-1];
+        //for(String s: hashtags)
+        for(int i=1;i<hashtags.length;i++)
         {
+            String s=hashtags[i];
             System.out.println("hashtag :"+ s);
+            System.out.println("The length of the hash is "+ s.length());
+            s.replaceAll("\\s+","");
+            if(s.length()!=0)
+            hashTagsWithoutSpaces[i-1]=s;
         }
-        return hashtags;
+        return hashTagsWithoutSpaces;
     }
 
     public static Event findEvent(){
