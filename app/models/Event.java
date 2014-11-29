@@ -149,10 +149,15 @@ public class Event extends Model{
         return find.where().eq("eventName",EventName).findUnique();
     }
 
-    public void updateEventStatus()
+    public void markEventStatusAsCompleted()
     {
         //marks the event as completed.
         this.active=2;
+    }
+
+    public void markEventStatusAsOngoing()
+    {
+        this.active=1;
     }
     //Find event stats for a particular event
 

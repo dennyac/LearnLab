@@ -234,7 +234,13 @@ public class Dashboard extends Controller {
     }
 
     public static Result activateEvent(Long eventId){
-
+        //Update the status of the event to 1 to mark that the event is activated.
+        //find event by eventID
+        Event event=Event.findById(eventId);
+        //Call function to mark the event as ongoing
+        event.markEventStatusAsOngoing();
+        //update the action to the database.
+        event.update();
         return ok(eventId+" Activated");
     }
 
