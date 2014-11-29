@@ -9,6 +9,7 @@ import com.typesafe.plugin.RedisPlugin;
 import models.Event;
 import models.EventActions;
 import models.User;
+import org.joda.time.DateTime;
 import play.Logger;
 import play.libs.Json;
 import redis.clients.jedis.Jedis;
@@ -85,8 +86,7 @@ public class InstructorWebSocket extends UntypedActor {
             ea.ActionType = "InstructorMessage";
             ea.Attribute1 = msg;
             ea.user = User.findByEmail(instructorEmail);
-            ;
-            ea.TimeOfEventAction = new Date(System.currentTimeMillis());
+            ea.TimeOfEventAction = DateTime.now();
             ea.event = Event.findById(eId);
             EventActions.asyncSave(ea);
 

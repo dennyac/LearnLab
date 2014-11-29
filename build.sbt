@@ -26,4 +26,4 @@ resolvers ++= Seq(
 )
 
 
-lazy val root = (project in file(".")).enablePlugins(play.PlayJava)
+lazy val root = (project in file(".")).enablePlugins(play.PlayJava,net.litola.SassPlugin)

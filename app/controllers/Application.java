@@ -1,6 +1,7 @@
 package controllers;
 
 import controllers.util.LeaderListElementWrapper;
+import controllers.util.MD5Util;
 import models.Event;
 import models.EventActions;
 import models.User;
@@ -165,7 +166,8 @@ public class Application extends Controller {
     }
 
     public static Result profile(){
-        return ok(userProfile.render((User.findByEmail(request().username())), Event.findEvent()));
+
+        return ok(userProfile.render((User.findByEmail(session().get("email"))), Event.findEvent(), MD5Util.md5Hex(session().get("email"))));
     }
 
     public static Result pastEventDiscussion(Long userid){

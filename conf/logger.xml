@@ -21,6 +21,8 @@
     <logger name="akka.Instructor" level="INFO" />
     <logger name="akka.UserWebSocket" level="INFO" />
     <logger name="akka.InstructorWebSocket" level="INFO" />
+    <logger name="akka.Robot" level="INFO" />
+
 
     <!-- Off these ones as they are annoying, and anyway we manage configuration ourself -->
     <logger name="com.avaje.ebean.config.PropertyMapLoader" level="OFF" />

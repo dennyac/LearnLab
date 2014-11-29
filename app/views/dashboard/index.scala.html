@@ -37,11 +37,48 @@
             <td>1</td>
             <td>
                 <form  method="POST" name="joinEvent" action="@routes.EventController.eventStage1(event.eventId)">
-                    <input type="submit" name="Join" value= "Join" class="btn btn-success">
+                    <input time="@event.getEventEpoch()" type="submit" name="Join" value= "Join" class="btn btn-success">
                 </form>
         </tr>
         }
     </table>
 </div>
+        <script>
+            $('input[name=Join]').click(function(e){
+
+                var button = $(this);
+                var milliseconds = button.attr('time');
+                console.log('milliseconds'  + milliseconds);
+
+                var currTime = (new Date).getTime();
+                console.log('currTime'  + currTime);
+                var diff = milliseconds - currTime;
+                console.log('diff'  + diff);
+                if(diff > 300000){
+                    e.preventDefault();
+                    alert('You are only allowed to join the event 5 minutes before it begins');
+                }
+                else{
+                    if(button.attr('proceed')=='true'){
+                        return true;
+                    }
+                    else{
+                        $('input[name=Join]').attr('disabled', 'disabled');
+                        setTimeout(function() {
+                            button.removeAttr('disabled');
+                            button.attr('proceed', 'true');
+                            button.click();
+                        },diff);
+                        console.log('diff is ' + diff);
+                        alert('The event will begin shortly');
+                    }
+
+
+                }
+                return false;
+
+
+            });
+        </script>
 <!--/span-->
 }

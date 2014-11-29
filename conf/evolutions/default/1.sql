@@ -7,7 +7,7 @@ create table event (
   event_id                  bigint auto_increment not null,
   instructor_id             bigint,
   event_name                varchar(255),
-  event_date                datetime,
+  event_date_time           datetime,
   start_time                varchar(255),
   end_time                  varchar(255),
   description               TEXT,
@@ -16,9 +16,9 @@ create table event (
   script_phase3             TEXT,
   script_phase4             TEXT,
   hashes                    varchar(255),
-  phase1duration            bigint,
-  phase2duration            bigint,
-  phase3duration            bigint,
+  phase1duration            integer,
+  phase2duration            integer,
+  phase3duration            integer,
   active                    integer,
   event_FK                  bigint,
   constraint pk_event primary key (event_id))
@@ -82,7 +82,6 @@ create table users (
   validated                 tinyint(1) default 0,
   is_instructor             tinyint(1) default 0,
   bio                       varchar(255),
-  user_stats_information_id bigint,
   constraint uq_users_email unique (email),
   constraint uq_users_fullname unique (fullname),
   constraint pk_users primary key (id))
@@ -145,16 +144,14 @@ alter table event_actions add constraint fk_event_actions_event_3 foreign key (e
 create index ix_event_actions_event_3 on event_actions (event_event_id);
 alter table event_actions add constraint fk_event_actions_user_4 foreign key (user_id) references users (id) on delete restrict on update restrict;
 create index ix_event_actions_user_4 on event_actions (user_id);
-alter table users add constraint fk_users_userStatsInformation_5 foreign key (user_stats_information_id) references user_stats (id) on delete restrict on update restrict;
-create index ix_users_userStatsInformation_5 on users (user_stats_information_id);
-alter table user_event_stats add constraint fk_user_event_stats_user_6 foreign key (user_id) references users (id) on delete restrict on update restrict;
-create index ix_user_event_stats_user_6 on user_event_stats (user_id);
-alter table user_event_stats add constraint fk_user_event_stats_event_7 foreign key (event_event_id) references event (event_id) on delete restrict on update restrict;
-create index ix_user_event_stats_event_7 on user_event_stats (event_event_id);
-alter table user_event_stats add constraint fk_user_event_stats_userStats_8 foreign key (user_stats_id) references user_stats (id) on delete restrict on update restrict;
-create index ix_user_event_stats_userStats_8 on user_event_stats (user_stats_id);
-alter table user_stats add constraint fk_user_stats_user_9 foreign key (user_id) references users (id) on delete restrict on update restrict;
-create index ix_user_stats_user_9 on user_stats (user_id);
+alter table user_event_stats add constraint fk_user_event_stats_user_5 foreign key (user_id) references users (id) on delete restrict on update restrict;
+create index ix_user_event_stats_user_5 on user_event_stats (user_id);
+alter table user_event_stats add constraint fk_user_event_stats_event_6 foreign key (event_event_id) references event (event_id) on delete restrict on update restrict;
+create index ix_user_event_stats_event_6 on user_event_stats (event_event_id);
+alter table user_event_stats add constraint fk_user_event_stats_userStats_7 foreign key (user_stats_id) references user_stats (id) on delete restrict on update restrict;
+create index ix_user_event_stats_userStats_7 on user_event_stats (user_stats_id);
+alter table user_stats add constraint fk_user_stats_user_8 foreign key (user_id) references users (id) on delete restrict on update restrict;
+create index ix_user_stats_user_8 on user_stats (user_id);
 
 
 

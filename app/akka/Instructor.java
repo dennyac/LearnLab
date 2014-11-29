@@ -19,6 +19,8 @@ import java.util.ArrayList;
 
 import java.util.concurrent.TimeUnit;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+
 /**
  * A chat room is an Actor.
  */
@@ -27,6 +29,7 @@ public class Instructor extends UntypedActor {
 
     // Default room.
     private final String CHANNEL;
+    private final ActorRef InstructorSparky;
     private static final Logger.ALogger logger = Logger.of(Instructor.class);
     private final ArrayList<ActorRef> outSockets = new ArrayList<ActorRef>();
 
@@ -45,7 +48,7 @@ public class Instructor extends UntypedActor {
         CHANNEL = instructor + ".event.*";
         logger.info("Instructor(" + CHANNEL + "):Instructor");
 
-
+        InstructorSparky = Akka.system().actorOf(InstructorRobot.props(getSelf(),instructor), CHANNEL + ".InstructorSparky");
         //add the robot
 
 
@@ -61,14 +64,13 @@ public class Instructor extends UntypedActor {
                 Akka.system().dispatcher()
         );
 
-        Akka.system().scheduler().scheduleOnce(
-                Duration.create(10, TimeUnit.SECONDS),
-                new Runnable() {
-                    public void run() {
-                        Akka.system().actorOf(InstructorRobot.props(getSelf()), instructor + ".Sparky");
-                    }
-                },
-                Akka.system().dispatcher()
+        Akka.system().scheduler().schedule(
+                Duration.create(20, SECONDS),
+                Duration.create(20, SECONDS),
+                InstructorSparky,
+                "Dummy",
+                Akka.system().dispatcher(),
+                /** sender **/getSelf()
         );
     }
 

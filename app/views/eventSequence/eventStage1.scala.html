@@ -63,6 +63,14 @@
     </div>
 </div>
 </div>
+<script>
+
+    console.log("@event.phase1Duration" * 60000);
+    var phaseComplete = function() {
+        $('input[name=Join]').click()
+    }
+    setTimeout(phaseComplete,"@event.phase1Duration" * 60000);
+</script>
 }
 
 
