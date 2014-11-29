@@ -245,33 +245,41 @@ public class Dashboard extends Controller {
         //Event e=Event.findByName(eventName);
         System.out.println("going to call report analytics function...");
         ra.analyze(eventName);
-        System.out.println("Report Analytics Max Percent Phase:"+ ra.getMaxPercentPhase());
-        System.out.println("Report Analytics Hash Messages:"+ ra.getHashMsgs());
-        System.out.println("Report Analytics collabMsg:"+ ra.getCollabMsg());
-
-        String output=ra.getMaxPercentPhase()+"|"+ra.getHashMsgs()+"|"+ra.getCollabMsg();
-        //System.out.println("Event name "+e.eventName);
-        //Finding the user with highest upvotes
-        List<UserEventStats> usrEventStatsList=UserEventStats.findAllUserEventStats();
-        System.out.println("The user event statistics...");
-        int maxUpvotes=Integer.MIN_VALUE;
-        User mostUpvotedUser=new User();
-        for(int i=0;i<usrEventStatsList.size();i++)
-        {
-            int currentUserUpvoteCount=usrEventStatsList.get(i).noOfUpVotesReceivedForEvent;
-            System.out.println("current user upvotes... "+currentUserUpvoteCount);
-            System.out.println("Fetching the current user..");
-            User currentUser=usrEventStatsList.get(i).user;
-            System.out.println("current user name.."+currentUser.fullname);
-            if(currentUserUpvoteCount>maxUpvotes) {
-                maxUpvotes = currentUserUpvoteCount;
-                mostUpvotedUser=currentUser;
+        String maxPercentPhase= ra.getMaxPercentPhase();
+        String hashTagMsgs=ra.getHashMsgs();
+        String collabMsg=ra.getCollabMsg();
+        System.out.println("Report Analytics Max Percent Phase:" + maxPercentPhase);
+        System.out.println("Report Analytics Hash Messages:" + hashTagMsgs);
+        System.out.println("Report Analytics collabMsg:" + collabMsg);
+        String output="";
+        if(maxPercentPhase!=null && hashTagMsgs!=null && collabMsg!=null) {
+            output = ra.getMaxPercentPhase() + "|" + ra.getHashMsgs() + "|" + ra.getCollabMsg();
+            //System.out.println("Event name "+e.eventName);
+            //Finding the user with highest upvotes
+            List<UserEventStats> usrEventStatsList = UserEventStats.findAllUserEventStats();
+            System.out.println("The user event statistics...");
+            int maxUpvotes = Integer.MIN_VALUE;
+            User mostUpvotedUser = new User();
+            for (int i = 0; i < usrEventStatsList.size(); i++) {
+                int currentUserUpvoteCount = usrEventStatsList.get(i).noOfUpVotesReceivedForEvent;
+                System.out.println("current user upvotes... " + currentUserUpvoteCount);
+                System.out.println("Fetching the current user..");
+                User currentUser = usrEventStatsList.get(i).user;
+                System.out.println("current user name.." + currentUser.fullname);
+                if (currentUserUpvoteCount > maxUpvotes) {
+                    maxUpvotes = currentUserUpvoteCount;
+                    mostUpvotedUser = currentUser;
+                }
             }
+            if (maxUpvotes > 0)
+                output += "|" + " The most upvoted student for this event is " + mostUpvotedUser.fullname + " with " + maxUpvotes + " votes.";
+            else
+                output += "|" + " None of the students in this event were upvoted by his/her peers. ";
         }
-        if(maxUpvotes>0)
-            output+="|"+" The most upvoted student for this event is "+mostUpvotedUser.fullname+" with "+maxUpvotes+ " votes.";
         else
-            output+="|"+" None of the students in this event was upvoted by his/her peers. ";
+        {
+            output="This event is not completed. You can view the reports for this event once it is complete";
+        }
         return ok(output);
     }
 

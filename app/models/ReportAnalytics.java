@@ -61,7 +61,7 @@ public class ReportAnalytics {
         System.out.println("Inside report analyze function");
         Event e=Event.findByName(eventName);
         System.out.println("creation of event object successful "+e.eventName);
-        //Check if the event is successfull
+        //Check if the event is successfully completed
         if(e.active==2) {
             //Find event stats by event id
             EventStats stat = EventStats.findByEventName(eventName);
@@ -76,6 +76,8 @@ public class ReportAnalytics {
                 System.out.println("the event stats does not exist");
                 return;
             }
+
+            //MAX PERCENT PHASE
             double max = Math.max(phase1, Math.max(phase3, phase4));
             if (max == phase1) {
                 this.setMaxPercentPhase("Majority of the people got the question right in phase 1");
@@ -87,7 +89,7 @@ public class ReportAnalytics {
                 System.out.println("invalid max");
             }
 
-            //Inferences on the number of formal and informal messages
+            // SET HASH TAG MESSAGES Inferences on the number of formal and informal messages
             if (stat.noOfInformalMessages > stat.noOfInformalMessages) {
                 this.setHashMsgs("The group chat had majority of informal messages that encouraged students to interact");
             } else if (stat.noOfInformalMessages < stat.noOfInformalMessages) {
@@ -96,10 +98,10 @@ public class ReportAnalytics {
                 this.setHashMsgs("The group chat had equal number of formal and informal messages ");
             }
 
+            //COLLABORATION MESSAGES
             if (stat.positiveCollaborationScore > 0.6) {
                 this.setCollabMsg("Most of the participants who got the answer wrong initially changed their answers to the right one after colloboration in the group chat ");
             }
-
             else if (stat.negativeCollaborationScore > 0.6) {
                 this.setCollabMsg("Most of the participants who got the answer right initially changed their answers to the wrong one after colloborating in the group chat");
             }
