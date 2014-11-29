@@ -1,7 +1,58 @@
-@(user: User, event: Event)
+@(user: User, myEventList : List[Event], otherEventList : List[Event])
 
 @mainStudent(user) {
-    <h4>
-        Past Event Discussions
-    </h4>
+<div id="wrapper">
+    <div class="col-md-9">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist" id="myTab">
+            <li role="presentation" class="active"><a href="#createEvent" role="tab" data-toggle="tab" onclick="">My Events</a></li>
+            <li role="presentation"><a href="#deleteEvent" role="delete" data-toggle="tab">Other Events</a></li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="createEvent">
+                <div class="col-md-9">
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Event Name</th>
+                            <th>Participants</th>
+                            <th>JoinIn</th>
+                        </tr>
+                        @for(event <- myEventList){
+                        <tr>
+                            <td>@event.eventName</td>
+                            <td>@event.participants.size</td>
+                            <td>
+                                <form  method="POST" name="joinEvent" action="@routes.Application.pastEventDiscussionView(event.eventId, user.id)">
+                                    <input type="submit" name="Join" value= "Select" class="btn btn-success">
+                                </form>
+                        </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="deleteEvent">
+                <div class="col-md-9">
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Event Name</th>
+                            <th>Participants</th>
+                            <th>JoinIn</th>
+                        </tr>
+                        @for(event <- otherEventList){
+                        <tr>
+                            <td>@event.eventName</td>
+                            <td>@event.participants.size</td>
+                            <td>
+                                <form  method="POST" name="joinEvent" action="@routes.Application.pastEventDiscussionView(event.eventId, user.id)">
+                                    <input type="submit" name="Join" value= "Details" class="btn btn-success">
+                                </form>
+                        </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 }

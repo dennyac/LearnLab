@@ -1,9 +1,6 @@
 package controllers;
 
-import models.Event;
-import models.Question;
-import models.User;
-import models.UserStats;
+import models.*;
 import play.data.validation.Constraints;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -21,15 +18,14 @@ import views.html.eventSequence.eventStage1;
 import views.html.instructorView;
 import views.html.pastEvents.pastEventsForInstructors;
 import views.html.pastEvents.pastEventsForInstructorsView;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Set;
+
+import java.util.*;
+
 import scala.collection.JavaConverters;
 import java.net.MalformedURLException;
 import models.utils.AppException;
 import play.Logger;
-import java.util.Date;
-import java.util.HashSet;
+
 import static play.data.Form.form;
 import java.text.*;
 /**
@@ -39,10 +35,18 @@ import java.text.*;
 public class PastEventController extends Controller {
 
 
-    public static Result pastEventsViewer(Long EventId){
+    public static Result pastEventsViewer(Long eventId)
+    {
+        List<String> userwiseMessages = EventActions.getUserwiseHashtagEvents();
+        List<String> eventMessages = EventActions.getHashtagEvents();
         User reportUser = User.findByEmail(request().username());
-        return ok(pastEventsForInstructorsView.render(reportUser));
+        return ok(pastEventsForInstructorsView.render(reportUser,eventMessages,userwiseMessages));
     }
+
+
+
+
+
 
 
 

@@ -51,7 +51,7 @@ public class Dashboard extends Controller {
             UserStats userStats = UserStats.findUserStatsByUser(user);
             return ok(index.render(user, userStats, eventList));
         }
-     }
+    }
 
     public static Result manageEvents() {
         User currentUser = User.findByEmail(request().username());
@@ -189,21 +189,48 @@ public class Dashboard extends Controller {
 
     }
 
-    public static Result getEventstoActivate(){
-        String s = "[{\"eventId\":\"jhhj\",\"eventName\":\"hjkghsjk\",\"Date\":\"jkdghs jkhsg\"}]";
-        return ok(s);
+    public static Result getEventstoActivate()
+    {
+        List<Event> eventList = Event.getAllEventsToActivate();
+        StringBuilder output = new StringBuilder();
+        output.append("[");
+        for(int i=0;i<eventList.size();i++){
+            output.append("{");
+            output.append("\"eventId\":");
+            output.append("\"");
+            output.append(eventList.get(i).eventId);
+            output.append("\"");
+            output.append(",");
+            output.append("\"eventName\":");
+            output.append("\"");
+            output.append(eventList.get(i).eventName);
+            output.append("\"");
+            output.append(",");
+            output.append("\"Date\":");
+            output.append("\"");
+            output.append(eventList.get(i).EventDate);
+            output.append("\"");
+            output.append("},");
+        }
+        String response = output.toString();
+        response = response.substring(0, response.length()-1);
+        response = response + "]";
+        System.out.println(response);
+//        String s = "[{\"eventId\":\"jhhj\",\"eventName\":\"hjkghsjk\",\"Date\":\"jkdghs jkhsg\"}]";
+        return ok(response);
     }
 
     public static Result generateReports() {
         User reportUser = User.findByEmail(request().username());
-       // Event reportEvent = Event.findByName(name);
+        // Event reportEvent = Event.findByName(name);
         Event reportEvent = Event.findEvent();
         return ok(report.render(reportUser, reportEvent,Event.findAllEvents()));
 
     }
 
-    public static Result activateEvent(String eventId){
-        return ok(eventId+" activated");
+    public static Result activateEvent(Long eventId){
+
+        return ok(eventId+" Activated");
     }
 
     public static Result generateIndividualEventSummary(String eventName){

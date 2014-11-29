@@ -5,6 +5,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.util.List;
 import play.db.ebean.Model;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Supriya on 22/11/2014.
  */
@@ -53,7 +57,27 @@ public class UserEventStats extends Model{
 
     public static Model.Finder<Long, UserEventStats> find = new Model.Finder<Long, UserEventStats>(Long.class, UserEventStats.class);
 
-    public static List<UserEventStats> findAllUserEventStats() {
+    public static List<Event> findUserCompletedEvents(Long userid){
+        List<UserEventStats> userEventStatsList =  find.where().eq("user_id", userid).findList();
+        System.out.println("****************************"+userEventStatsList.size());
+        List<Event> userCompletedEvents = new ArrayList<Event>();
+        for(int i=0;i<userEventStatsList.size();i++){
+            userCompletedEvents.add(Event.findById(userEventStatsList.get(i).userEventId));
+        }
+        return userCompletedEvents;
+    }
+
+    public static List<Event> findOtherCompletedEvents(Long userid) {
+        List<UserEventStats> userEventStatsList = find.where().ne("user_id", userid).findList();
+        System.out.println("****************************" + userEventStatsList.size());
+        List<Event> userCompletedEvents = new ArrayList<Event>();
+        for (int i = 0; i < userEventStatsList.size(); i++) {
+            userCompletedEvents.add(Event.findById(userEventStatsList.get(i).userEventId));
+        }
+        return userCompletedEvents;
+    }
+
+    public static List<UserEventStats> findAllUserEventStats(){
         return find.findList();
     }
 }

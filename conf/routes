@@ -8,7 +8,7 @@ GET     /dashboard                                             controllers.Dashb
 GET     /dashboard/manageEvents                                controllers.Dashboard.manageEvents()
 GET     /dashboard/getEvents                                   controllers.Dashboard.getEventstoActivate()
 GET     /dashboard/report                                      controllers.Dashboard.generateReports()
-GET     /dashboard/getEvents/activate                          controllers.Dashboard.activateEvent(eventId: String)
+GET     /dashboard/getEvents/activate                          controllers.Dashboard.activateEvent(eventId: Long)
 GET     /dashboard/getSummary/individualEventSummary           controllers.Dashboard.generateIndividualEventSummary(eventName: String)
 GET     /assets/javascripts/listUser.js                        controllers.Dashboard.listUserJs(divID:String)
 GET     /assets/javascripts/listEvent.js                       controllers.Dashboard.listEventJs(divID:String)
@@ -20,13 +20,14 @@ POST    /dashboard/updateEvent                  controllers.Dashboard.updateEven
 
 
 GET     /dashboard/pastEvents                   controllers.Dashboard.instructorPastEvents()
-GET     /pastEvents/view                        controllers.PastEventController.pastEventsViewer(eventId: Long)
+POST    /pastEvents/view                       controllers.PastEventController.pastEventsViewer(eventId: Long)
 
 
 #Student Home Page Specific
 GET     /leaderBoard                controllers.Application.leaderBoard(userId: Long)
 GET     /profile                    controllers.Application.profile()
-GET     /pastEventDiscussion        controllers.Application.pastEventDiscussion()
+GET     /pastEventDiscussion        controllers.Application.pastEventDiscussion(userId: Long)
+POST    /pastEventDiscussion/view   controllers.Application.pastEventDiscussionView(eventId: Long, userId: Long)
 
 POST    /eventStage1                controllers.EventController.eventStage1(eventId: Long)
 POST    /eventStage3                controllers.EventController.eventStage3(eventId: Long)
