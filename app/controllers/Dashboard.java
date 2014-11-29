@@ -7,6 +7,9 @@ import models.User;
 import models.UserStats;
 import models.UserEventStats;
 import models.ReportAnalytics;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import play.data.validation.Constraints;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -106,8 +109,10 @@ public class Dashboard extends Controller {
         event.eventName=createEventForm.eventName;
 
         //Converting string to date
-        Date date = new SimpleDateFormat("MM/dd/yyyy").parse(createEventForm.date);
-        event.EventDate=date;
+        //todo form changes
+        //Date date = new SimpleDateFormat("MM/dd/yyyy").parse(createEventForm.date);
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("MM/dd/yyyy HH:mmaa");
+        event.eventDateTime= formatter.parseDateTime(createEventForm.date + " " +  createEventForm.startTime);
 
         //Start and end time
         event.startTime=createEventForm.startTime;
@@ -169,9 +174,9 @@ public class Dashboard extends Controller {
         event.Questions.add(fq);
 
         //add durations for all the phases
-        event.phase1Duration=15L;
-        event.phase2Duration=15L;
-        event.phase3Duration=15L;
+        event.phase1Duration=5;
+        event.phase2Duration=10;
+        event.phase3Duration=5;
 
         //event active status
         event.active=0;
@@ -208,7 +213,7 @@ public class Dashboard extends Controller {
             output.append(",");
             output.append("\"Date\":");
             output.append("\"");
-            output.append(eventList.get(i).EventDate);
+            output.append(eventList.get(i).eventDateTime);
             output.append("\"");
             output.append("},");
         }

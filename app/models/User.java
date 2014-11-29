@@ -58,7 +58,7 @@ public class User extends Model {
     @ManyToMany(mappedBy = "participants")
     public List<Event> EventsParticipated;
 
-    @OneToOne
+    @OneToOne(mappedBy = "user")
     public UserStats userStatsInformation;
 
     @OneToMany(mappedBy = "user")

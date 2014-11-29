@@ -4,6 +4,7 @@ import models.Event;
 import models.EventActions;
 import models.User;
 import models.UserEventStats;
+import org.joda.time.DateTime;
 import play.data.validation.Constraints;
 
 import java.text.DateFormat;
@@ -47,8 +48,7 @@ public class EventUtils {
         e.Attribute1 =  f.answer;
         e.ActionType = f.eventAction;
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date = new Date();
-        e.TimeOfEventAction = date;
+        e.TimeOfEventAction = DateTime.now();
         long eventid = Long.parseLong(f.eventId);
         System.out.println("After parsing, the long event id was:"+ eventid);
         e.event =  Event.findById(eventid);

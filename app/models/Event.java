@@ -1,6 +1,8 @@
 package models;
 
 import com.avaje.ebean.Ebean;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeUtils;
 import org.joda.time.Minutes;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
@@ -41,8 +43,8 @@ public class Event extends Model{
     //@Column(unique = true)
     public String eventName;
 
-    @Formats.DateTime(pattern = "MM/dd/yyyy")
-    public Date EventDate;
+    //@Formats.DateTime(pattern = "MM/dd/yyyy")
+    public DateTime eventDateTime;
 
     @Constraints.Required
     @Formats.NonEmpty
@@ -93,15 +95,15 @@ public class Event extends Model{
 
     @Constraints.Required
     @Formats.NonEmpty
-    public long phase1Duration; // needs to be minutes
+    public int phase1Duration; // needs to be minutes
 
     @Constraints.Required
     @Formats.NonEmpty
-    public long phase2Duration;
+    public int phase2Duration;
 
     @Constraints.Required
     @Formats.NonEmpty
-    public long phase3Duration;
+    public int phase3Duration;
 
     public int active;  //flag to check if the event is an ongoing event.
 
@@ -134,6 +136,8 @@ public class Event extends Model{
         //return find.where().eq("eventId", eId ).findUnique();
         return Event.find.byId(eId);
     }
+
+    public Long getEventEpoch(){ return DateTimeUtils.getInstantMillis(eventDateTime);}
 
     public static List<Event> findAllEvents()
     {

@@ -7,9 +7,17 @@ resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/release
 // Cloudbees
 resolvers += "Sonatype OSS Snasphots" at "http://oss.sonatype.org/content/repositories/snapshots"
 
+//Sass related
+resolvers += "Sonatype OSS Releases" at "https://oss.sonatype.org/content/repositories/releases"
+
 // Use the Play sbt plugin for Play projects
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.3.0-RC2")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-less" % "1.0.0-RC2")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-coffeescript" % "1.0.0-RC3")
+
+
+
+//Sass related
+addSbtPlugin("net.litola" % "play-sass" % "0.4.0")

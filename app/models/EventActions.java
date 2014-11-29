@@ -2,6 +2,8 @@ package models;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
+import org.joda.time.DateTime;
+import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
@@ -45,7 +47,7 @@ public class EventActions extends Model{
 
     public String Attribute2; //Possible values: Justification	HashTag
 
-    public Date TimeOfEventAction;
+    public DateTime TimeOfEventAction;
 
     public static Model.Finder<Long, EventActions> find = new Model.Finder<Long, EventActions>(Long.class, EventActions.class);
 
@@ -55,6 +57,10 @@ public class EventActions extends Model{
 
     public static List<EventActions> findHashTagMessagesByEventIDUserID(User user,Event event){
         return find.where().eq("event", event).eq("user",user).eq("Attribute2","hashTag").findList();
+    }
+
+    public static List<EventActions> getEventMessages(Event event,int minutes){
+        return find.where().eq("event", event).eq("ActionType","Message").gt("TimeOfEventAction",DateTime.now().minusMinutes(minutes)).findList();
     }
 
     public static List<EventActions> findMessagesByEventIDUserID(User user,Event event){

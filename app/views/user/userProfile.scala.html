@@ -1,5 +1,94 @@
-@(user: User, event: Event)
+@(user: User, event: Event, hash: String)
+
+@star(num: Integer,full: Boolean) =@{
+if(full)
+for(i<-1 to num) yield <i class='glyphicon glyphicon-star'></i>
+else
+for(i<-1 to num) yield <i class='glyphicon glyphicon-star-empty'></i>
+}
+
+
+@rating(rating: Integer) = @{
+star(rating,true) ++ star(5-rating,false)
+
+}
 
 @mainStudent(user) {
-    <h4>User Profile</h4>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">@user.fullname</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-5 col-lg-5 " align="center">
+                            <div><img alt="User Pic"  class="img-circle" src="http://www.gravatar.com/avatar/@hash?s=120&d=mm"/></div>
+
+                            <div><p>@user.bio</p></div>
+                        </div>
+
+                        <div class=" col-md-7 col-lg-7 ">
+                            <table class="table table-user-information">
+                                <tbody>
+                                <tr>
+                                    <td>Email:</td>
+                                    <td>@user.email</td>
+                                </tr>
+                                <tr>
+                                    <td>Social Score</td>
+                                    <td>@rating(user.userStatsInformation.noOfIndividualInformalMessages)</td>
+                                </tr>
+                                <tr>
+                                    <td>Outgoing Score</td>
+                                    <td>@rating(user.userStatsInformation.noOfEventsParticipatedIn)</td>
+                                </tr>
+                                <tr>
+                                    <td>Helpful Score</td>
+                                    <td>@rating(user.userStatsInformation.upVotes)</td>
+                                </tr>
+                                <tr>
+                                    <td>Aggregate Score</td>
+                                    <td>@user.userStatsInformation.aggregateScore</td>
+                                </tr>
+                                <tr>
+                                    <td>Cognitive Ability</td>
+                                    <td>@user.userStatsInformation.cognitiveAbilitiesScore</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div><a href="http://en.gravatar.com/" class="btn btn-primary">Update Profile Pic</a></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+
+.img-circle {
+    margin-bottom: 10px
+}
+.table-user-information > tbody > tr {
+    border-top: 1px solid rgb(221, 221, 221);
+}
+
+.table-user-information > tbody > tr:first-child {
+    border-top: 0;
+}
+
+
+.table-user-information > tbody > tr > td {
+    border-top: 0;
+}
+.toppad
+{margin-top:20px;
+}
+</style>
 }

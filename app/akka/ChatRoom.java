@@ -21,6 +21,8 @@ import java.util.concurrent.TimeUnit;
 
 import akka.messages.*;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+
 
 /**
  * A chat room is an Actor.
@@ -30,7 +32,7 @@ public class ChatRoom extends UntypedActor {
     // Default room.
     private final String CHANNEL;
     private final String MEMBERS;
-    //private final ActorRef sparky;
+    private final ActorRef sparky;
     private static final ALogger logger = Logger.of(ChatRoom.class);
 
     public static Props props(final Long eventId, final String instructor) {
@@ -47,7 +49,11 @@ public class ChatRoom extends UntypedActor {
     public ChatRoom(final Long eventId, final String instructor) {
         CHANNEL = instructor + ".event." + eventId;
         logger.info("ChatRoom(" + CHANNEL + "):ChatRoom");
-        System.out.println("The logger name is " + ChatRoom.class + "and the logger status is " + logger.isInfoEnabled());
+
+
+        sparky = Akka.system().actorOf(Robot.props(getSelf(),eventId), CHANNEL + ".Sparky");
+
+        logger.info("ChatRoom(" + CHANNEL + "):ChatRoom:Created Sparky");
 
 
         MEMBERS = "members." + eventId;
@@ -64,15 +70,36 @@ public class ChatRoom extends UntypedActor {
                 Akka.system().dispatcher()
         );
 
-        Akka.system().scheduler().scheduleOnce(
-                Duration.create(10, TimeUnit.SECONDS),
-                new Runnable() {
-                    public void run() {
-                        Akka.system().actorOf(Robot.props(getSelf()), CHANNEL + ".Sparky");
-                    }
-                },
-                Akka.system().dispatcher()
+        Akka.system().scheduler().schedule(
+                Duration.create(5, SECONDS),
+                Duration.create(60, SECONDS),
+                sparky,
+                "BatchMessages",
+                Akka.system().dispatcher(),
+                /** sender **/getSelf()
         );
+
+        //dummy message to keep websockets alive
+        Akka.system().scheduler().schedule(
+                Duration.create(20, SECONDS),
+                Duration.create(20, SECONDS),
+                sparky,
+                "Dummy",
+                Akka.system().dispatcher(),
+                /** sender **/getSelf()
+        );
+
+        logger.info("ChatRoom(" + CHANNEL + "):ChatRoom:Created Sparky scheduler");
+
+//        Akka.system().scheduler().scheduleOnce(
+//                Duration.create(10, TimeUnit.SECONDS),
+//                new Runnable() {
+//                    public void run() {
+//                        Akka.system().actorOf(Robot.props(getSelf()), CHANNEL + ".Sparky");
+//                    }
+//                },
+//                Akka.system().dispatcher()
+//        );
     }
 
     /**
@@ -102,17 +129,35 @@ public class ChatRoom extends UntypedActor {
                     sockets.add(join.getOutSocket());
                     members.put(join.getUsername(), sockets);
                     logger.info("ChatRoom(" + CHANNEL + "):onReceive:Join:" + join.getUsername() + ": Joined for the first time");
+                    sparky.tell(join,getSelf());
+
+                    j.sadd(MEMBERS, join.getUsername());
+
+                    logger.info("ChatRoom(" + CHANNEL + "):onReceive:Join:" + join.getUsername() + ":Sent join message to Sparky");
+
+                    //Publish the join notification to all nodes
+                    RosterNotification rosterNotify = new RosterNotification(join.getUsername(), "join", join.getMessage());
+                    j.publish(CHANNEL, Json.stringify(Json.toJson(rosterNotify)));
+                    logger.info("ChatRoom(" + CHANNEL + "):onReceive:Join:" + join.getUsername() + ":RosterMessage:" + join.getMessage());
                 }
 
 
-                j.sadd(MEMBERS, join.getUsername());
-
-                //Publish the join notification to all nodes
-                RosterNotification rosterNotify = new RosterNotification(join.getUsername(), "join", join.getMessage());
-                j.publish(CHANNEL, Json.stringify(Json.toJson(rosterNotify)));
-                logger.info("ChatRoom(" + CHANNEL + "):onReceive:Join:" + join.getUsername() + ":RosterMessage:" + join.getMessage());
                 getSender().tell("OK", getSelf());
 
+            } else if(message instanceof  IndividualMessage){
+                logger.info("ChatRoom(" + CHANNEL + "):onReceive:IndividualMessage");
+                IndividualMessage msg = (IndividualMessage) message;
+                logger.info("ChatRoom(" + CHANNEL + "):onReceive:IndividualMessage1:" + msg.getUsername() + ":" + msg.getText()+":"+getSender());
+                if(members.containsKey(msg.getUsername())){
+                    for(ActorRef socketOut: members.get(msg.getUsername())){
+                        logger.info("ChatRoom(" + CHANNEL + "):onReceive:IndividualMessage:"+msg.getUsername()+":"+msg.getText());
+                        ObjectNode event = Json.newObject();
+                        event.put("kind", "talk");
+                        event.put("user", "Sparky");
+                        event.put("message", msg.getText());
+                        socketOut.tell(event, self());
+                    }
+                }
             } else if (message instanceof Quit) {
                 // Received a Quit message
                 Quit quit = (Quit) message;
@@ -139,6 +184,9 @@ public class ChatRoom extends UntypedActor {
                 } else if ("quit".equals(rosterNotify.getDirection())) {
                     logger.info("ChatRoom(" + CHANNEL + "):onReceive:RosterNotification:" + rosterNotify.getUsername() + ":Quit");
                     notifyAll("quit", rosterNotify.getUsername(), "has left the room");
+                } else if("Dummy".equals(rosterNotify.getDirection())) {
+                    logger.info("ChatRoom(" + CHANNEL + "):onReceive:RosterNotification:" + rosterNotify.getUsername() + ":Dummy");
+                    notifyAll("Dummy", rosterNotify.getUsername(), "Dummy Message");
                 }
             } else if (message instanceof Talk) {
                 // Received a Talk message

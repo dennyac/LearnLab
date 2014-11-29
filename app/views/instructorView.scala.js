@@ -28,43 +28,47 @@ $(function() {
     var receiveEvent = function(event) {
         console.log("Received event")
         var data = JSON.parse(event.data)
-        //username
-        //eventid
-        //text
-        console.log("data.text-" +data.text+"-data.username-"+data.username+"data.eventid" +data.eventId )
-        // Handle errors
-        if(data.error) {
-            chatSocket.close()
-            $("#onError span").text(data.error)
-            $("#onError").show()
-            return
-        } else {
-            $("#onChat").show()
+        if(data.text == 'Dummy'){
+            console.log('Dummy message received to keep the websocket alive.')
         }
-
-        if(data.text.match(/(^|\s)(#[a-z\d-]+)/ig) != null){
-            var hashtag = data.text.match(/(^|\s)(#[a-z\d-]+)/ig)[0].substr(1)
-            console.log('Matched Hashtag')
-            var $object = $('#h' +data.eventId+ hashtag);
-            if(!$object.length) {
-                var dl = $('<div class="panel panel-default"><div class="panel-heading" role="tab" >               <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" aria-expanded="true" >                           </a></h4></div><div                  class="panel-collapse collapse in" role="tabpanel" >                            <div class="panel-body"><ul class="list-group"></ul></div></div></div>')
-                //  <div class="panel panel-default"><div class="panel-heading" role="tab" id="headingOne"><h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne"></a></h4></div><div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne"><div class="panel-body">                            </div></div></div>
-                $('.panel-heading',dl).attr('id',"heading" + hashtag)
-                $('a',dl).attr('href','#collapse' + hashtag)
-                $('a',dl).attr('aria-controls','collapse' + hashtag)
-                $('a', dl).text(hashtag)
-                $('.panel-collapse',dl).attr('aria-labelledby',"heading" + hashtag)
-                $('.panel-collapse',dl).attr('id',"collapse" + hashtag)
-                $("ul",dl).attr('id',"ul" + hashtag+ data.eventId)
-                $(dl).attr('id',"h" +data.eventId + hashtag)
-                $('#accordion' + data.eventId).append(dl)
+        else{
+            //username
+            //eventid
+            //text
+            console.log("data.text-" +data.text+"-data.username-"+data.username+"data.eventid" +data.eventId )
+            // Handle errors
+            if(data.error) {
+                chatSocket.close()
+                $("#onError span").text(data.error)
+                $("#onError").show()
+                return
+            } else {
+                $("#onChat").show()
             }
 
-            var li = document.createElement('li');
-            $(li).addClass("list-group-item")
-            $(li).text(data.text)
-            $("#ul" + hashtag + data.eventId).append(li);
-        }
+            if(data.text.match(/(^|\s)(#[a-z\d-]+)/ig) != null){
+                var hashtag = data.text.match(/(^|\s)(#[a-z\d-]+)/ig)[0].substr(1)
+                console.log('Matched Hashtag')
+                var $object = $('#h' +data.eventId+ hashtag);
+                if(!$object.length) {
+                    var dl = $('<div class="panel panel-default"><div class="panel-heading" role="tab" >               <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" aria-expanded="true" >                           </a></h4></div><div                  class="panel-collapse collapse in" role="tabpanel" >                            <div class="panel-body"><ul class="list-group"></ul></div></div></div>')
+                    //  <div class="panel panel-default"><div class="panel-heading" role="tab" id="headingOne"><h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne"></a></h4></div><div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne"><div class="panel-body">                            </div></div></div>
+                    $('.panel-heading',dl).attr('id',"heading" + hashtag)
+                    $('a',dl).attr('href','#collapse' + hashtag)
+                    $('a',dl).attr('aria-controls','collapse' + hashtag)
+                    $('a', dl).text(hashtag)
+                    $('.panel-collapse',dl).attr('aria-labelledby',"heading" + hashtag)
+                    $('.panel-collapse',dl).attr('id',"collapse" + hashtag)
+                    $("ul",dl).attr('id',"ul" + hashtag+ data.eventId)
+                    $(dl).attr('id',"h" +data.eventId + hashtag)
+                    $('#accordion' + data.eventId).append(dl)
+                }
+
+                var li = document.createElement('li');
+                $(li).addClass("list-group-item")
+                $(li).text(data.text)
+                $("#ul" + hashtag + data.eventId).append(li);
+            }
 //
 //        // Create the message element
 //        if(data.username != 'Robot'){
@@ -76,9 +80,9 @@ $(function() {
 //            $('#messages').prepend(el)
 //        }
 
-    console.log(event);
+            console.log(event);
 
-        // Update the members list
+            // Update the members list
 //        $("#members").html('')
 //        $(data.members).each(function() {
 //            var li = document.createElement('li');
@@ -88,25 +92,27 @@ $(function() {
 //        alert("receiving");
 //        barData.shift();
 //        barData.push(next());
-        if(data.text.match(/(^|\s)(#[a-z\d-]+)/ig) != null){
-            hash_message_count = hash_message_count + 1;
-        }else{
-            message_count = message_count + 1;
-        }
+            if(data.text.match(/(^|\s)(#[a-z\d-]+)/ig) != null){
+                hash_message_count = hash_message_count + 1;
+            }else{
+                message_count = message_count + 1;
+            }
 
 //        message_count = message_count + 1;
 //        hash_message_count = hash_message_count + 1;
-        var newData = [];
-        var temp1 = {};
-        temp1["x"]="Informal Messages";
-        temp1["y"]=message_count;
-        newData.push(temp1);
-        var temp2 = {};
-        temp2["x"]="Hashtag Messages";
-        temp2["y"]=hash_message_count;
-        newData.push(temp2);
-        console.log(newData);
-        redraw(newData);
+            var newData = [];
+            var temp1 = {};
+            temp1["x"]="Informal Messages";
+            temp1["y"]=message_count;
+            newData.push(temp1);
+            var temp2 = {};
+            temp2["x"]="Hashtag Messages";
+            temp2["y"]=hash_message_count;
+            newData.push(temp2);
+            console.log(newData);
+            redraw(newData);
+        }
+
 
     }
 

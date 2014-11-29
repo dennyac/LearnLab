@@ -78,4 +78,12 @@
 </div>
 
 <script type="text/javascript" charset="utf-8" src="@routes.Chat.chatRoomJs(user.email,event.eventId)"></script>
+<script>
+
+    console.log("@event.phase2Duration" * 60000);
+    var phaseComplete = function() {
+        $('input[name=Submit]').click()
+    }
+    setTimeout(phaseComplete,"@event.phase2Duration" * 60000);
+</script>
 }
