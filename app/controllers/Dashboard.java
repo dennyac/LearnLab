@@ -59,7 +59,7 @@ public class Dashboard extends Controller {
     public static Result manageEvents() {
         User currentUser = User.findByEmail(request().username());
         Event eventSelected = Event.findEvent();
-        return ok(manageEvents.render(currentUser,eventSelected,form(CreateEventForm.class),User.findAllUsers()));
+        return ok(manageEvents.render(currentUser,eventSelected,form(CreateEventForm.class),User.findAllUsers(),Event.findAllEvents()));
     }
     public static Result listUserJs(String divID) {
         List<User> userList=User.findAllUsers();
@@ -185,6 +185,8 @@ public class Dashboard extends Controller {
 
     }
     public static Result deleteEvent(){
+
+        //cascade delete event and its correspoding entries
         return ok(deleteEventConfirmation.render((User.findByEmail(request().username())), Event.findEvent()));
 
     }

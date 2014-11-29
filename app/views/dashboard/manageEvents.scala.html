@@ -1,4 +1,4 @@
-@(user: User, event: Event, createEveForm: Form[Dashboard.CreateEventForm],participants: List[User])
+@(user: User, event: Event, createEveForm: Form[Dashboard.CreateEventForm],participants: List[User],events: List[Event])
 @import helper._
 @import play.api.mvc._
 @mainInstructor(user) {
@@ -8,7 +8,7 @@
         <ul class="nav nav-tabs" role="tablist" id="myTab">
             <li role="presentation" class="active"><a href="#createEvent" role="tab" data-toggle="tab">Create</a></li>
             <li role="presentation"><a href="#deleteEvent" role="delete" data-toggle="tab">Delete</a></li>
-            <li role="presentation"><a href="#updateEvent" role="delete" data-toggle="tab">Update</a></li>
+            <!--<li role="presentation"><a href="#updateEvent" role="delete" data-toggle="tab">Update</a></li>-->
             <li role="presentation"><a href="#viewEvent" role="delete" data-toggle="tab" onclick="loadData()">View</a></li>
         </ul>
         <div class="tab-content">
@@ -164,24 +164,30 @@
             <div role="tabpanel" class="tab-pane" id="deleteEvent">
                 <br>
                 <fieldset class="fieldSetLegend">
-                    <legend class="fieldSetLegend"><h5><b>Delete Event</b></h5></legend>
-                <form method="POST" class="form-horizontal" role="form" action="@routes.Dashboard.deleteEvent()">
+                    <legend class="fieldSetLegend"><h5><b>Select Event</b></h5></legend>
+                    <form method="POST" class="form-horizontal" role="form" action="@routes.Dashboard.deleteEvent()">
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Event ID</label>
+                        <label for="individualEvent" class="col-sm-2 control-label">Event Name</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" name="dummyText" id="inputEmail3" placeholder="Event ID">
+                            <select class="form-control" name="events" id="individualEvent">
+                                <option value="Select Event">Select Event</option>
+                                @for((individualEvent,index) <- events.zipWithIndex){
+                                <option value="@individualEvent.eventName">@individualEvent.eventName</option>
+                                }
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-success">Delete</button>
-                        </div>
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-success">Delete</button>
+                            </div>
                     </div>
-                </form>
-            </fieldset>
+                    </form>
+                </fieldset>
+
 
             </div>
-            <div role="tabpanel" class="tab-pane" id="updateEvent">
+            <!--<div role="tabpanel" class="tab-pane" id="updateEvent">
                 <br>
                 <form method="POST" class="form-horizontal" role="form" action="@routes.Dashboard.updateEvent()">
                     <fieldset class="fieldSetLegend">
@@ -205,7 +211,7 @@
                         </div>
                     </fieldset>
                 </form>
-            </div>
+            </div> -->
             <div role="tabpanel" class="tab-pane" id="viewEvent">
                 <br>
                 <table class="table table-striped" id="eventViewId">
