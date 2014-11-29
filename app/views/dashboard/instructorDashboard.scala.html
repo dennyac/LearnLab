@@ -1,6 +1,36 @@
 @(user: User, event: Event)
 @mainInstructor(user) {
-    <div class="col-md-9">
-    <h3> Welcome Instructor @user.fullname! This is your dashboard.</h3>
-    </div>
+<br>
+<fieldset class="fieldSetLegend">
+    <legend class="fieldSetLegend"><h5><b>Instructor`s Dashboard</b></h5></legend>
+        <div class="form-group">
+            <div class="col-md-9">
+                <h4> Welcome Instructor @user.fullname! This is your dashboard.</h4>
+                <br>
+                <h5><u><b>Events</b></u></h5>
+                <p> You can create events including a group of students. An event has three stages.
+                <br> Stage 1: This stage has a multiple choice question</p>
+                <br>
+                <p>Stage 2: In this stage the students chat and discuss what should be the correct answer</p>
+                <br>
+                <p>Stage 3: In this stage, the students will get a chance to correct their answers and justify the same</p>
+                <br>
+                <p>Stage 4: In this stage, the students will face a followup question</p>
+                <br>
+                <h5><u><b>Statistics</b></u></h5>
+                <p> You can view the statistics of an event or an individual statistics by following appropriate
+                <br> links on the left navigation bar</p>
+                <br>
+                <h5><u><b>Live Feed</b></u></h5>
+                <p>You can choose the event and get live feed of messages exchanged between students and intervene if necessary</p>
+                <br>
+                <h5><u><b>Past Event Discussions</b></u></h5>
+                <p>You can view the discussions which have happened in the past events</p>
+                <br>
+                <h5><u><b>Event Summary</b></u></h5>
+                <br>
+                <p>You can view the summary of the event by selecting an appropriate event.</p>
+            </div>
+        </div>
+</fieldset>
 }

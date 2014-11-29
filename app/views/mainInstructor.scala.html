@@ -1,7 +1,5 @@
 @(user: User = null, scripts: Html = Html(""))(content: Html)
-
 <!DOCTYPE html>
-
 <html>
 <head>
     <title>@Messages("title")</title>
@@ -63,7 +61,7 @@
         <div class="well sidebar-nav">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">User Profile</h3>
+                    <h3 class="panel-title">Quick Links</h3>
                 </div>
                 <div class="panel-body">
                     <div class="panel-body">
@@ -73,27 +71,27 @@
                     </div>
                     <div class="panel-body">
                         <div class="text-left">
-                            <a href="#">Group Statistics <i class="fa fa-arrow-circle-right"></i></a>
+                            <a href="#">Event Statistics <i class="fa fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <div class="panel-body">
                         <div class="text-left">
-                            <a href="#">Individual Statistics <i class="fa fa-arrow-circle-right"></i></a>
+                            <a href="#">Individual Student Statistics <i class="fa fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <div class="panel-body">
                         <div class="text-left">
-                            <a href="@routes.Dashboard.instructorView()">Instructor Feed <i class="fa fa-arrow-circle-right"></i></a>
+                            <a href="@routes.Dashboard.instructorView()">Live Chat Feed <i class="fa fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <div class="panel-body">
                         <div class="text-left">
-                            <a href="@routes.Dashboard.instructorPastEvents()">Past Events <i class="fa fa-arrow-circle-right"></i></a>
+                            <a href="@routes.Dashboard.instructorPastEventDiscussions()">Past Event Discussions <i class="fa fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <div class="panel-body">
                         <div class="text-left">
-                            <a href="@routes.Dashboard.generateReports()">Reports <i class="fa fa-arrow-circle-right"></i></a>
+                            <a href="@routes.Dashboard.getEventSummary()">Event Summary <i class="fa fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                 </div>

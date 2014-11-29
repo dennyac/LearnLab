@@ -7,7 +7,7 @@ GET     /                                                      controllers.Appli
 GET     /dashboard                                             controllers.Dashboard.index()
 GET     /dashboard/manageEvents                                controllers.Dashboard.manageEvents()
 GET     /dashboard/getEvents                                   controllers.Dashboard.getEventstoActivate()
-GET     /dashboard/report                                      controllers.Dashboard.generateReports()
+GET     /dashboard/getSummary                                  controllers.Dashboard.getEventSummary()
 GET     /dashboard/getEvents/activate                          controllers.Dashboard.activateEvent(eventId: Long)
 GET     /dashboard/getSummary/individualEventSummary           controllers.Dashboard.generateIndividualEventSummary(eventName: String)
 GET     /assets/javascripts/listUser.js                        controllers.Dashboard.listUserJs(divID:String)
@@ -19,7 +19,7 @@ POST    /dashboard/deleteEvent                  controllers.Dashboard.deleteEven
 POST    /dashboard/updateEvent                  controllers.Dashboard.updateEvent()
 
 
-GET     /dashboard/pastEvents                   controllers.Dashboard.instructorPastEvents()
+GET     /dashboard/pastEvents                   controllers.Dashboard.instructorPastEventDiscussions()
 POST    /pastEvents/view                       controllers.PastEventController.pastEventsViewer(eventId: Long)
 
 

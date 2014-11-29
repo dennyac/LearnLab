@@ -227,7 +227,7 @@ public class Dashboard extends Controller {
         return ok(response);
     }
 
-    public static Result generateReports() {
+    public static Result getEventSummary() {
         User reportUser = User.findByEmail(request().username());
         // Event reportEvent = Event.findByName(name);
         Event reportEvent = Event.findEvent();
@@ -301,7 +301,7 @@ public class Dashboard extends Controller {
         return ok(instructorView.render(currUser));
     }
 
-    public static Result instructorPastEvents() {
+    public static Result instructorPastEventDiscussions() {
         List<Event> completedEvents = Event.findAllCompletedEvents();
         User reportUser = User.findByEmail(request().username());
         return ok(pastEventsForInstructors.render(reportUser,completedEvents));
