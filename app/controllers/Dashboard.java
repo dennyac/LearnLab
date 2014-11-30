@@ -187,6 +187,7 @@ public class Dashboard extends Controller {
     public static Result deleteEvent(){
 
         //cascade delete event and its correspoding entries
+
         return ok(deleteEventConfirmation.render((User.findByEmail(request().username())), Event.findEvent()));
 
     }

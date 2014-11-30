@@ -9,7 +9,7 @@
             <li role="presentation" class="active"><a href="#createEvent" role="tab" data-toggle="tab">Create</a></li>
             <li role="presentation"><a href="#deleteEvent" role="delete" data-toggle="tab">Delete</a></li>
             <!--<li role="presentation"><a href="#updateEvent" role="delete" data-toggle="tab">Update</a></li>-->
-            <li role="presentation"><a href="#viewEvent" role="delete" data-toggle="tab" onclick="loadData()">View</a></li>
+            <li role="presentation"><a href="#viewEvent" role="delete" data-toggle="tab" onclick="loadData()">Publish Event</a></li>
         </ul>
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="createEvent">
@@ -227,7 +227,7 @@
                     <tr>
                         <td>EventId</td>
                         <td>Created On</td>
-                        <td>Activate</td>
+                        <td>Publish</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -265,7 +265,7 @@
                         console.log(result);
                         var data = jQuery.parseJSON(result);
                         $.each(data, function(idx, elem){
-                        table.append("<tr><td>"+elem.eventId+"</td><td>"+elem.eventName+"</td><td id="+elem.eventId+"><a href='javascript:;' onclick='activate(\""+elem.eventId+"\")'>"+'Activate'+"</a></td></tr>");
+                        table.append("<tr><td>"+elem.eventId+"</td><td>"+elem.eventName+"</td><td id="+elem.eventId+"><a href='javascript:;' onclick='activate(\""+elem.eventId+"\")'>"+'Publish'+"</a></td></tr>");
                         });
                 }});
             }
