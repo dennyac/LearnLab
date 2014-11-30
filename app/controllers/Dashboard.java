@@ -117,7 +117,9 @@ public class Dashboard extends Controller {
 
         //Start and end time
         event.startTime=createEventForm.startTime;
-        //event.endTime=createEventForm.endTime;
+
+        //Calculate end time using phase duration
+        //event.endTime=createEventForm.startTime+createEventForm.phaseDuration;
 
         //Event Description
         event.description=createEventForm.eventDescription;
