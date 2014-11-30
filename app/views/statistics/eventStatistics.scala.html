@@ -1,5 +1,44 @@
 @(user: User,events: List[Event])
 @mainInstructor(user){
+<style>
+    .col-md-4 {
+    border: 2px solid;
+    border-radius: 25px;
+    }
+    .chart rect {
+    fill: steelblue;
+    stroke: white;
+    }
+    .axis path, .axis line
+    {
+    fill: none;
+    stroke: #777;
+    shape-rendering: crispEdges;
+    }
+
+    .axis text
+    {
+    font-family: 'Arial';
+    font-size: 13px;
+    }
+    .tick
+    {
+    stroke-dasharray: 1, 2;
+    }
+    .bar
+    {
+    fill: FireBrick;
+    }
+    .nav nav-tabs
+    {
+    width: 500;
+    }
+
+    .take-all-space-you-can{
+    width:100%;
+    }
+</style>
+
 <fieldset class="fieldSetLegend">
     <legend class="fieldSetLegend"><h5><b>Select Event</b></h5></legend>
     <div class="form-group">
@@ -14,22 +53,49 @@
         </div>
     </div>
 </fieldset>
-<fieldset class="fieldSetLegend">
-    <legend class="fieldSetLegend"><h5><b>Event Statistics</b></h5></legend>
-    <div class="row">
-        <div class="form-group" id="tabid">
-            <table id="myTable" class="table table-striped">
-                <thead>
-                <tr>
-                    <th> Please find the statistics of the event below</th>
-                </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+
+<div id="wrapper">
+    <div class="col-md-9">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist" id="myTab">
+            <li role="presentation" class="active"><a href="#eventStats" role="tab" data-toggle="tab">Event Stats</a></li>
+            <li role="presentation"><a href="#msgStats" role="delete" data-toggle="tab">Message Stats</a></li>
+            <!--<li role="presentation"><a href="#updateEvent" role="delete" data-toggle="tab">Update</a></li>-->
+            <li role="presentation"><a href="#ansStats" role="delete" data-toggle="tab">Answer Stats</a></li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="eventStats">
+                <br>
+                <fieldset class="fieldSetLegend">
+                    <legend class="fieldSetLegend" id="eventHeadId"><h5></h5></legend>
+                    <div class="row">
+                        <div class="form-group" id="tabid">
+                            <table id="myTable" class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th> Please find the statistics of the event below</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="msgStats">
+                <div class="row" id="id1"></div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="ansStats">
+                <div class="row" id="id2"></div>
+            </div>
         </div>
-    </div>
-</fieldset>
+
+</div>
+</div>
+
+
+
 <script>
     $("#tabid").hide();
         $("select").change(function () {
@@ -40,6 +106,8 @@
                 eventName  = $( this ).text();
                 if(eventName!="Select Event") {
                     getEventData(eventName);
+                    drawPieChart();
+                    drawGroupBarGraph();
                 }
                 else{
                     $("#tabid").hide();
@@ -49,6 +117,7 @@
 
         function getEventData(eventName)
         {
+            $("#eventHeadId h5").text(eventName);
             $("#tabid").show();
             //Populate data by AJAX call here
             //alert("Activating"+eventName);
@@ -74,6 +143,212 @@
                 });
         }
 
+
+function drawGroupBarGraph(){
+
+
+    var data = [
+        {
+            "State":"Phase1",
+            "Correct Answers":"4",
+            "Incorrect Answers":"1"
+        },
+        {
+            "State":"Phase2",
+            "Correct Answers":"3",
+            "Incorrect Answers":"2"
+        },
+        {
+            "State":"Phase3",
+            "Correct Answers":"5",
+            "Incorrect Answers":"0"
+        }
+    ];
+
+
+    var margin = {top: 20, right: 20, bottom: 30, left: 40},
+            width = 700 - margin.left - margin.right,
+            height = 300 - margin.top - margin.bottom;
+
+    var x0 = d3.scale.ordinal()
+            .rangeRoundBands([0, width], .1);
+
+    var x1 = d3.scale.ordinal();
+
+    var y = d3.scale.linear()
+            .range([height, 0]);
+
+    var color = d3.scale.ordinal()
+            .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+    var xAxis = d3.svg.axis()
+            .scale(x0)
+            .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left")
+            .tickFormat(d3.format(".2s"));
+
+    var svg = d3.select("#id2").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+//    d3.csv("data.csv", function(error, data) {
+        var ageNames = d3.keys(data[0]).filter(function(key) { return key !== "State"; });
+
+        data.forEach(function(d) {
+            d.ages = ageNames.map(function(name) { return {name: name, value: +d[name]}; });
+        });
+
+        x0.domain(data.map(function(d) { return d.State; }));
+        x1.domain(ageNames).rangeRoundBands([0, x0.rangeBand()]);
+        y.domain([0, 50]);
+
+        svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+
+        svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis)
+                .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 6)
+                .attr("dy", ".71em")
+                .style("text-anchor", "end")
+                .text("Number of students");
+
+        var state = svg.selectAll(".state")
+                .data(data)
+                .enter().append("g")
+                .attr("class", "g")
+                .attr("transform", function(d) { return "translate(" + x0(d.State) + ",0)"; });
+
+        state.selectAll("rect")
+                .data(function(d) { return d.ages; })
+                .enter().append("rect")
+                .attr("width", x1.rangeBand())
+                .attr("x", function(d) { return x1(d.name); })
+                .attr("y", function(d) { return y(d.value); })
+                .attr("height", function(d) { return height - y(d.value); })
+                .style("fill", function(d) { return color(d.name); });
+
+        var legend = svg.selectAll(".legend")
+                .data(ageNames.slice().reverse())
+                .enter().append("g")
+                .attr("class", "legend")
+                .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+        legend.append("rect")
+                .attr("x", width - 18)
+                .attr("width", 18)
+                .attr("height", 18)
+                .style("fill", color);
+
+        legend.append("text")
+                .attr("x", width - 24)
+                .attr("y", 9)
+                .attr("dy", ".35em")
+                .style("text-anchor", "end")
+                .text(function(d) { return d; });
+
+//    });
+}
+function drawPieChart() {
+    var data = [
+        {
+            "age": "Informal Messages",
+            "population": "40"
+        },
+        {
+            "age": "Hashtag Messages",
+            "population": "10"
+        }
+    ];
+    var width = 500,
+            height = 300,
+//            radius = Math.min(width, height) / 2;
+              radius = 100;
+    var color = d3.scale.ordinal()
+            .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+    var arc = d3.svg.arc()
+            .outerRadius(radius - 10)
+            .innerRadius(0);
+
+    var pie = d3.layout.pie()
+            .sort(null)
+            .value(function (d) {
+                return d.population;
+            });
+
+    var id1 = document.getElementById("id1");
+    console.log(id1);
+    var svg = d3.select("#id1").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+    //            d3.csv("data.csv", function(error, data) {
+
+    data.forEach(function (d) {
+        d.population = +d.population;
+    });
+
+    var g = svg.selectAll(".arc")
+            .data(pie(data))
+            .enter().append("g")
+            .attr("class", "arc");
+
+    g.append("path")
+            .attr("d", arc)
+            .style("fill", function (d) {
+                return color(d.data.age);
+            });
+
+    g.append("text")
+            .attr("transform", function (d) {
+//                d.outerRadius = radius + 50; // Set Outer Coordinate
+//                d.innerRadius = radius - 35;
+//                return "translate(" + arc.centroid(d) + ")";
+                return "translate(" +
+                        ( (radius - 12) * Math.sin( ((d.endAngle - d.startAngle) / 2) + d.startAngle ) ) +
+                        ", " +
+                        ( -1 * (radius - 12) * Math.cos( ((d.endAngle - d.startAngle) / 2) + d.startAngle ) ) +
+                        ")";
+
+            })
+            .attr("dy", ".35em")
+            .style("text-anchor", "middle")
+            .text(function (d) {
+                return d.data.age;
+            });
+
+    g.append("text")
+            .attr("dy", ".35em")
+            .attr("text-anchor", "middle")
+        //.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")rotate(" + angle(d) + ")"; })
+            .attr("transform", function(d) { //set the label's origin to the center of the arc
+                //we have to make sure to set these before calling arc.centroid
+                d.outerRadius = radius; // Set Outer Coordinate
+                d.innerRadius = radius/2; // Set Inner Coordinate
+                return "translate(" + arc.centroid(d) + ")rotate(" + angle(d) + ")";
+            })
+            .style("fill", "White")
+            .style("font", "bold 12px Arial")
+            .text(function(d) { return d.data.population; });
+
+    function angle(d) {
+        var a = (d.startAngle + d.endAngle) * 90 / Math.PI - 90;
+        return a > 90 ? a - 180 : a;
+    }
+    //            });
+}
     </script>
 
 }
