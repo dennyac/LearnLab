@@ -1,0 +1,69 @@
+@(user: User,students: List[User])
+@mainInstructor(user){
+<fieldset class="fieldSetLegend">
+    <legend class="fieldSetLegend"><h5><b>Select Student</b></h5></legend>
+    <div class="form-group">
+        <label for="individualStudent" class="col-sm-2 control-label">Select Student</label>
+        <div class="form-group col-md-3 col-sm-4 col-xs-12">
+            <select class="form-control" name="events" id="individualStudent">
+                <option value="Select Event">Select Student</option>
+                @for((individualStudent,index) <- students.zipWithIndex){
+                @if(individualStudent.fullname!=user.fullname){
+                <option value="@individualStudent.fullname">@individualStudent.fullname</option>
+                }}
+            </select>
+        </div>
+    </div>
+</fieldset>
+<fieldset class="fieldSetLegend">
+    <legend class="fieldSetLegend"><h5><b>Student Statistics</b></h5></legend>
+    <div class="row">
+        <div class="form-group" id="tabid">
+        </div>
+    </div>
+</fieldset>
+<script>
+    $("#tabid").hide();
+        $("select").change(function () {
+            $("#tabid").hide();
+            var studentName = " ";
+
+            $( "select option:selected" ).each(function() {
+                studentName  = $( this ).text();
+                if(studentName!="Select Student") {
+                    getStudentData(studentName);
+                }
+                else{
+                    $("#tabid").hide();
+                }
+            });
+        }).change();
+
+        function getStudentData(studentName)
+        {
+            $("#tabid").show();
+
+            //Populate data by AJAX call here
+            //alert("Activating "+studentName);
+                $.ajax({
+                    url: "/statistics/getStudentStatistics/individualStudentStatistics",
+                    type: 'GET',
+                    data: { studentName: studentName } ,
+                    success: function (response) {
+                        var messageArray = response.split('|');
+                        var arrayLength=messageArray.length;
+                        document.getElementById("tabid").innerHTML = " ";
+
+                        for(var i = 0;i<arrayLength;i++) {
+                         $("#tabid").append("<br>&nbsp &nbsp"+ messageArray[i] +"</br>");
+                        }
+                    },
+                    error: function () {
+                    //your error code
+                    }
+                });
+        }
+
+    </script>
+
+}

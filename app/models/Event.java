@@ -50,8 +50,8 @@ public class Event extends Model{
     @Formats.NonEmpty
     public String startTime;
 
-    @Constraints.Required
-    @Formats.NonEmpty
+    //@Constraints.Required
+    //@Formats.NonEmpty
     public String endTime;
 
     @Constraints.Required

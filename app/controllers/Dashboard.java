@@ -116,7 +116,7 @@ public class Dashboard extends Controller {
 
         //Start and end time
         event.startTime=createEventForm.startTime;
-        event.endTime=createEventForm.endTime;
+        //event.endTime=createEventForm.endTime;
 
         //Event Description
         event.description=createEventForm.eventDescription;
@@ -174,9 +174,9 @@ public class Dashboard extends Controller {
         event.Questions.add(fq);
 
         //add durations for all the phases
-        event.phase1Duration=5;
-        event.phase2Duration=10;
-        event.phase3Duration=5;
+        event.phase1Duration=Integer.valueOf(createEventForm.phaseDuration);
+        event.phase2Duration=Integer.valueOf(createEventForm.phaseDuration);
+        event.phase3Duration=Integer.valueOf(createEventForm.phaseDuration);
 
         //event active status
         event.active=0;
@@ -369,8 +369,11 @@ public class Dashboard extends Controller {
         @Constraints.Required
         public String date;
 
+        //@Constraints.Required
+        //public String endTime;
+
         @Constraints.Required
-        public String endTime;
+        public String phaseDuration;
 
         @Constraints.Required
         public String startTime;

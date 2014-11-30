@@ -1,0 +1,68 @@
+@(user: User,events: List[Event])
+@mainInstructor(user){
+<fieldset class="fieldSetLegend">
+    <legend class="fieldSetLegend"><h5><b>Select Event</b></h5></legend>
+    <div class="form-group">
+        <label for="individualEvent" class="col-sm-2 control-label">Select Event</label>
+        <div class="form-group col-md-3 col-sm-4 col-xs-12">
+            <select class="form-control" name="events" id="individualEvent">
+                <option value="Select Event">Select Event</option>
+                @for((individualEvent,index) <- events.zipWithIndex){
+                <option value="@individualEvent.eventName">@individualEvent.eventName</option>
+                }
+            </select>
+        </div>
+    </div>
+</fieldset>
+<fieldset class="fieldSetLegend">
+    <legend class="fieldSetLegend"><h5><b>Event Statistics</b></h5></legend>
+    <div class="row">
+        <div class="form-group" id="tabid">
+        </div>
+    </div>
+</fieldset>
+<script>
+    $("#tabid").hide();
+        $("select").change(function () {
+            $("#tabid").hide();
+            var eventName = " ";
+
+            $( "select option:selected" ).each(function() {
+                eventName  = $( this ).text();
+                if(eventName!="Select Event") {
+                    getEventData(eventName);
+                }
+                else{
+                    $("#tabid").hide();
+                }
+            });
+        }).change();
+
+        function getEventData(eventName)
+        {
+            $("#tabid").show();
+
+            //Populate data by AJAX call here
+            //alert("Activating"+eventName);
+                $.ajax({
+                    url: "/statistics/getEventStatistics/individualEventStatistics",
+                    type: 'GET',
+                    data: { eventName: eventName } ,
+                    success: function (response) {
+                        var messageArray = response.split('|');
+                        var arrayLength=messageArray.length;
+                        document.getElementById("tabid").innerHTML = " ";
+
+                        for(var i = 0;i<arrayLength;i++) {
+                         $("#tabid").append("<br>&nbsp &nbsp"+ messageArray[i] +"</br>");
+                        }
+                    },
+                    error: function () {
+                    //your error code
+                    }
+                });
+        }
+
+    </script>
+
+}

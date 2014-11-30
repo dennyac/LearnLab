@@ -22,6 +22,11 @@ POST    /dashboard/updateEvent                  controllers.Dashboard.updateEven
 GET     /dashboard/pastEvents                   controllers.Dashboard.instructorPastEventDiscussions()
 POST    /pastEvents/view                       controllers.PastEventController.pastEventsViewer(eventId: Long)
 
+#Statistics
+GET     /statistics/getEventStatistics                                     controllers.Statistics.getEventStatistics()
+GET     /statistics/getStudentStatistics                                   controllers.Statistics.getStudentStatistics()
+GET     /statistics/getEventStatistics/individualEventStatistics           controllers.Statistics.generateIndividualEventStatistics(eventName: String)
+GET     /statistics/getStudentStatistics/individualStudentStatistics       controllers.Statistics.generateIndividualStudentStatistics(studentName: String)
 
 #Student Home Page Specific
 GET     /leaderBoard                controllers.Application.leaderBoard(userId: Long)

@@ -55,7 +55,7 @@ public class EventStats extends Model {
 
     public static EventStats findByEventName(String EventName)
     {
-        Event event=Event.findByName("DBNormalization");
+        Event event=Event.findByName(EventName);
         System.out.println("event id  "+event.eventId);
         EventStats st=find.where().eq("eventId",event.eventId).findUnique();
         System.out.println("event stats id  "+st.id);
