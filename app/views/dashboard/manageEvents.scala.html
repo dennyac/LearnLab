@@ -18,40 +18,43 @@
                   <div id="dummy"></div>
                   <fieldset class="fieldSetLegend">
                       <legend class="fieldSetLegend"><h5><b>Event and Scripts</b></h5></legend>
+                      <!--<p>In this section, please enter the name of the event, a brief description of the event,
+                          hashtags students are required to use when they discuss the question with their peers in the same event.
+                      </p>-->
                             <div class="row">
-                                <div class="form-group col-md-6 col-sm-4 col-xs-12">
+                                <div class="form-group col-md-6 col-sm-4 col-xs-12" title="Enter Event Name here">
                                     <label for="eventName">Event Name</label>
-                                    <input name="eventName" type="text" class="form-control" id="eventName">
+                                    <input name="eventName" type="text" class="form-control" id="eventName" placeholder="Enter event name here">
                                 </div>
-                                <div class="form-group col-md-6 col-sm-4 col-xs-12">
+                                <div class="form-group col-md-6 col-sm-4 col-xs-12" title="Describe in 1 or 2 sentences the objective of the event">
                                     <label for="eventDescription">Event Description</label>
-                                    <textarea name="eventDescription" type="text" class="form-control" id="eventDescription"></textarea>
+                                    <textarea name="eventDescription" type="text" class="form-control" id="eventDescription" placeholder="Enter brief description of the event here"></textarea>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12 col-sm-4 col-xs-12">
                                     <label for="hashTags">HashTags</label>
-                                    <input name="hashes" type="text" class="form-control" id="hashTags">
+                                    <input name="hashes" type="text" class="form-control" id="hashTags" placeholder="Enter hashtags for example #chemistry #math which must be used by the students">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6 col-sm-4 col-xs-12">
                                     <label for="Script1">Phase 1 Script</label>
-                                    <textarea name="script1" type="text" class="form-control" id="Script1" rows="2"></textarea>
+                                    <textarea name="script1" type="text" class="form-control" id="Script1" rows="2" placeholder="Describe the rules students are expected to follow in Phase 1."></textarea>
                                 </div>
                                 <div class="form-group col-md-6 col-sm-4 col-xs-12">
                                     <label for="Script2">Phase 2 Script</label>
-                                    <textarea name="script2" type="text" class="form-control" id="Script2" rows="2"></textarea>
+                                    <textarea name="script2" type="text" class="form-control" id="Script2" rows="2" placeholder="Describe the rules students are expected to follow when they discuss the question with their peers in Phase 2."></textarea>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6 col-sm-4 col-xs-12">
                                     <label for="Script3">Phase 3 Script</label>
-                                    <textarea name="script3" type="text" class="form-control" id="Script3" rows="2"></textarea>
+                                    <textarea name="script3" type="text" class="form-control" id="Script3" rows="2" placeholder="Describe what is expected from a student as he/she is given a chance to change their answers to the question stated in first phase(pretest)."></textarea>
                                 </div>
                                 <div class="form-group col-md-6 col-sm-4 col-xs-12">
                                     <label for="Script4">Phase 4 Script</label>
-                                    <textarea name="script4" type="text" class="form-control" id="Script4" rows="2"></textarea>
+                                    <textarea name="script4" type="text" class="form-control" id="Script4" rows="2" placeholder="Enter the expectations for Follow up question posed in Phase 4 "></textarea>
                                 </div>
                             </div>
                   </fieldset>
@@ -60,7 +63,7 @@
                             <div class="row">
                                 <div class="form-group col-md-7 col-sm-4 col-xs-12">
                                     <label for="Question">Question</label>
-                                    <textarea name="question" type="text" class="form-control" id="Question" rows="2"></textarea>
+                                    <textarea name="question" type="text" class="form-control" id="Question" rows="2" placeholder="Enter the question for Phase 1"></textarea>
                                 </div>
                                 <div class="form-group col-md-3 col-sm-4 col-xs-12">
                                     <label for="Answer">Answer</label>
@@ -75,19 +78,19 @@
                             <div class="row">
                                 <div class="form-group col-md-3 col-sm-4 col-xs-12">
                                     <label for="Option1">Option 1</label>
-                                    <textarea name="option1" type="text" class="form-control" id="Option1" rows="2"></textarea>
+                                    <textarea name="option1" type="text" class="form-control" id="Option1" rows="2" placeholder="Enter first choice here"></textarea>
                                 </div>
                                 <div class="form-group col-md-3 col-sm-4 col-xs-12">
                                     <label for="Option2">Option 2</label>
-                                    <textarea name="option2" type="text" class="form-control" id="Option2" rows="2" ></textarea>
+                                    <textarea name="option2" type="text" class="form-control" id="Option2" rows="2" placeholder="Enter second choice here"></textarea>
                                 </div>
                                 <div class="form-group col-md-3 col-sm-4 col-xs-12">
                                     <label for="Option3">Option 3</label>
-                                    <textarea name="option3" type="text" class="form-control" id="Option3" rows="2" ></textarea>
+                                    <textarea name="option3" type="text" class="form-control" id="Option3" rows="2" placeholder="Enter third choice here"></textarea>
                                 </div>
                                 <div class="form-group col-md-3 col-sm-4 col-xs-12">
                                     <label for="Option4">Option 4</label>
-                                    <textarea name="option4" type="text" class="form-control" id="Option4" rows="2" ></textarea>
+                                    <textarea name="option4" type="text" class="form-control" id="Option4" rows="2" placeholder="Enter fourth choice here"></textarea>
                                 </div>
                             </div>
                   </fieldset>
@@ -96,7 +99,7 @@
                                 <div class="row">
                                     <div class="form-group col-md-7 col-sm-4 col-xs-12">
                                         <label for="FollowUpQuestion">FollowUp Question</label>
-                                        <textarea name="fquestion" type="text" class="form-control" id="FollowUpQuestion" rows="2" ></textarea>
+                                        <textarea name="fquestion" type="text" class="form-control" id="FollowUpQuestion" rows="2" placeholder="Describe follow up question for Phase 4"></textarea>
                                     </div>
                                     <div class="form-group col-md-3 col-sm-4 col-xs-12">
                                         <label for="FollowUpAnswer">Answer</label>
@@ -111,19 +114,19 @@
                                 <div class="row">
                                     <div class="form-group col-md-3 col-sm-4 col-xs-12">
                                         <label for="FollowUpOption1">Option 1</label>
-                                        <textarea name="foption1" type="text" class="form-control" id="FollowUpOption1" rows="2"></textarea>
+                                        <textarea name="foption1" type="text" class="form-control" id="FollowUpOption1" rows="2" placeholder="Enter first choice here"></textarea>
                                     </div>
                                     <div class="form-group col-md-3 col-sm-4 col-xs-12">
                                         <label for="FollowUpOption2">Option 2</label>
-                                        <textarea name="foption2" type="text" class="form-control" id="FollowUpOption2" rows="2"></textarea>
+                                        <textarea name="foption2" type="text" class="form-control" id="FollowUpOption2" rows="2" placeholder="Enter second choice here"></textarea>
                                     </div>
                                     <div class="form-group col-md-3 col-sm-4 col-xs-12">
                                         <label for="FollowUpOption3">Option 3</label>
-                                        <textarea name="foption3" type="text" class="form-control" id="FollowUpOption3" rows="2"></textarea>
+                                        <textarea name="foption3" type="text" class="form-control" id="FollowUpOption3" rows="2" placeholder="Enter third choice here"></textarea>
                                     </div>
                                     <div class="form-group col-md-3 col-sm-4 col-xs-12">
                                         <label for="FollowUpOption4">Option 4</label>
-                                        <textarea name="foption4" type="text" class="form-control" id="FollowUpOption4" rows="2"></textarea>
+                                        <textarea name="foption4" type="text" class="form-control" id="FollowUpOption4" rows="2" placeholder="Enter fourth choice here"></textarea>
                                     </div>
                                 </div>
                   </fieldset>
@@ -131,7 +134,8 @@
                         <legend class="fieldSetLegend"><h5><b>Event Participants and Schedule</b></h5></legend>
                         <div class="row">
                             <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                                <select name="participants" multiple="multiple" size="4">
+                                <label for="participantSelect" class="col-sm-2 control-label">Participants</label>
+                                <select name="participants" multiple="multiple" size="4" id="participantSelect">
                                 @for((participantUser,index) <- participants.zipWithIndex){
                                 @if( user.id != participantUser.id){
                                 <option value="@participantUser.fullname">@participantUser.fullname</option>
@@ -141,18 +145,18 @@
                             </div>
                             <div class="form-group col-md-3 col-sm-4 col-xs-12">
                                 <label for="createdatepicker" class="col-sm-2 control-label">Date</label>
-                                <input name="date" type="text" class="form-control" id="createdatepicker" size="30">
+                                <input name="date" type="text" class="form-control" id="createdatepicker" size="30" placeholder="Select event date">
                             </div>
                             <div class="form-group col-md-3 col-sm-4 col-xs-12">
                                 <label for="startTimeCreateForm" class="col-sm-2 control-label">StartTime</label>
-                                <input name="startTime" type="text" class="time start form-control" id="startTimeCreateForm"/>
+                                <input name="startTime" type="text" class="time start form-control" id="startTimeCreateForm" placeholder="Select event start time"/>
                             </div>
                             <!--<div class="form-group col-md-3 col-sm-4 col-xs-12">
                                 <label for="endTimeCreateForm" class="col-sm-2 control-label">EndTime</label>
                                 <input name="endTime" type="text" class="time start form-control" id="endTimeCreateForm"/>
                             </div>-->
                             <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                                <label for="phaseDuration">Phase Duration</label>
+                                <label for="phaseDuration">Duration of each phase</label>
                                 <select class="form-control" name="phaseDuration" id="phaseDuration">
                                     <option value="5">5 minutes</option>
                                     <option value="10">10 minutes</option>
