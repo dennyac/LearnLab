@@ -56,18 +56,21 @@ public class Statistics extends Controller {
         Event e=Event.findByName(eventName);
         String output="";
         if(e.active==2) {
-            EventStats stat = EventStats.findByEventName(eventName);
+            /*EventStats stat = EventStats.findByEventName(eventName);
             output += "Number of participants : " + stat.noOfPraticipants + "|";
             output += "Number of formal messages(hashtags) : " + stat.noOfHashTagMessgaes + "|";
             output += "Number of informal messages(chat) : " + stat.noOfInformalMessages + "|";
             output += "Percentage of students who gave correct answer in pre test(Phase1) : " + stat.percentageCorrectInPhase1 + "% |";
             output += "Percentage of students who gave correct answer in post test(Phase3) : " + stat.percentageCorrectInPhase3 + "% |";
             output += "Percentage of students who gave correct answer to follow up question : " + stat.percentageCorrectInPhase4 + "%";
-            return ok(output);
-        }
-        else
+            System.out.println("The output "+output);
+            //return ok(output);*/
+            System.out.println("Returning sample output");
+            return ok("Returning sample output"+"|"+"second row |"+"third row");
+    }
+    else
         {
-            output+="The event is not completed. You can view the statistics for this event once it is complete.";
+            output+="The event is not completed. You can view the statistics for this event once it is complete."+"|";
             return ok(output);
         }
     }
@@ -95,7 +98,7 @@ public class Statistics extends Controller {
             output+="Total Number of formal messages: "+stat.noOfIndividualHashTagMessages +"|";
             output+="Total Number of messages: "+stat.noOfMessagesExchangedByAllInAllEventsUserParticipated +"|";
             output+="Contribution of the user to discussions (percentage): "+stat.percentageContributionForDiscussion +"|";
-            //output+="Cognitive Ability Score: "+ stat.cognitiveAbilitiesScore+"|";
+            output+="Cognitive Ability Score: "+ stat.cognitiveAbilitiesScore+"|";
             output+="Number of upvotes received till date: "+ stat.upVotes+"|";
             output+="Aggregate Score: "+stat.aggregateScore;
         }

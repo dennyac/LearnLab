@@ -18,6 +18,15 @@
     <legend class="fieldSetLegend"><h5><b>Event Statistics</b></h5></legend>
     <div class="row">
         <div class="form-group" id="tabid">
+            <table id="myTable" class="table table-striped">
+                <thead>
+                <tr>
+                    <th> Please find the statistics of the event below</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
     </div>
 </fieldset>
@@ -41,7 +50,6 @@
         function getEventData(eventName)
         {
             $("#tabid").show();
-
             //Populate data by AJAX call here
             //alert("Activating"+eventName);
                 $.ajax({
@@ -51,10 +59,13 @@
                     success: function (response) {
                         var messageArray = response.split('|');
                         var arrayLength=messageArray.length;
-                        document.getElementById("tabid").innerHTML = " ";
 
                         for(var i = 0;i<arrayLength;i++) {
-                         $("#tabid").append("<br>&nbsp &nbsp"+ messageArray[i] +"</br>");
+                         var tableRef = document.getElementById('myTable').getElementsByTagName('tbody')[0];
+                         var newRow   = tableRef.insertRow(tableRef.rows.length);
+                         var newCell  = newRow.insertCell(0);
+                         var newText  = document.createTextNode(messageArray[i]);
+                         newCell.appendChild(newText);
                         }
                     },
                     error: function () {
