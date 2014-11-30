@@ -1,36 +1,38 @@
 @(user: User)
 @mainInstructor(user) {
-<br>
-<fieldset class="fieldSetLegend">
-    <legend class="fieldSetLegend"><h5><b>Help</b></h5></legend>
     <div class="form-group">
         <div class="col-md-9">
-            <h4> Introduction to Learn Lab</h4>
+            <div class="alert " role="alert">
+                <h2> Introduction to Learn Lab</h2>
+                <br>
+                <h4><b>Events</b></h4>
+                <p> You can create events including a group of students. An event has three stages. Each stage is timed. Every stage has a script which
+                describes the question and how the students can participate.</p>
+                <br>
+                <p><b>Stage 1</b>:    This stage has a multiple choice question. The student individually answers this question. </p>
+                <p><b>Stage 2</b>:     In this stage the students belonging to the same event, chat using instant messaging feature and discuss what they think is the correct answer.</p>
+                <p><b>Stage 3</b>:     In this stage, the student will get a chance to correct their answers and justify the same</p>
+                <p><b>Stage 4</b>:     In this stage, the students will face a followup question</p>
+                <br>
+            <!--<h5><u><b>Events</b></u></h5>-->
             <br>
-            <h5><u><b>Events</b></u></h5>
-            <p> You can create events including a group of students. An event has three stages.
-                <br> Stage 1: This stage has a multiple choice question</p>
-            <br>
-            <p>Stage 2: In this stage the students chat and discuss what should be the correct answer</p>
-            <br>
-            <p>Stage 3: In this stage, the students will get a chance to correct their answers and justify the same</p>
-            <br>
-            <p>Stage 4: In this stage, the students will face a followup question</p>
-            <br>
-            <h5><u><b>Statistics</b></u></h5>
-            <p> You can view the statistics of an event or an individual statistics by following appropriate
-                <br> links on the left navigation bar</p>
-            <br>
-            <h5><u><b>Live Feed</b></u></h5>
-            <p>You can choose the event and get live feed of messages exchanged between students and intervene if necessary</p>
-            <br>
-            <h5><u><b>Past Event Discussions</b></u></h5>
-            <p>You can view the discussions which have happened in the past events</p>
-            <br>
-            <h5><u><b>Event Summary</b></u></h5>
-            <br>
-            <p>You can view the summary of the event by selecting an appropriate event.</p>
+            <h4><b>Statistics</b></h4>
+            <p> You can view the statistics of an event or statistics of an individual student by following appropriate links on the left navigation bar.
+            The statistics help to understand a student`s standing in the course and whether or not collaboration fostered learning in the event.</p>
+            <br><br>
+            <h4><b>Live Chat Feed</b></h4>
+            <p>This feature lets you choose an event and observe the live chat discussions students are having in Stage 2. This also lets the instructor to
+                intervene and send messages to direct students in the right path, if necessary</p>
+            <br><br>
+            <h4><b>Past Event Discussions</b></h4>
+            <p>This feature lets you choose a past event and view the discussions which have happened in it. Using this feature,events can be better designed
+                to foster learning through collaboration.</p>
+            <br><br>
+            <h4><b>Event Summary</b></h4>
+            <p>You can view the summary of the event by selecting an appropriate event. The summary includes details such of stages in which majority of students
+            were successful, whether outcome of collaboration was positive or negative, the most upvoted user etc. These details provide more clarity
+            to the instructor to understand if the event was successful.</p>
+        </div>
         </div>
     </div>
-</fieldset>
 }
