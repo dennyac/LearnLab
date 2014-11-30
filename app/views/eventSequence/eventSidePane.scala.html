@@ -1,0 +1,28 @@
+@(event: Event,hashTags: List[String])
+<div class="col-md-3">
+    <div class="well sidebar-nav">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">@event.eventName</h3>
+            </div>
+            <div class="panel-body">
+                     <ul class="list-group">
+                        <li class="list-group-item"><font color="#196CBF">HashTags</font></li>
+                           @for(hashTag <- hashTags){
+                           <li class="list-group-item"><font color="#666666">#<nobr>@hashTag</nobr></font></li>
+                           }
+                     </ul>
+
+                <ul class="list-group">
+                    <li class="list-group-item"><font color="#196CBF">Event Members</font></li>
+                    @for(eventMember <- event.participants){
+                    <li class="list-group-item"><font color="#666666"> @eventMember.fullname</font> </li>
+                    }
+                </ul>
+
+
+            </div>
+            <!--/.well -->
+        </div>
+    </div>
+</div>

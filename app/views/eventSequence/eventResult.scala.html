@@ -1,47 +1,20 @@
-@(user: User, event: Event, eventStats: controllers.util.EventStatsWrapper)
+@(user: User, event: Event)
 
 @mainStudent(user) {
 
-<h4> Event Results Summary</h4>
-<div class="col-md-9">
-    <table class="table table-striped">
-        <tr>
-            <th>Event Detail</th>
-            <th>Statistics</th>
-        </tr>
-        <tr>
-            <td>Number of Participants:</td>
-            <td>@eventStats.noOfPraticipants</td>
-        </tr>
-        <tr>
-            <td>Total Number Of Messages Exchanged:</td>
-            <td>@eventStats.totalNoOfMessages</td>
-        </tr>
-        <tr>
-            <td>Total Number Of HashTagged Messages:</td>
-            <td>@eventStats.noOfHashTagMessgaes</td>
-        </tr>
-        <tr>
-            <td>Percentage Correct in Stage 1:</td>
-            <td>@eventStats.percentageCorrectInPhase1 %</td>
-        </tr>
-        <tr>
-            <td>Percentage Correct in Stage 3:</td>
-            <td>@eventStats.percentageCorrectInPhase3 %</td>
-        </tr>
-        <tr>
-            <td>Percentage Correct in Stage 4:</td>
-            <td>@eventStats.percentageCorrectInPhase4 %</td>
-        </tr>
-        <tr>
-            <td>Positive Collaboration Index:</td>
-            <td>@eventStats.positiveCollaborationScore</td>
-        </tr>
-        <tr>
-            <td>Negative Collaboration Index:</td>
-            <td>@eventStats.negativeCollaborationScore</td>
-        </tr>
-     </table>
-</div>
-</div>
+        <div class="well">
+            <div class="container">
+                <div class="col-md-3">
+                        <img src="http://www.mooreadamsoncraig.co.uk/wp/wp-content/uploads/2012/03/tick-mark.jpg" class="img-circle" height="142" width="142"/>
+                </div>
+                <div class="col-md-9">
+                    <br>
+                    <br>
+                    <h4>Event Completed Successfully</h4>
+                    <br>
+                    <br>
+                    <!--<h4><a href="#">Your Performance</a></h4>-->
+                </div>
+            </div>
+        </div>
 }

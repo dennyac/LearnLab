@@ -3,6 +3,7 @@ package controllers;
 import controllers.util.EventStatsWrapper;
 import controllers.util.EventUtils;
 import controllers.util.EventUtils.EventStageform;
+import controllers.util.MD5Util;
 import controllers.util.UserEventStatsWrapper;
 import models.*;
 import play.data.Form;
@@ -46,9 +47,10 @@ public class EventController extends Controller {
         EventUtils.initEventStage(f);
         User currUser = User.findByEmail(request().username());
         Event eventSelected = Event.findById(eventId);
+        Question question = eventSelected.Questions.get(0);
         String[] hashTagsFromEvent = eventSelected.getHashTags();
         List<String> hashTags = Arrays.asList(hashTagsFromEvent);
-        return ok(chatRoom.render((currUser),eventSelected,hashTags));
+        return ok(chatRoom.render((currUser),eventSelected,hashTags, question));
     }
 
     public static Result eventStage3(long eventId) {
@@ -86,9 +88,12 @@ public class EventController extends Controller {
             }
         }
         EventUtils.initEventStage(f);
-        EventStatsWrapper eventStatsWrapper = EventUtils.EventAggregator(Event.findById(Long.parseLong(f.eventId)), User.findById(f.userId));
-        ;
-        return ok(eventResult.render((User.findByEmail(request().username())), Event.findEvent(),eventStatsWrapper));
+
+        return ok(eventResult.render((User.findByEmail(request().username())), Event.findEvent()));
+        //Commented this out as it will be handled in the CRON JOB  [To be handled by Denny]
+        //EventStatsWrapper eventStatsWrapper = EventUtils.EventAggregator(Event.findById(Long.parseLong(f.eventId)), User.findById(f.userId));
+        //;
+        //return ok(eventResult.render((User.findByEmail(request().username())), Event.findEvent(),eventStatsWrapper));
     }
 
     public static Result eventFeeds(){

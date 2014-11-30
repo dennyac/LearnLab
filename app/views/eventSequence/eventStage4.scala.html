@@ -3,42 +3,12 @@
 
 @mainStudent(user) {
 <div id="wrapper">
-    <div class="col-md-3">
-        <div class="well sidebar-nav">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">@event.eventName</h3>
-                </div>
-                <div class="panel-body">
-                    <ol class="nav">
-                        <li><font color="blue">Sample HashTags:</font>
-                            <ul>
-                                @for(hashTag <- hashTags){
-                                <li><font color="DodgerBlue">@hashTag</font></li>
-                                }
-                            </ul>
-                        </li>
-
-                        <br>
-                        <br>
-
-                        <li><font color="blue">Event Members:</font>
-                            <ol>
-                                @for(eventMember <- event.participants){
-                                <li><font color="DodgerBlue">@eventMember.fullname</font></li>
-                                }
-                                <br>
-                            </ol>
-                </div>
-                <!--/.well -->
-            </div>
-        </div>
-    </div>
+    @eventSidePane(event,hashTags)
 </div>
 
 <div class="col-md-9">
     <div class="progress progress-striped">
-        <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+        <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%" style="width: 80%">
             Stage 4
             <span class="sr-only">bootstrap.min.css + bootstrap-theme.min.css (master branch</span>
         </div>
@@ -51,15 +21,16 @@
     <div class="well">
         @form(routes.EventController.eventResult()){
             <div class="well">
-                <ul class="answers">
-                    <p><b><br>@question.questionString<br> </b></p>
+                    <p><b>@question.questionString<br> </b></p>
                     <input type="radio" name="answer" value="Option1" id="q2a"><label for="q2a">  @question.Option1</label><br/>
                     <input type="radio" name="answer" value="Option2" id="q2b"><label for="q2b">  @question.Option2</label><br/>
                     <input type="radio" name="answer" value="Option3" id="q2c"><label for="q2c">  @question.Option3 </label><br/>
                     <input type="radio" name="answer" value="Option4" id="q2d"><label for="q2d">  @question.Option4</label><br/>
                     <input type="hidden" name="eventId" value=@event.eventId />
                     <input type="hidden" name="userId" value=@user.id />
-                    <p><b><br> Who helped me: <br> </b></p>
+            </div>
+            <div class="well">
+                    <p><b> Who helped me: <br> </b></p>
                     @for((participantUser,index) <- participants.zipWithIndex){
                         @if( user.id != participantUser.id){
                             <input type="checkbox" name="upVotedPeers[@index]" value = @participantUser.id> @participantUser.fullname <br>
@@ -68,7 +39,6 @@
                     <div class="pull-right">
                         <input type="submit" name="Submit" value= "Submit" class="btn btn-success">
                     </div>
-                </ul>
             </div>
         }
 </div>

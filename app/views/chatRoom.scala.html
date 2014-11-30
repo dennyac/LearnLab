@@ -1,44 +1,15 @@
-@(user: User, event: Event, hashTags: List[String])
+@(user: User, event: Event, hashTags: List[String], question: Question)
 
 @mainStudent(user) {
 
 <div id="wrapper">
 
-    <div class="col-md-3">
-        <div class="well sidebar-nav">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">@event.eventName</h3>
-                </div>
-                <div class="panel-body">
-                    <ol class="nav">
-                        <li><font color="blue">Sample HashTags:</font>
-                            <ul>
-                                @for(hashTag <- hashTags){
-                                <li><font color="DodgerBlue">@hashTag</font></li>
-                                }
-                            </ul>
-                        </li>
+    @eventSidePane(event,hashTags)
 
-                        <br>
-                        <br>
-
-                        <li><font color="blue">Event Members:</font>
-                            <ol>
-                                @for(eventMember <- event.participants){
-                                <li><font color="DodgerBlue">@eventMember.fullname</font></li>
-                                }
-                                <br>
-                            </ol>
-                </div>
-                <!--/.well -->
-            </div>
-        </div>
-    </div>
 
     <div class="col-md-9">
         <div class="progress progress-striped">
-            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 20%" style="width: 40%">
                 Stage 2
                 <span class="sr-only">bootstrap.min.css + bootstrap-theme.min.css (master branch</span>
             </div>
@@ -50,15 +21,27 @@
                     <p>@event.scriptPhase2</p>
                 </ul>
             </div>
+            <div class="well">
+                <ul class="answers">
+                    <h5><b>Question</b></h5>
+                    <p>@question.questionString</p>
+                </ul>
+            </div>
+            <div class="well">
+                <p>
                 <div id="onChat" class="row">
                     <div class="span10" id="main">
                         <div id="messages"></div>
                         <textarea id="talk" size="35"></textarea>
                         <form  method="POST" name="" action="@routes.EventController.eventStage3(event.eventId)">
+                            <div class="pull-right">
                             <input type="submit" name="Submit" value= "Submit" class="btn btn-success">
+                            </div>
                         </form>
                     </div>
                 </div>
+                </p>
+            </div>
         </div>
     <div class="col-md-3">
         <div class="well">

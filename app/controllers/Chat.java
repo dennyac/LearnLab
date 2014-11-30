@@ -43,11 +43,12 @@ public class Chat extends Controller {
 
         User currUser = User.findByEmail(request().username());
         Event eventSelected = Event.findById(eventId);
+        Question question = eventSelected.Questions.get(0);
         String[] hashTagsFromEvent = eventSelected.getHashTags();
         List<String> hashTags = Arrays.asList(hashTagsFromEvent);
 //        System.out.println("Request().username:"+ currUser.fullname);
 //        System.out.println("User email id is " + currUser.email);
-        return ok(chatRoom.render((currUser),eventSelected,hashTags));
+        return ok(chatRoom.render((currUser),eventSelected,hashTags,question));
     }
 
     public static Result chatRoomJs(String username, long eventId) {
