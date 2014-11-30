@@ -28,6 +28,12 @@
             'placeholder -> Messages("password"),
             'class -> "form-control"
         )
+        @inputText(
+        signupForm("bio"),
+        '_label -> null,
+        'placeholder -> Messages("Give us a brief description of yourself"),
+        'class -> "form-control"
+        )
 
         @checkbox(field = signupForm("isInstructor"))
     </fieldset>

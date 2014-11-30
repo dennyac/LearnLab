@@ -93,6 +93,7 @@ public class Signup extends Controller {
         user.passwordHash = Hash.createPassword(register.inputPassword);
         user.confirmationToken = UUID.randomUUID().toString();
         user.isInstructor = register.isInstructor;
+        user.bio = register.bio;
         user.save();
         if(user.isInstructor == false){
             System.out.println("Came to this point");

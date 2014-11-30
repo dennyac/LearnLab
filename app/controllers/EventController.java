@@ -89,8 +89,13 @@ public class EventController extends Controller {
         }
         EventUtils.initEventStage(f);
 
+        //Retrieving event to set the event as complete.
+        long eventId = Long.parseLong(f.eventId);
+        Event eventSelected = Event.findById(eventId);
+        eventSelected.markEventStatusAsCompleted();
+        eventSelected.update();
         return ok(eventResult.render((User.findByEmail(request().username())), Event.findEvent()));
-        //Commented this out as it will be handled in the CRON JOB  [To be handled by Denny]
+        //[TODO]Commented this out as it will be handled in the CRON JOB  [To be handled by Denny]
         //EventStatsWrapper eventStatsWrapper = EventUtils.EventAggregator(Event.findById(Long.parseLong(f.eventId)), User.findById(f.userId));
         //;
         //return ok(eventResult.render((User.findByEmail(request().username())), Event.findEvent(),eventStatsWrapper));

@@ -152,7 +152,17 @@ public class Event extends Model{
     public void markEventStatusAsCompleted()
     {
         //marks the event as completed.
-        this.active=2;
+        //implies that the eventHas just finished but not aggregated
+        //Statistics are not available yet
+        this.active=4;
+    }
+
+    public void markEventStatusAsAggregated()
+    {
+        //marks the completed events as aggregated.
+        //implies the eventStatistics are now ready for use.
+        this.active = 2;
+
     }
 
     public void markEventStatusAsOngoing()
@@ -233,5 +243,13 @@ public class Event extends Model{
         return eventsToActivateList;
     }
 
-
+    public static boolean isEventReadyForAggregation(Event event){
+        if(event.active == 4){
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
