@@ -16,6 +16,7 @@ import play.mvc.Result;
 import play.mvc.Security;
 import play.data.Form;
 import views.html.dashboard.index;
+import views.html.dashboard.help;
 import views.html.dashboard.instructorDashboard;
 import views.html.dashboard.manageEvents;
 import views.html.dashboard.createEventConfirmation;
@@ -241,7 +242,11 @@ public class Dashboard extends Controller {
         return ok(report.render(reportUser, reportEvent,Event.findAllEvents()));
 
     }
-
+    public static Result help()
+    {
+        User reportUser = User.findByEmail(request().username());
+        return ok(help.render(reportUser));
+    }
     public static Result activateEvent(Long eventId){
         //Update the status of the event to 1 to mark that the event is activated.
         //find event by eventID

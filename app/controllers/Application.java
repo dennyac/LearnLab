@@ -15,6 +15,7 @@ import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
+import views.html.dashboard.help;
 import views.html.user.userProfile;
 import views.html.user.pastEventDiscussion;
 import views.html.user.leaderBoard;
@@ -62,7 +63,6 @@ public class Application extends Controller {
 
         return ok(index.render(form(Register.class), form(Login.class)));
     }
-
     /**
      * Login class used by Login Form.
      */
