@@ -174,7 +174,11 @@ public class Application extends Controller {
         List<Event> userCompletedEvents = UserEventStats.findUserCompletedEvents(userid);
         List<Event> otherCompletedEvents = UserEventStats.findOtherCompletedEvents(userid);
         User u = User.findById(userid);
-        return ok(pastEventDiscussion.render(u, userCompletedEvents, otherCompletedEvents));
+        UserStats userStats = null;
+        if(!u.isInstructor){
+            userStats = UserStats.findUserStatsByUser(u);
+        }
+        return ok(pastEventDiscussion.render(u, userCompletedEvents, otherCompletedEvents, userStats));
     }
 
     public static Result pastEventDiscussionView(Long eventId, Long userId){

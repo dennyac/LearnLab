@@ -71,9 +71,9 @@ public class Robot extends UntypedActor {
         if (message instanceof String) {
             String msg = (String) message;
             if(msg.equals("BatchMessages")) {
-                logger.info("Robot(" + event.eventId + "):onReceive:BatchMessages");
-                Set<User> inactiveUsers = new HashSet<>(event.participants);
-                Set<User> activeUsers = new HashSet<>();
+                //logger.info("Robot(" + event.eventId + "):onReceive:BatchMessages");
+                HashSet<User> inactiveUsers = new HashSet<User>(event.participants);
+                HashSet<User> activeUsers = new HashSet<User>();
 
                 for(EventActions ea:EventActions.getEventMessages(event,2)){
                     logger.info("Robot(" + event.eventId + "):onReceive:BatchMessages:ActiveUser:" + ea.user.id);

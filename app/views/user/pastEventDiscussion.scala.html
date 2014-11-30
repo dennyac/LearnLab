@@ -1,7 +1,26 @@
-@(user: User, myEventList : List[Event], otherEventList : List[Event])
+@(user: User, myEventList : List[Event], otherEventList : List[Event], userStats: UserStats)
 
 @mainStudent(user) {
 <div id="wrapper">
+    <div class="col-md-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title"> @user.fullname 's Profile</h3>
+            </div>
+            <div class="panel-body">
+                <ol class="nav">
+                    <li>Student ID: @user.id</li>
+                    <br>
+                    <li>Events Participated In: @userStats.noOfEventsParticipatedIn </li>
+                    <br>
+                    <li>Hash Tag Contribution: @userStats.noOfIndividualHashTagMessages </li>
+                    <br>
+                    <li>Peers who you have helped: @userStats.upVotes</li>
+                    <br>
+                </ol>
+            </div>
+        </div>
+    </div>
     <div class="col-md-9">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist" id="myTab">
