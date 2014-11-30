@@ -184,12 +184,18 @@ public class Dashboard extends Controller {
         event.save();
 
     }
+
+
     public static Result deleteEvent(){
-
-        //cascade delete event and its correspoding entries
-
-        return ok(deleteEventConfirmation.render((User.findByEmail(request().username())), Event.findEvent()));
-
+        User instructor = User.findByEmail(request().username());
+        Form<deleteEventForm> dform = form(deleteEventForm.class);
+        deleteEventForm d = dform.bindFromRequest().get();
+        //Get the corresponding event
+        Event e=Event.findByName(d.eventNameToBeDeleted);
+        //Mark the event as deleted- status 3
+        e.active=3;
+        e.update();
+        return ok(deleteEventConfirmation.render((User.findByEmail(request().username())), e));
     }
 
     public static Result updateEvent(){
@@ -383,6 +389,11 @@ public class Dashboard extends Controller {
         public List<String> participants;
     }
 
+    public static class deleteEventForm{
+        @Constraints.Required
+        public String eventNameToBeDeleted;
+
+    }
     public static class reportForEvent {
         @Constraints.Required
         public String event;

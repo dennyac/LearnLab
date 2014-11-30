@@ -177,11 +177,12 @@
                     <div class="form-group">
                         <label for="individualEvent" class="col-sm-2 control-label">Event Name</label>
                         <div class="col-sm-7">
-                            <select class="form-control" name="events" id="individualEvent">
+                            <select class="form-control" name="eventNameToBeDeleted" id="individualEvent">
                                 <option value="Select Event">Select Event</option>
                                 @for((individualEvent,index) <- events.zipWithIndex){
+                                @if(individualEvent.active==0){
                                 <option value="@individualEvent.eventName">@individualEvent.eventName</option>
-                                }
+                                }}
                             </select>
                         </div>
                     </div>
