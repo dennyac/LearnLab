@@ -15,7 +15,7 @@ import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
-import views.html.dashboard.help;
+//import views.html.dashboard.help;
 import views.html.user.userProfile;
 import views.html.user.pastEventDiscussion;
 import views.html.user.leaderBoard;
@@ -108,7 +108,11 @@ public class Application extends Controller {
         public String inputPassword;
 
         @Constraints.Required
+        public String bio;
+
+        @Constraints.Required
         public boolean isInstructor;
+
 
         /**
          * Validate the authentication.
