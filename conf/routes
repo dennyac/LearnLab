@@ -94,3 +94,4 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 #Map exception landing page
 POST    /exceptionOccurred           controllers.Application.exceptionHandler(message: String)
+GET     /exceptionOccurred           controllers.Application.exceptionHandler(message: String)
