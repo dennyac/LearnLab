@@ -95,11 +95,12 @@ public class EventController extends Controller {
         Event eventSelected = Event.findById(eventId);
         eventSelected.markEventStatusAsCompleted();
         eventSelected.update();
-        return ok(eventResult.render((User.findByEmail(request().username())), Event.findEvent()));
+
         //[TODO]Commented this out as it will be handled in the CRON JOB  [To be handled by Denny]
         //EventStatsWrapper eventStatsWrapper = EventUtils.EventAggregator(Event.findById(Long.parseLong(f.eventId)), User.findById(f.userId));
         //;
         //return ok(eventResult.render((User.findByEmail(request().username())), Event.findEvent(),eventStatsWrapper));
+        return ok(eventResult.render((User.findByEmail(request().username())), Event.findEvent()));
     }
 
     public static Result eventFeeds(){
