@@ -21,6 +21,7 @@ import views.html.user.pastEventDiscussion;
 import views.html.user.leaderBoard;
 import views.html.user.pastEventsForUsersView;
 import views.html.user.myEventStatistics;
+import views.html.exceptionLandingPage;
 
 import javax.validation.Constraint;
 import scala.collection.JavaConverters;
@@ -64,6 +65,7 @@ public class Application extends Controller {
 
         return ok(index.render(form(Register.class), form(Login.class)));
     }
+
     /**
      * Login class used by Login Form.
      */
@@ -149,12 +151,12 @@ public class Application extends Controller {
     public static Result authenticate() {
         Form<Login> loginForm = form(Login.class).bindFromRequest();
 
-            Form<Register> registerForm = form(Register.class);
+        Form<Register> registerForm = form(Register.class);
 
-            if (loginForm.hasErrors()) {
-                return badRequest(index.render(registerForm, loginForm));
-            } else {
-                session("email", loginForm.get().email);
+        if (loginForm.hasErrors()) {
+            return badRequest(index.render(registerForm, loginForm));
+        } else {
+            session("email", loginForm.get().email);
             return GO_DASHBOARD;
         }
     }
@@ -170,31 +172,44 @@ public class Application extends Controller {
         return GO_HOME;
     }
 
-    public static Result profile(){
+    public static Result profile() {
 
         return ok(userProfile.render((User.findByEmail(session().get("email"))), Event.findEvent(), MD5Util.md5Hex(session().get("email"))));
     }
 
-    public static Result pastEventDiscussion(Long userid){
-        List<Event> userCompletedEvents = UserEventStats.findUserCompletedEvents(userid);
-        List<Event> otherCompletedEvents = UserEventStats.findOtherCompletedEvents(userid);
-        User u = User.findById(userid);
-        UserStats userStats = null;
-        if(!u.isInstructor){
-            userStats = UserStats.findUserStatsByUser(u);
+    public static Result pastEventDiscussion(Long userid) {
+        try {
+            List<Event> userCompletedEvents = UserEventStats.findUserCompletedEvents(userid);
+            List<Event> otherCompletedEvents = UserEventStats.findOtherCompletedEvents(userid);
+            User u = User.findById(userid);
+            UserStats userStats = null;
+            if (!u.isInstructor) {
+                userStats = UserStats.findUserStatsByUser(u);
+            }
+            return ok(pastEventDiscussion.render(u, userCompletedEvents, otherCompletedEvents, userStats));
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return ok(exceptionLandingPage.render("Exception Occured in past event"));
         }
-        return ok(pastEventDiscussion.render(u, userCompletedEvents, otherCompletedEvents, userStats));
     }
 
-    public static Result pastEventDiscussionView(Long eventId, Long userId){
+
+    public static Result pastEventDiscussionView(Long eventId, Long userId) {
+     try{
         List<String> userwiseMessages = EventActions.getUserwiseHashtagEvents();
         List<String> eventMessages = EventActions.getHashtagEvents();
 //        User u = User.findByEmail(request().username());
         User u = User.findById(userId);
-        return ok(pastEventsForUsersView.render(u,eventMessages,userwiseMessages));
+        return ok(pastEventsForUsersView.render(u, eventMessages, userwiseMessages));
+     } catch (Exception e) {
+
+         e.printStackTrace();
+         return ok(exceptionLandingPage.render(""));
+     }
     }
 
-    public static Result leaderBoard(Long userId){
+    public static Result leaderBoard(Long userId) {
         //retrieve userStats and the side pane
         User currentUser = User.findById(userId);
         UserStats userStats = UserStats.findUserStatsByUser(currentUser);
@@ -202,14 +217,18 @@ public class Application extends Controller {
         //retrieve the leader list from the wrapper
         LeaderListElementWrapper le = new LeaderListElementWrapper();
         List<LeaderListElementWrapper> leaderList = le.prepareLeaderList();
-        return ok(leaderBoard.render(currentUser,userStats, Event.findEvent(),leaderList));
+        return ok(leaderBoard.render(currentUser, userStats, Event.findEvent(), leaderList));
     }
 
-    public static Result myEventStats(Long userId){
+    public static Result myEventStats(Long userId) {
         User currentUser = User.findById(userId);
         UserStats userStats = UserStats.findUserStatsByUser(currentUser);
         List<Event> userCompletedEvents = UserEventStats.findUserCompletedEvents(userId);
-        return ok(myEventStatistics.render(currentUser,userStats,userCompletedEvents));
+        return ok(myEventStatistics.render(currentUser, userStats, userCompletedEvents));
+    }
+
+    public static Result exceptionHandler(String exceptionMessage) {
+        return ok(exceptionLandingPage.render(exceptionMessage));
     }
 
 }
