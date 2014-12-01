@@ -134,8 +134,7 @@
                         <legend class="fieldSetLegend"><h5><b>Event Participants and Schedule</b></h5></legend>
                         <div class="row">
                             <div class="form-group col-md-3 col-sm-4 col-xs-12">
-                                <label for="participantSelect" class="col-sm-2 control-label">Participants</label>
-                                <select name="participants" multiple="multiple" size="4" id="participantSelect">
+                                <select name="participants[]" multiple="multiple" size="4">
                                 @for((participantUser,index) <- participants.zipWithIndex){
                                 @if( user.id != participantUser.id){
                                 <option value="@participantUser.fullname">@participantUser.fullname</option>
