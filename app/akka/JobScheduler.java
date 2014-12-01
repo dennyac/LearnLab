@@ -41,9 +41,12 @@ public class JobScheduler extends UntypedActor {
                 List<Event> events = Event.findAllCompletedEvents();
 
                 for(Event e: events) {
-                    System.out.println("Aggregator called for the event"+e.eventName);
-                    EventUtils.EventAggregator(e, null);
+                    if (Event.isEventReadyForAggregation(e)) {
+                        System.out.println("Aggregator called for the event"+e.eventName);
+                        EventUtils.EventAggregator(e, null);
+                    }
                 }
+
                 logger.info("JobScheduler: Completed computing stats");
             }
         }

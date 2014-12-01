@@ -16,9 +16,26 @@ $(function() {
     var WS = window['MozWebSocket'] ? MozWebSocket : WebSocket
     var chatSocket = new WS("@routes.Chat.instructor(username).webSocketURL(request)")
 
+    var rootURL = "/event/chatPhaseEvents";
+
+    $.ajax({
+        type: 'GET',
+        url: rootURL,
+        success: function(data) {
+            for(var i=0;i<data.length;i++){
+//                var opt = $('<option></option>')
+//
+//                $('option',opt).attr('id',data[i].eventId)
+//                $('option', opt).text(data[i].eventName)
+                $('#eventSelect').append('<option id="'+data[i].eventId+'">'+ data[i].eventName + '</option>');
+            }
+
+        } //Put a failure function as well...
+    });
+
     var sendMessage = function() {
         var e = document.getElementById("eventSelect");
-        var strUser = e.options[e.selectedIndex].value;
+        var strUser = e.options[e.selectedIndex].id;
         chatSocket.send(JSON.stringify(
             {text: $("#talk").val(), eventid: strUser}
         ))
@@ -49,8 +66,14 @@ $(function() {
             if(data.text.match(/(^|\s)(#[a-z\d-]+)/ig) != null){
                 var hashtag = data.text.match(/(^|\s)(#[a-z\d-]+)/ig)[0].substr(1)
                 console.log('Matched Hashtag')
-                var $object = $('#h' +data.eventId+ hashtag);
-                if(!$object.length) {
+                var $eventPosts = $('#accordion' + data.eventId);
+                if(!$eventPosts.length){
+                    var evnt = $('<div class="col-md-4"><div class="panel-group" role="tablist" aria-multiselectable="true"></div></div>')
+                    $('.panel-group',evnt).attr('id','accordion' + data.eventId)
+                    $('.pinned').append(evnt)
+                }
+                var $hashGroup = $('#h' +data.eventId+ hashtag);
+                if(!$hashGroup.length) {
                     var dl = $('<div class="panel panel-default"><div class="panel-heading" role="tab" >               <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" aria-expanded="true" >                           </a></h4></div><div                  class="panel-collapse collapse in" role="tabpanel" >                            <div class="panel-body"><ul class="list-group"></ul></div></div></div>')
                     //  <div class="panel panel-default"><div class="panel-heading" role="tab" id="headingOne"><h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne"></a></h4></div><div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne"><div class="panel-body">                            </div></div></div>
                     $('.panel-heading',dl).attr('id',"heading" + hashtag)
@@ -66,7 +89,7 @@ $(function() {
 
                 var li = document.createElement('li');
                 $(li).addClass("list-group-item")
-                $(li).text(data.text)
+                $(li).text(data.username + ": " + data.text)
                 $("#ul" + hashtag + data.eventId).append(li);
             }
 //
