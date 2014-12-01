@@ -55,9 +55,18 @@ $(function() {
 //                }
 //            }
 //            else {
-                var el = $('<div class="message"><span></span><p></p></div>')
+                if(data.user == "Sparky"){
+                var el = $('<div class="message" style="color:#FF0000"><span></span><p><i></i></p></div>');
+                }
+                else if(data.user == '@username'){
+                var el = $('<div class="message" style="color:#3D993D"><span></span><p><i></i></p></div>');
+                }
+                else{
+                var el = $('<div class="message" style="color:#0000FF"><span></span><p><i></i></p></div>');
+                }
+                //var el = $('<div class="message" style="color:#0000FF"><span></span><p><i></i></p></div>')
                 $("span", el).text(data.user)
-                $("p", el).text(data.message)
+                $("i", el).text(data.message)
                 $(el).addClass(data.kind)
                 if(data.user == '@username') $(el).addClass('me')
                 $('#messages').prepend(el)
