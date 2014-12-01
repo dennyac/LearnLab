@@ -23,6 +23,7 @@ import views.html.dashboard.createEventConfirmation;
 import views.html.dashboard.deleteEventConfirmation;
 import views.html.dashboard.updateEventConfirmation;
 import views.html.dashboard.report;
+import views.html.exceptionLandingPage;
 import views.html.statistics.eventStatistics;
 import views.html.statistics.individualStudentStatistics;
 import views.html.chatRoom;
@@ -46,11 +47,17 @@ import java.text.*;
 public class Statistics extends Controller {
 
     public static Result getEventStatistics(){
+        try{
         User reportUser = User.findByEmail(request().username());
         return ok(eventStatistics.render(reportUser, Event.findAllEvents()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ok(exceptionLandingPage.render("Something went wrong at  "));
+        }
     }
 
     public static Result generateIndividualEventStatistics(String eventName){
+      try{
         //code to return the statistics of an event
         //get the statistics of the event
         Event e=Event.findByName(eventName);
@@ -75,14 +82,24 @@ public class Statistics extends Controller {
             output+="The event is not completed. You can view the statistics for this event once it is complete."+"|";
             return ok(output);
         }
+      } catch (Exception e) {
+          e.printStackTrace();
+          return ok(exceptionLandingPage.render("Something went wrong at generate individual event statistics"));
+      }
     }
 
     public static Result getStudentStatistics(){
+        try{
         User reportUser = User.findByEmail(request().username());
         return ok(individualStudentStatistics.render(reportUser, User.findAllUsers()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ok(exceptionLandingPage.render("Something went wrong at  get student statistics"));
+        }
     }
 
     public static Result generateIndividualStudentStatistics(String studentName){
+        try{
         //code to return the statistics of a student
         User student=User.findByFullname(studentName);
         UserStats stat = UserStats.findUserStatsByUser(student);
@@ -106,5 +123,9 @@ public class Statistics extends Controller {
         }
         System.out.println("student name is "+ studentName);
         return ok(output);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ok(exceptionLandingPage.render("Something went wrong at generate individual student statistics"));
+        }
     }
 }

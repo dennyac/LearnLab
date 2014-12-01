@@ -16,6 +16,7 @@ import views.html.dashboard.updateEventConfirmation;
 import views.html.dashboard.report;
 import views.html.chatRoom;
 import views.html.eventSequence.eventStage1;
+import views.html.exceptionLandingPage;
 import views.html.instructorView;
 import views.html.pastEvents.pastEventsForInstructors;
 import views.html.pastEvents.pastEventsForInstructorsView;
@@ -39,14 +40,20 @@ public class PastEventController extends Controller {
 
     public static Result pastEventsViewer(Long eventId)
     {
+        try{
         List<String> userwiseMessages = EventActions.getUserwiseHashtagEvents();
         List<String> eventMessages = EventActions.getHashtagEvents();
         User reportUser = User.findByEmail(request().username());
         return ok(pastEventsForInstructorsView.render(reportUser,eventMessages,userwiseMessages));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ok(exceptionLandingPage.render("Something went wrong at past events viewer "));
+        }
     }
 
     public static Result pastUserEventStatistics(Long userId, Long eventId)
     {
+        try{
         User currentUser =  User.findById(userId);
         Event eventSelected = Event.findById(eventId);
         System.out.println("Event ID:"+ eventId);
@@ -54,6 +61,10 @@ public class PastEventController extends Controller {
         EventAverageWrapper eventAverageWrapper = new EventAverageWrapper(eventStats);
         UserEventStats userEventStats = UserEventStats.findEventSpecificStatsForUserStats(currentUser,eventSelected);
         return ok(pastUserEventPerformaceView.render(currentUser, eventSelected, eventAverageWrapper, userEventStats));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ok(exceptionLandingPage.render("Something went wrong at  past user event statistics"));
+        }
     }
 
 }

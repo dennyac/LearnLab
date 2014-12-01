@@ -14,6 +14,7 @@ import play.mvc.Result;
 import views.html.account.reset.ask;
 import views.html.account.reset.reset;
 import views.html.account.reset.runAsk;
+import views.html.exceptionLandingPage;
 
 import java.net.MalformedURLException;
 
@@ -47,8 +48,13 @@ public class Reset extends Controller {
      * @return reset password form
      */
     public static Result ask() {
+        try{
         Form<AskForm> askForm = form(AskForm.class);
         return ok(ask.render(askForm));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ok(exceptionLandingPage.render("Something went wrong at ask"));
+        }
     }
 
     /**
@@ -57,6 +63,7 @@ public class Reset extends Controller {
      * @return reset password form if error, runAsk render otherwise
      */
     public static Result runAsk() {
+        try{
         Form<AskForm> askForm = form(AskForm.class).bindFromRequest();
 
         if (askForm.hasErrors()) {
@@ -89,6 +96,10 @@ public class Reset extends Controller {
             flash("error", Messages.get("error.technical"));
         }
         return badRequest(ask.render(askForm));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ok(exceptionLandingPage.render("Something went wrong at  run ask"));
+        }
     }
 
     /**
@@ -105,7 +116,7 @@ public class Reset extends Controller {
     }
 
     public static Result reset(String token) {
-
+    try {
         if (token == null) {
             flash("error", Messages.get("error.technical"));
             Form<AskForm> askForm = form(AskForm.class);
@@ -128,12 +139,18 @@ public class Reset extends Controller {
 
         Form<ResetForm> resetForm = form(ResetForm.class);
         return ok(reset.render(resetForm, token));
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        return ok(exceptionLandingPage.render("Something went wrong at reset"));
+    }
     }
 
     /**
      * @return reset password form
      */
     public static Result runReset(String token) {
+        try{
         Form<ResetForm> resetForm = form(ResetForm.class).bindFromRequest();
 
         if (resetForm.hasErrors()) {
@@ -177,7 +194,10 @@ public class Reset extends Controller {
             flash("error", Messages.get("error.technical"));
             return badRequest(reset.render(resetForm, token));
         }
-
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ok(exceptionLandingPage.render("Something went wrong at run reset "));
+        }
     }
 
     /**
