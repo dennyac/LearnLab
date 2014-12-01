@@ -70,23 +70,31 @@
     </tr>
 </table>
 
+
 <div class="panel panel-default">
     <div class="panel-body">
         <b>
        General Comments And Feedback:
         </b>
     </div>
-    <div class="panel-footer"> @if(userEventStats.percentageOfCognitiveAbility==100){
+    <div class="panel-footer"> @if(userEventStats.cognitiveAbilityScore==2){
         You have shown great cognitive abilities in this event! <i class="fa fa-trophy"></i>
         Keep Going!
         }
-        @if(userEventStats.percentageOfCognitiveAbility==50){
+        @if(userEventStats.cognitiveAbilityScore==1){
         You have shown good cognitive abilities but could improve! <i class="fa fa-star-half-o"></i>
         Good Going!
         }
-        @if(userEventStats.percentageOfCognitiveAbility==0){
+        @if(userEventStats.cognitiveAbilityScore==0){
         You need to work on your cognitive abilities <i class="fa fa-meh-o"></i>
         Collaborate More!
         }</div>
+    @if(userEventStats.noOfUpVotesReceivedForEvent!=0){
+        <div class="panel-footer">
+                <h5>
+                     @userEventStats.noOfUpVotesReceivedForEvent found your contributions to this activity helpful <i class="fa fa-thumbs-o-up"></i>
+                </h5>
+        </div>
+    }
 </div>
 }
