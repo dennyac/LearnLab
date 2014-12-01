@@ -73,7 +73,7 @@ public class InstructorWebSocket extends UntypedActor {
 
             logger.info("InstructorWebSocket(" + instructorEmail + "):onReceive:JsonNode");
             JsonNode json = (JsonNode) message;
-            Long eId = Long.parseLong(json.get("event").asText());
+            Long eId = Long.parseLong(json.get("eventid").asText());
             logger.info("InstructorWebSocket(" + instructorEmail + "):onReceive:json:eventId:" + eId.toString());
             String msg = json.get("text").asText();
             logger.info("InstructorWebSocket(" + instructorEmail + "):onReceive:json:Message:" + msg);
