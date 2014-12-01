@@ -65,6 +65,10 @@ public class EventStats extends Model {
         return st;
     }
 
+    public static EventStats findByEventId(Long eventId){
+        EventStats eventStats = find.where().eq("eventId",eventId).findUnique();
+        return  eventStats;
+    }
     public static EventStats findByEvent(Event e){
         System.out.println("ComingHERE");
         EventStats eventStats = find.where().eq("event", e).findUnique();

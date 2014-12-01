@@ -24,7 +24,6 @@ public class EventUtils {
         public String justification;
         public List<String> upVotedPeers;
         public Long userId;
-
     }
 
     public static EventStatsWrapper EventAggregator(Event event,User user){

@@ -77,6 +77,11 @@ public class UserEventStats extends Model{
         return userCompletedEvents;
     }
 
+    public static UserEventStats findEventSpecificStatsForUserStats(User user,Event event){
+        UserEventStats userEventStats = find.where().eq("user",user).eq("event",event).findUnique();
+        return userEventStats;
+    }
+
     public static List<UserEventStats> findAllUserEventStats(){
         return find.findList();
     }
