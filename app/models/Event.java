@@ -256,6 +256,7 @@ public class Event extends Model{
     public static List<Event> findAllEventsToBeAggregated()
     {
         List<Event> toBeAggregatedEventList = find.where().eq("active",4).findList();
+        System.out.println("####################COMING HERE****************");
         return toBeAggregatedEventList;
     }
 

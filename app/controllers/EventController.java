@@ -114,7 +114,7 @@ public class EventController extends Controller {
         //Retrieving event to set the event as complete.
         long eventId = Long.parseLong(f.eventId);
         Event eventSelected = Event.findById(eventId);
-        eventSelected.markEventStatusAsCompleted();
+            eventSelected.markEventStatusAsCompleted();
         eventSelected.update();
 
         //[TODO]Commented this out as it will be handled in the CRON JOB  [To be handled by Denny]
