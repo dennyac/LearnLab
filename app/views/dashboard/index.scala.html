@@ -30,15 +30,17 @@
             <th>JoinIn</th>
         </tr>
         @for(event <- eventList){
-        <tr>
-            <td>@event.eventName</td>
-            <td><div class="well">@event.description</div></td>
-            <td>@event.participants.size</td>
-            <td>
-                <form  method="POST" name="joinEvent" action="@routes.EventController.eventStage1(event.eventId)">
-                    <input time="@event.getEventEpoch()" type="submit" name="Join" value= "Join" class="btn btn-success">
-                </form>
-        </tr>
+            @if(event.active==1){
+                <tr>
+                    <td>@event.eventName</td>
+                    <td><div class="well">@event.description</div></td>
+                    <td>@event.participants.size</td>
+                    <td>
+                        <form  method="POST" name="joinEvent" action="@routes.EventController.eventStage1(event.eventId)">
+                            <input time="@event.getEventEpoch()" type="submit" name="Join" value= "Join" class="btn btn-success">
+                        </form>
+                </tr>
+            }
         }
     </table>
 </div>
