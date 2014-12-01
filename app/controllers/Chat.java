@@ -40,15 +40,20 @@ public class Chat extends Controller {
 //        Form<EventStats> userForm = form(EventStats.class);
 //        EventStats s = userForm.bindFromRequest().get();
 //        System.out.println("Came HERE!!"+ s.answer);
-
-        User currUser = User.findByEmail(request().username());
-        Event eventSelected = Event.findById(eventId);
-        Question question = eventSelected.Questions.get(0);
-        String[] hashTagsFromEvent = eventSelected.getHashTags();
-        List<String> hashTags = Arrays.asList(hashTagsFromEvent);
+        try {
+            User currUser = User.findByEmail(request().username());
+            Event eventSelected = Event.findById(eventId);
+            Question question = eventSelected.Questions.get(0);
+            String[] hashTagsFromEvent = eventSelected.getHashTags();
+            List<String> hashTags = Arrays.asList(hashTagsFromEvent);
 //        System.out.println("Request().username:"+ currUser.fullname);
 //        System.out.println("User email id is " + currUser.email);
-        return ok(chatRoom.render((currUser),eventSelected,hashTags,question));
+            return ok(chatRoom.render((currUser), eventSelected, hashTags, question));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return ok(exceptionLandingPage.render("Something went wrong while entering the chat room"));
+        }
     }
 
     public static Result chatRoomJs(String username, long eventId) {
@@ -67,19 +72,29 @@ public class Chat extends Controller {
     //chatRoom.scala.js should handle the error if the websocket connection fails
     //Or render some error html pages
     public static WebSocket<JsonNode> chat(final String username, final long eventId) {
-        return WebSocket.withActor(new F.Function<ActorRef, Props>() {
-            public Props apply(ActorRef out) throws Throwable {
-                return UserWebSocket.props(username,eventId,out);
-            }
-        });
+        try {
+            return WebSocket.withActor(new F.Function<ActorRef, Props>() {
+                public Props apply(ActorRef out) throws Throwable {
+                    return UserWebSocket.props(username, eventId, out);
+                }
+            });
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ok(exceptionLandingPage.render("Something went wrong in the chat room"));
+        }
     }
 
     public static WebSocket<JsonNode> instructor(final String username) {
-        return WebSocket.withActor(new F.Function<ActorRef, Props>() {
-            public Props apply(ActorRef out) throws Throwable {
-                return InstructorWebSocket.props(username, out);
-            }
-        });
+        try {
+            return WebSocket.withActor(new F.Function<ActorRef, Props>() {
+                public Props apply(ActorRef out) throws Throwable {
+                    return InstructorWebSocket.props(username, out);
+                }
+            });
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ok(exceptionLandingPage.render("Something went wrong in the instructor chat room"));
+        }
     }
   
 }
