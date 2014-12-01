@@ -62,17 +62,21 @@ public class UserEventStats extends Model{
         System.out.println("****************************"+userEventStatsList.size());
         List<Event> userCompletedEvents = new ArrayList<Event>();
         for(int i=0;i<userEventStatsList.size();i++){
-            userCompletedEvents.add(Event.findById(userEventStatsList.get(i).userEventId));
+            UserEventStats currentUserEventStat = userEventStatsList.get(i);
+            userCompletedEvents.add(currentUserEventStat.event);
         }
         return userCompletedEvents;
+
     }
+
 
     public static List<Event> findOtherCompletedEvents(Long userid) {
         List<UserEventStats> userEventStatsList = find.where().ne("user_id", userid).findList();
         System.out.println("****************************" + userEventStatsList.size());
         List<Event> userCompletedEvents = new ArrayList<Event>();
         for (int i = 0; i < userEventStatsList.size(); i++) {
-            userCompletedEvents.add(Event.findById(userEventStatsList.get(i).userEventId));
+            UserEventStats currentUserEventStat = userEventStatsList.get(i);
+            userCompletedEvents.add(currentUserEventStat.event);
         }
         return userCompletedEvents;
     }

@@ -15,13 +15,21 @@
                         </div>
                 </div>
     </fieldset>
-    <fieldset class="fieldSetLegend">
+<fieldset class="fieldSetLegend">
     <legend class="fieldSetLegend"><h5><b>Event Summary</b></h5></legend>
     <div class="row">
         <div class="form-group" id="tabid">
+            <table id="myTable" class="table table-bordered">
+                <tbody>
+                <tr class="info"><td></td></tr>
+                <tr class="success"><td></td></tr>
+                <tr class="info"><td></td></tr>
+                <tr class="danger"><td></td></tr>
+                <tbody>
+            </table>
         </div>
     </div>
-    </fieldset>
+</fieldset>
     <script>
     $("#tabid").hide();
         $("select").change(function () {
@@ -51,11 +59,13 @@
                     data: { eventName: eventName } ,
                     success: function (response) {
                         var messageArray = response.split('|');
-                        var arrayLength=messageArray.length;
-                        document.getElementById("tabid").innerHTML = " ";
-
-                        for(var i = 0;i<arrayLength;i++) {
-                         $("#tabid").append("<br>&nbsp &nbsp"+ messageArray[i] +"</br>");
+                         var arrayLength=messageArray.length;
+                         var table = document.getElementById("myTable");
+                         for (var i = 0; i< table.rows.length; i++) {
+                         var row=table.rows[i];
+                         console.log(row);
+                         var firstCell  = row.cells[0];
+                         firstCell.innerHTML=messageArray[i];
                         }
                     },
                     error: function () {
