@@ -47,8 +47,9 @@
             <select class="form-control" name="events" id="individualEvent">
                 <option value="Select Event">Select Event</option>
                 @for((individualEvent,index) <- events.zipWithIndex){
+                @if(individualEvent.active==2){
                 <option value="@individualEvent.eventName">@individualEvent.eventName</option>
-                }
+                }}
             </select>
         </div>
     </div>
