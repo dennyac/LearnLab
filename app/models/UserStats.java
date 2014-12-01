@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 
@@ -23,7 +24,7 @@ public class UserStats extends Model{
     @OneToOne
     public User user;
 
-    @OneToMany(mappedBy = "userStats")
+    @OneToMany(fetch=FetchType.LAZY, mappedBy = "userStats") @JsonBackReference
     public List<UserEventStats> listOfUserEventStatsInStats;
 
     @Formats.NonEmpty

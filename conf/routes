@@ -20,8 +20,10 @@ POST    /dashboard/deleteEvent                  controllers.Dashboard.deleteEven
 POST    /dashboard/updateEvent                  controllers.Dashboard.updateEvent()
 
 
+#Past Event Related Discussions and Statistics
 GET     /dashboard/pastEvents                   controllers.Dashboard.instructorPastEventDiscussions()
-POST    /pastEvents/view                       controllers.PastEventController.pastEventsViewer(eventId: Long)
+POST    /pastEvents/view                        controllers.PastEventController.pastEventsViewer(eventId: Long)
+POST    /userEventStatistics                    controllers.PastEventController.pastUserEventStatistics(userId: Long, eventId: Long)
 
 #Statistics
 GET     /statistics/getEventStatistics                                     controllers.Statistics.getEventStatistics()
@@ -34,11 +36,15 @@ GET     /leaderBoard                controllers.Application.leaderBoard(userId: 
 GET     /profile                    controllers.Application.profile()
 GET     /pastEventDiscussion        controllers.Application.pastEventDiscussion(userId: Long)
 POST    /pastEventDiscussion/view   controllers.Application.pastEventDiscussionView(eventId: Long, userId: Long)
+GET     /myEventStatistics          controllers.Application.myEventStats(userId: Long)
 
+
+GET     /event/chatPhaseEvents      controllers.EventController.getChatPhaseEvents()
 POST    /eventStage1                controllers.EventController.eventStage1(eventId: Long)
 POST    /eventStage3                controllers.EventController.eventStage3(eventId: Long)
 POST    /eventStage4                controllers.EventController.eventStage4(eventId: Long)
 POST    /eventResult                controllers.EventController.eventResult()
+
 
 POST    /login                      controllers.Application.authenticate()
 GET     /logout                     controllers.Application.logout()

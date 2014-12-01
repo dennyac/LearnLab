@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Ebean;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
 import org.joda.time.Minutes;
@@ -123,10 +124,10 @@ public class Event extends Model{
         this.eventStats = eventStats;
     }
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(fetch=FetchType.LAZY, mappedBy = "event") @JsonBackReference
     public List<EventActions> eventActions;
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(fetch=FetchType.LAZY, mappedBy = "event") @JsonBackReference
     public List<UserEventStats> listOfUserEventStats;
 
     public static Model.Finder<Long, Event> find = new Model.Finder<Long, Event>(Long.class, Event.class);
@@ -138,6 +139,20 @@ public class Event extends Model{
     }
 
     public Long getEventEpoch(){ return DateTimeUtils.getInstantMillis(eventDateTime);}
+
+    public static List<Event> getChatPhaseEvents() {
+
+        List<Event> phase2Events = new ArrayList<Event>();
+
+            for(Event e: find.findList()){
+                DateTime phase2StartTime = e.eventDateTime.plusMinutes(e.phase1Duration);
+                DateTime phase2EndTime = e.eventDateTime.plusMinutes(e.phase1Duration + e.phase2Duration);
+                if(DateTime.now().isAfter(phase2StartTime) && DateTime.now().isBefore(phase2EndTime) )
+                    phase2Events.add(e);
+            }
+
+        return phase2Events;
+    }
 
     public static List<Event> findAllEvents()
     {

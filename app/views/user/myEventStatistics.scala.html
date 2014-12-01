@@ -1,0 +1,42 @@
+@(user: User, userStats: UserStats, myEventList : List[Event])
+@mainStudent(user) {
+<div class="col-md-3">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title"> @user.fullname 's Profile</h3>
+        </div>
+        <div class="panel-body">
+            <ol class="nav">
+                <li>Student ID: @user.id</li>
+                <br>
+                <li>Events Participated In: @userStats.noOfEventsParticipatedIn </li>
+                <br>
+                <li>Hash Tag Contribution: @userStats.noOfIndividualHashTagMessages </li>
+                <br>
+                <li>Peers who you have helped: @userStats.upVotes</li>
+                <br>
+            </ol>
+        </div>
+    </div>
+</div>
+<div class="col-md-9">
+    <h4>Events you have participated</h4>
+    <table class="table table-striped">
+        <tr>
+            <th>Event Name</th>
+            <th>Event Description</th>
+            <th>View Performance</th>
+        </tr>
+        @for(event <- myEventList){
+        <tr>
+            <td>@event.eventName</td>
+            <td><div class="well">@event.description</div></td>
+            <td>
+                <form  method="POST" name="joinEvent" action="@routes.PastEventController.pastUserEventStatistics( user.id, event.eventId)">
+                    <input type="submit" name="Join" value= "Your Performance" class="btn btn-success">
+                </form>
+        </tr>
+        }
+    </table>
+</div>
+}

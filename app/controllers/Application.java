@@ -20,6 +20,7 @@ import views.html.user.userProfile;
 import views.html.user.pastEventDiscussion;
 import views.html.user.leaderBoard;
 import views.html.user.pastEventsForUsersView;
+import views.html.user.myEventStatistics;
 
 import javax.validation.Constraint;
 import scala.collection.JavaConverters;
@@ -202,6 +203,13 @@ public class Application extends Controller {
         LeaderListElementWrapper le = new LeaderListElementWrapper();
         List<LeaderListElementWrapper> leaderList = le.prepareLeaderList();
         return ok(leaderBoard.render(currentUser,userStats, Event.findEvent(),leaderList));
+    }
+
+    public static Result myEventStats(Long userId){
+        User currentUser = User.findById(userId);
+        UserStats userStats = UserStats.findUserStatsByUser(currentUser);
+        List<Event> userCompletedEvents = UserEventStats.findUserCompletedEvents(userId);
+        return ok(myEventStatistics.render(currentUser,userStats,userCompletedEvents));
     }
 
 }

@@ -19,6 +19,7 @@ import views.html.chatRoom;
 import views.html.live.liveFeeds;
 import views.html.live.liveStats;
 import views.html.live.offlineStats;
+import static play.libs.Json.toJson;
 
 import java.util.*;
 
@@ -94,11 +95,12 @@ public class EventController extends Controller {
         Event eventSelected = Event.findById(eventId);
         eventSelected.markEventStatusAsCompleted();
         eventSelected.update();
-        return ok(eventResult.render((User.findByEmail(request().username())), Event.findEvent()));
+
         //[TODO]Commented this out as it will be handled in the CRON JOB  [To be handled by Denny]
         //EventStatsWrapper eventStatsWrapper = EventUtils.EventAggregator(Event.findById(Long.parseLong(f.eventId)), User.findById(f.userId));
         //;
         //return ok(eventResult.render((User.findByEmail(request().username())), Event.findEvent(),eventStatsWrapper));
+        return ok(eventResult.render((User.findByEmail(request().username())), Event.findEvent()));
     }
 
     public static Result eventFeeds(){
@@ -123,6 +125,10 @@ public class EventController extends Controller {
         eventnames.add("EventGroup1");
         eventnames.add("EventGroup2");
         return ok(offlineStats.render((User.findByEmail(request().username())), eventnames));
+    }
+
+    public static Result getChatPhaseEvents(){
+        return ok(toJson(Event.getChatPhaseEvents()));
     }
 
     public static Result eventFeedsJs(){

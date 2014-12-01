@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import models.utils.AppException;
 import models.utils.Hash;
 import play.data.format.Formats;
@@ -28,7 +29,7 @@ public class User extends Model {
     public String email;
 
 
-    @OneToMany(mappedBy = "instructor")
+    @OneToMany(fetch=FetchType.LAZY, mappedBy = "instructor") @JsonBackReference
     public List<Event> events;
 
     @Constraints.Required
@@ -55,16 +56,16 @@ public class User extends Model {
     @Formats.NonEmpty
     public String bio;
 
-    @ManyToMany(mappedBy = "participants")
+    @ManyToMany(fetch=FetchType.LAZY, mappedBy = "participants") @JsonBackReference
     public List<Event> EventsParticipated;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(fetch=FetchType.LAZY, mappedBy = "user")  @JsonBackReference
     public UserStats userStatsInformation;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(fetch=FetchType.LAZY, mappedBy = "user")  @JsonBackReference
     public List<UserEventStats> listOfUserEventStats;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(fetch=FetchType.LAZY, mappedBy = "user") @JsonBackReference
     public List<EventActions> actions;
 
     // -- Queries (long id, user.class)

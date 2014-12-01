@@ -1,0 +1,92 @@
+@(user: User, event: Event, eventsAverage: controllers.util.EventAverageWrapper, userEventStats: UserEventStats)
+@mainStudent(user){
+    <h4> @event.eventName
+    </h4>
+    <h4>
+    </h4>
+
+</h4>
+<table class="table table-bordered">
+    <!-- On rows -->
+    <tr class="info">
+        <th>Event Details</th>
+        <th>Event Statistics</th>
+        <th>Your Performance</th>
+        <th>Your Statistics</th>
+    </tr>
+
+    <tr class="danger">
+        <td><b>Event's Average Score:</b></td>
+        <td>@eventsAverage.avgAggregateScore</td>
+        <td><b> Your Score:</b></td>
+        <td>@userEventStats.aggregatedScoreForEvent</td>
+    </tr>
+
+    <tr class="success">
+        <td><b>No Of #Tag Messages exchanged:</b></td>
+        <td>@eventsAverage.noOfFormalMsgs</td>
+        <td><b>No Of #Tag Messages you contributed to:</b></td>
+        <td>@userEventStats.noOfIndividualHashTagMessagesInEvent</td>
+    </tr>
+
+    <tr class="success">
+        <td><b>No Of Informal Messages exchanged:</b></td>
+        <td>@eventsAverage.noOfInformalMsgs</td>
+        <td><b>No Of Informal Messages you contributed to:</b></td>
+        <td>@userEventStats.noOfIndividualInformalMessagesInEvent</td>
+    </tr>
+
+    <tr class="warning">
+        <td><b> % who got it right in Phase 1: </b></td>
+        <td>@eventsAverage.percentageCorrectInPhase1 %</td>
+        <td><b> Your Answer in Phase 1 was: </b></td>
+        @if(userEventStats.scorePhase1InEvent==0) {
+            <td> <i class="fa fa-times"></i></td>
+        } else {
+            <td> <i class="fa fa-check"></i></td>
+        }
+    </tr>
+
+    <tr class="warning">
+        <td><b> % who got it right in Phase 3:</b></td>
+        <td>@eventsAverage.percentageCorrectInPhase3 %</td>
+        <td><b> Your Answer in Phase 3 was: </b></td>
+        @if(userEventStats.scorePhase3InEvent==0) {
+        <td> <i class="fa fa-times"></i></td>
+        } else {
+        <td> <i class="fa fa-check"></i></td>
+        }
+    </tr>
+
+    <tr class="warning">
+        <td><b> % who got it right in Phase 4:</b></td>
+        <td>@eventsAverage.percentageCorrectInPhase4 %</td>
+        <td><b> Your Answer in Phase 4 was: </b></td>
+        @if(userEventStats.scorePhase4InEvent==0) {
+        <td> <i class="fa fa-times"></i></td>
+        } else {
+        <td> <i class="fa fa-check"></i></td>
+        }
+    </tr>
+</table>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <b>
+       General Comments And Feedback:
+        </b>
+    </div>
+    <div class="panel-footer"> @if(userEventStats.percentageOfCognitiveAbility==100){
+        You have shown great cognitive abilities in this event! <i class="fa fa-trophy"></i>
+        Keep Going!
+        }
+        @if(userEventStats.percentageOfCognitiveAbility==50){
+        You have shown good cognitive abilities but could improve! <i class="fa fa-star-half-o"></i>
+        Good Going!
+        }
+        @if(userEventStats.percentageOfCognitiveAbility==0){
+        You need to work on your cognitive abilities <i class="fa fa-meh-o"></i>
+        Collaborate More!
+        }</div>
+</div>
+}

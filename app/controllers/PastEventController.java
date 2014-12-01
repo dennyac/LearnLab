@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.util.EventAverageWrapper;
 import models.*;
 import play.data.validation.Constraints;
 import play.mvc.Controller;
@@ -18,6 +19,7 @@ import views.html.eventSequence.eventStage1;
 import views.html.instructorView;
 import views.html.pastEvents.pastEventsForInstructors;
 import views.html.pastEvents.pastEventsForInstructorsView;
+import views.html.pastEvents.pastUserEventPerformaceView;
 
 import java.util.*;
 
@@ -43,12 +45,15 @@ public class PastEventController extends Controller {
         return ok(pastEventsForInstructorsView.render(reportUser,eventMessages,userwiseMessages));
     }
 
-
-
-
-
-
-
-
+    public static Result pastUserEventStatistics(Long userId, Long eventId)
+    {
+        User currentUser =  User.findById(userId);
+        Event eventSelected = Event.findById(eventId);
+        System.out.println("Event ID:"+ eventId);
+        EventStats eventStats = EventStats.findByEventId(eventId);
+        EventAverageWrapper eventAverageWrapper = new EventAverageWrapper(eventStats);
+        UserEventStats userEventStats = UserEventStats.findEventSpecificStatsForUserStats(currentUser,eventSelected);
+        return ok(pastUserEventPerformaceView.render(currentUser, eventSelected, eventAverageWrapper, userEventStats));
+    }
 
 }

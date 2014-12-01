@@ -1,9 +1,11 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import java.util.List;
@@ -19,7 +21,7 @@ public class Question extends Model {
     @Formats.NonEmpty
     public Long questionNumber;
 
-    @ManyToMany(mappedBy = "Questions")
+    @ManyToMany(fetch=FetchType.LAZY,mappedBy = "Questions")  @JsonBackReference
     public List<Event> EventsUsingQuestion;
 
     @Constraints.Required

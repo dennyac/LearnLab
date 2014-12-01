@@ -71,7 +71,7 @@ public class ChatRoom extends UntypedActor {
         );
 
         Akka.system().scheduler().schedule(
-                Duration.create(5, SECONDS),
+                Duration.create(60, SECONDS),
                 Duration.create(60, SECONDS),
                 sparky,
                 "BatchMessages",
@@ -81,7 +81,7 @@ public class ChatRoom extends UntypedActor {
 
         //dummy message to keep websockets alive
         Akka.system().scheduler().schedule(
-                Duration.create(20, SECONDS),
+                Duration.create(10, SECONDS),
                 Duration.create(20, SECONDS),
                 sparky,
                 "Dummy",
