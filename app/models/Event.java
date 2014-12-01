@@ -274,4 +274,38 @@ public class Event extends Model{
             return false;
         }
     }
+
+    public static List<Event> getActiveEvents(){
+        List<Event> activeEventList = find.where().eq("active",1).findList();
+        return activeEventList;
+    }
+
+
+    public static List<String> getAllHashTags(){
+        List<Event> events = Event.getActiveEvents();
+        List<String> hashList = new ArrayList<String>();
+        HashMap<String,Integer> hashes = new HashMap<String, Integer>();
+        for(int i=0;i<events.size();i++){
+            String[] temp = events.get(i).getHashTags();
+            for(int j=0;j<temp.length;j++){
+                System.out.println(temp[j]);
+                if(!hashes.containsKey(temp[j])){
+                 hashes.put(temp[j],0);
+             }
+            }
+        }
+        System.out.println(hashes.size());
+        Iterator<Map.Entry<String, Integer>> entries = hashes.entrySet().iterator();
+        while (entries.hasNext()) {
+            Map.Entry<String, Integer> entry = entries.next();
+            hashList.add(entry.getKey());
+        }
+        System.out.println("**********************************");
+        for(int k=0;k<hashList.size();k++){
+            System.out.println(hashList.get(k));
+        }
+        hashList.add("Informal");
+        hashList.add("Formal");
+        return hashList;
+    }
 }

@@ -128,4 +128,79 @@ public class Statistics extends Controller {
             return ok(exceptionLandingPage.render("Something went wrong at generate individual student statistics"));
         }
     }
+
+    public static Result getEventMessageStatsPie(String eventName){
+
+        EventStats e = EventStats.findByEventName(eventName);
+        double im = e.noOfInformalMessages;
+        double fm = e.noOfHashTagMessgaes;
+        StringBuilder output = new StringBuilder();
+        output.append("[");
+        output.append("{");
+        output.append("\"age\":");
+        output.append("\"");
+        output.append("Informal Messages");
+        output.append("\"");
+        output.append(",");
+        output.append("\"population\":");
+        output.append("\"");
+        output.append(String.valueOf(im));
+//            output.append("30");
+        output.append("\"");
+        output.append("},");
+        output.append("{");
+        output.append("\"age\":");
+        output.append("\"");
+        output.append("Hashtag Messages");
+        output.append("\"");
+        output.append(",");
+        output.append("\"population\":");
+        output.append("\"");
+        output.append(String.valueOf(fm));
+//            output.append("50");
+        output.append("\"");
+        output.append("}");
+        String response = output.toString();
+        response = response + "]";
+        return ok(response);
+    }
+
+    public static Result getEventMessageStatsBG(String eventName){
+
+        EventStats e = EventStats.findByEventName(eventName);
+        double p1 = e.percentageCorrectInPhase1/2;
+        double p2 = e.percentageCorrectInPhase3/2;
+        double p3 = e.percentageCorrectInPhase3/2;
+        Double[] p = new Double[3];
+        p[0] = p1;
+        p[1] = p2;
+        p[2] = p3;
+
+        StringBuilder output = new StringBuilder();
+        output.append("[");
+        for(int i=0;i<3;i++)
+        {
+            output.append("{");
+            output.append("\"State\":");
+            output.append("\"");
+            output.append("Phase"+String.valueOf(i));
+            output.append("\"");
+            output.append(",");
+            output.append("\"Correct Answers\":");
+            output.append("\"");
+            output.append(p[i]);
+            output.append("\"");
+            output.append(",");
+            output.append("\"Incorrect Answers\":");
+            output.append("\"");
+            output.append(50-p[i]);
+            output.append("\"");
+            output.append("},");
+        }
+        String response = output.toString();
+        response = response.substring(0, response.length()-1);
+        response = response + "]";
+
+        return ok(response);
+    }
 }
