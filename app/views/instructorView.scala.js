@@ -1,14 +1,30 @@
-@(username: String)
+@(username: String, graphInput: String, hashesList: List[String])
 var uname = '@username';
-var barData = [{
-    'x': "Informal Messages",
-    'y': 0
-}, {
-    'x': "Hashtag Messages",
-    'y': 0
+var graphJsonData = '@graphInput';
+var barData = jQuery.parseJSON(graphJsonData);
+var scriptHashTags = [];
+@for(hash <- hashesList){
+    scriptHashTags.push('@hash');
 }
-];
-alert(uname);
+hashTagMap = {};
+for(i=0;i<scriptHashTags.length;i++){
+    hashTagMap[scriptHashTags[i]] = 0;
+}
+//var barData = [{
+//    'x': "Informal Messages",
+//    'y': 0
+//}, {
+//    'x': "Hashtag Messages",
+//    'y': 0
+//},{
+//      'x': "#explain",
+//      'y': 0
+//  },{
+//          'x': "#justify",
+//          'y': 0
+//      }
+//];
+console.log(scriptHashTags);
 var message_count =  0;
 var hash_message_count = 0;
 $(function() {
@@ -64,7 +80,7 @@ $(function() {
             }
 
             if(data.text.match(/(^|\s)(#[a-z\d-]+)/ig) != null){
-                var hashtag = data.text.match(/(^|\s)(#[a-z\d-]+)/ig)[0].substr(1)
+                var hashtag = data.text.match(/(^|\s)(#[a-z\d-]+)/ig)[0].substr(1);
                 console.log('Matched Hashtag')
                 var $eventPosts = $('#accordion' + data.eventId);
                 if(!$eventPosts.length){
@@ -115,28 +131,48 @@ $(function() {
 //        alert("receiving");
 //        barData.shift();
 //        barData.push(next());
-            if(data.text.match(/(^|\s)(#[a-z\d-]+)/ig) != null){
-                hash_message_count = hash_message_count + 1;
-            }else{
-                message_count = message_count + 1;
+
+        if(data.text.match(/(^|\s)(#[a-z\d-]+)/ig) != null){
+            var t = data.text.match(/(^|\s)(#[a-z\d-]+)/ig);
+            var v = t[0].substring(1);
+            console.log(v);
+            if(v in hashTagMap){
+                hashTagMap[v] = hashTagMap[v] + 1;
             }
+            hash_message_count = hash_message_count + 1;
+            hashTagMap["Formal"] = hashTagMap["Formal"] + 1;
+        }else{
+            message_count = message_count + 1;
+            hashTagMap["Informal"] = hashTagMap["Informal"] + 1;
+        }
 
 //        message_count = message_count + 1;
 //        hash_message_count = hash_message_count + 1;
-            var newData = [];
-            var temp1 = {};
-            temp1["x"]="Informal Messages";
-            temp1["y"]=message_count;
-            newData.push(temp1);
-            var temp2 = {};
-            temp2["x"]="Hashtag Messages";
-            temp2["y"]=hash_message_count;
-            newData.push(temp2);
-            console.log(newData);
-            redraw(newData);
+        var newData = [];
+//        var temp1 = {};
+//        temp1["x"]="Informal Messages";
+//        temp1["y"]=message_count;
+//        newData.push(temp1);
+//        var temp2 = {};
+//        temp2["x"]="Hashtag Messages";
+//        temp2["y"]=hash_1message_count;
+//        newData.push(temp2);
+//        var temp2 = {};
+//        temp2["x"]="Hashtag Messages";
+//        temp2["y"]=hash_1message_count;
+//        newData.push(temp2);
+
+
+        for(i=0;i<scriptHashTags.length;i++){
+            var temp = {};
+            temp["x"] = scriptHashTags[i];
+            temp["y"] = hashTagMap[scriptHashTags[i]];
+            newData.push(temp);
         }
 
-
+        console.log(newData);
+        redraw(newData);
+        }
     }
 
     var handleReturnKey = function(e) {

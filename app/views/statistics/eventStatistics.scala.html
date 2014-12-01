@@ -108,6 +108,8 @@
                 eventName  = $( this ).text();
                 if(eventName!="Select Event") {
                     getEventData(eventName);
+                    getGraphData(eventName);
+                    getBarGraphDataBG(eventName);
                     drawPieChart();
                     drawGroupBarGraph();
                 }
@@ -116,6 +118,46 @@
                 }
             });
         }).change();
+
+
+        function getGraphData(eventName){
+         $.ajax({
+                    url: "/statistics/getEventMessageStats",
+                    type: 'GET',
+                    data: { eventName: eventName } ,
+                    success: function (response)
+                    {
+                    console.log(response);
+                    var data1 = jQuery.parseJSON(response);
+                    data1[0].population = parseInt(data1[0].population);
+                    data1[1].population = parseInt(data1[1].population);
+
+                    drawPieChart(data1);
+                    },
+                    error: function () {
+                    //your error code
+                    }
+                });
+        }
+
+        function getBarGraphDataBG(eventName){
+                 $.ajax({
+                    url: "/statistics/getEventMessageStatsBG",
+                    type: 'GET',
+                    data: { eventName: eventName } ,
+                    success: function (response)
+                    {
+                    console.log(response);
+                    var data1 = jQuery.parseJSON(response);
+                    console.log(data1);
+                    drawGroupBarGraph(data1);
+                    },
+                    error: function () {
+                    //your error code
+                    }
+                });
+
+        }
 
         function getEventData(eventName)
         {
@@ -148,28 +190,8 @@
         }
 
 
-function drawGroupBarGraph(){
-
-
-    var data = [
-        {
-            "State":"Phase1",
-            "Correct Answers":"4",
-            "Incorrect Answers":"1"
-        },
-        {
-            "State":"Phase2",
-            "Correct Answers":"3",
-            "Incorrect Answers":"2"
-        },
-        {
-            "State":"Phase3",
-            "Correct Answers":"5",
-            "Incorrect Answers":"0"
-        }
-    ];
-
-
+function drawGroupBarGraph(data){
+      $( "#id2" ).empty();
     var margin = {top: 20, right: 20, bottom: 30, left: 40},
             width = 700 - margin.left - margin.right,
             height = 300 - margin.top - margin.bottom;
@@ -262,17 +284,8 @@ function drawGroupBarGraph(){
 
 //    });
 }
-function drawPieChart() {
-    var data = [
-        {
-            "age": "Informal Messages",
-            "population": "40"
-        },
-        {
-            "age": "Hashtag Messages",
-            "population": "10"
-        }
-    ];
+function drawPieChart(data) {
+    $( "#id1" ).empty();
     var width = 500,
             height = 300,
 //            radius = Math.min(width, height) / 2;

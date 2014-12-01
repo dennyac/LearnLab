@@ -15,6 +15,7 @@ import views.html.chatRoom;
 import views.html.exceptionLandingPage;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -61,9 +62,7 @@ public class Chat extends Controller {
         return ok(views.js.chatRoom.render(username,eventId));
     }
 
-    public static Result instructorJs(String username) {
-        return ok(views.js.instructorView.render(username));
-    }
+
 
 
     /**
@@ -90,5 +89,33 @@ public class Chat extends Controller {
             });
 
     }
-  
+
+    public static Result instructorJs(String username) {
+//        List<String> hashtags = new ArrayList<String>();
+//        hashtags.add("Informal");
+//        hashtags.add("Formal");
+//        hashtags.add("#justify");
+//        hashtags.add("#explain");
+//        hashtags.add("#example");
+        List<String> hashtags =Event.getAllHashTags();
+        StringBuilder output = new StringBuilder();
+        output.append("[");
+        for(int i=0;i<hashtags.size();i++){
+            output.append("{");
+            output.append("\"x\":");
+            output.append("\"");
+            output.append(hashtags.get(i));
+            output.append("\"");
+            output.append(",");
+            output.append("\"y\":");
+            output.append("\"");
+            output.append(String.valueOf(0));
+            output.append("\"");
+            output.append("},");
+        }
+        String response = output.toString();
+        response = response.substring(0, response.length()-1);
+        response = response + "]";
+        return ok(views.js.instructorView.render(username, response, hashtags));
+    }
 }
