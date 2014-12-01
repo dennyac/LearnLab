@@ -190,7 +190,7 @@ public class Application extends Controller {
         } catch (Exception e) {
 
             e.printStackTrace();
-            return ok(exceptionLandingPage.render("Exception Occured in past event"));
+            return ok(exceptionLandingPage.render("Something went wrong at past event"));
         }
     }
 
@@ -203,28 +203,36 @@ public class Application extends Controller {
         User u = User.findById(userId);
         return ok(pastEventsForUsersView.render(u, eventMessages, userwiseMessages));
      } catch (Exception e) {
-
          e.printStackTrace();
-         return ok(exceptionLandingPage.render(""));
+         return ok(exceptionLandingPage.render("Something went wrong at Past Event Discussion"));
      }
     }
 
     public static Result leaderBoard(Long userId) {
+        try{
         //retrieve userStats and the side pane
         User currentUser = User.findById(userId);
         UserStats userStats = UserStats.findUserStatsByUser(currentUser);
-
         //retrieve the leader list from the wrapper
         LeaderListElementWrapper le = new LeaderListElementWrapper();
         List<LeaderListElementWrapper> leaderList = le.prepareLeaderList();
         return ok(leaderBoard.render(currentUser, userStats, Event.findEvent(), leaderList));
-    }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ok(exceptionLandingPage.render("Something went wrong at Leader Board "));
+        }
+     }
 
     public static Result myEventStats(Long userId) {
+       try{
         User currentUser = User.findById(userId);
         UserStats userStats = UserStats.findUserStatsByUser(currentUser);
         List<Event> userCompletedEvents = UserEventStats.findUserCompletedEvents(userId);
         return ok(myEventStatistics.render(currentUser, userStats, userCompletedEvents));
+       } catch (Exception e) {
+           e.printStackTrace();
+           return ok(exceptionLandingPage.render("Something went wrong at  Event Stats"));
+       }
     }
 
     public static Result exceptionHandler(String exceptionMessage) {
