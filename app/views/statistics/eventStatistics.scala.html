@@ -78,6 +78,9 @@
                                 <tr><td></td><td></td></tr>
                                 <tr><td></td><td></td></tr>
                                 <tr><td></td><td></td></tr>
+                                <tr><td></td><td></td></tr>
+                                <tr><td></td><td></td></tr>
+                                <tr><td></td><td></td></tr>
                                 <tbody>
                                 </tbody>
                             </table>
@@ -173,7 +176,7 @@
                         var messageArray = response.split('|');
                         var arrayLength=messageArray.length;
                         var table = document.getElementById("myTable");
-                        for (var i = 0; i< table.rows.length-1; i++) {
+                        for (var i = 0; i< table.rows.length; i++) {
                          var rowValues=messageArray[i].split(',');
                          var row=table.rows[i];
                          console.log(row);
