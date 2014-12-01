@@ -40,6 +40,7 @@ public class JobScheduler extends UntypedActor {
                 logger.info("JobScheduler: Received ComputeStats message");
                 List<Event> events = Event.findAllCompletedEvents();
                 for(Event e: events)
+                    if(Event.isEventReadyForAggregation(e))
                     EventUtils.EventAggregator(e,null);
                 logger.info("JobScheduler: Completed computing stats");
             }
