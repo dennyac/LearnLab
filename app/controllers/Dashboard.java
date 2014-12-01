@@ -17,6 +17,7 @@ import play.mvc.Security;
 import play.data.Form;
 import views.html.dashboard.*;
 import views.html.chatRoom;
+import views.html.exceptionLandingPage;
 import views.html.eventSequence.eventStage1;
 import views.html.instructorView;
 import java.util.Collections;
@@ -113,7 +114,7 @@ public class Dashboard extends Controller {
         return ok(createEventConfirmation.render((User.findByEmail(request().username())), Event.findEvent()));
     }
     private static void initEventStage(Dashboard.CreateEventForm createEventForm,User instructorUser) throws AppException,MalformedURLException,ParseException {
-        try {
+        
             Event event = new Event();
 
             //need to add the instructor
@@ -197,10 +198,7 @@ public class Dashboard extends Controller {
             event.active = 0;
             //save the event
             event.save();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ok(exceptionLandingPage.render("Something went wrong while we were saving the event"));
-        }
+
     }
 
 

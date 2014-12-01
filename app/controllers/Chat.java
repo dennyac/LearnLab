@@ -12,6 +12,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.WebSocket;
 import views.html.chatRoom;
+import views.html.exceptionLandingPage;
 
 
 import java.util.Arrays;
@@ -72,29 +73,22 @@ public class Chat extends Controller {
     //chatRoom.scala.js should handle the error if the websocket connection fails
     //Or render some error html pages
     public static WebSocket<JsonNode> chat(final String username, final long eventId) {
-        try {
+
             return WebSocket.withActor(new F.Function<ActorRef, Props>() {
                 public Props apply(ActorRef out) throws Throwable {
                     return UserWebSocket.props(username, eventId, out);
                 }
             });
-        }catch (Exception e) {
-            e.printStackTrace();
-            return ok(exceptionLandingPage.render("Something went wrong in the chat room"));
-        }
     }
 
     public static WebSocket<JsonNode> instructor(final String username) {
-        try {
+
             return WebSocket.withActor(new F.Function<ActorRef, Props>() {
                 public Props apply(ActorRef out) throws Throwable {
                     return InstructorWebSocket.props(username, out);
                 }
             });
-        }catch (Exception e) {
-            e.printStackTrace();
-            return ok(exceptionLandingPage.render("Something went wrong in the instructor chat room"));
-        }
+
     }
   
 }
