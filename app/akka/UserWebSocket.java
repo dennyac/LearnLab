@@ -74,42 +74,51 @@ public class UserWebSocket extends UntypedActor {
         logger.info("UserWebSocket(" + eventId + "." + username + "):onReceive:Entry");
         if (message instanceof JsonNode) {
 
+            try
+            {
+                //JsonNode json = Json.parse((String) message);
+                JsonNode json = (JsonNode) message;
+                logger.info("UserWebSocket(" + eventId + "." + username + "):onReceive:JsonNode");
+                String uname = json.get("user").asText();
+                logger.info("UserWebSocket(" + eventId + "." + username + "):onReceive:json:username:" + uname);
+                Long eId = Long.parseLong(json.get("event").asText());
+                logger.info("UserWebSocket(" + eventId + "." + username + "):onReceive:json:eventId:" + eId.toString());
+                String msg = json.get("text").asText();
+                logger.info("UserWebSocket(" + eventId + "." + username + "):onReceive:json:Message:" + msg);
 
-            //JsonNode json = Json.parse((String) message);
-            JsonNode json = (JsonNode) message;
-            logger.info("UserWebSocket(" + eventId + "." + username + "):onReceive:JsonNode");
-            String uname = json.get("user").asText();
-            logger.info("UserWebSocket(" + eventId + "." + username + "):onReceive:json:username:" + uname);
-            Long eId = Long.parseLong(json.get("event").asText());
-            logger.info("UserWebSocket(" + eventId + "." + username + "):onReceive:json:eventId:" + eId.toString());
-            String msg = json.get("text").asText();
-            logger.info("UserWebSocket(" + eventId + "." + username + "):onReceive:json:Message:" + msg);
+                Talk talk = new Talk(uname, eId, msg);
+                EventActions ea = new EventActions();
+                ea.ActionType = "Message";
+                ea.Attribute1 = msg;
+                ea.user = User.findByEmail(uname);
+                ea.TimeOfEventAction = DateTime.now();
+                ea.Attribute2 = ea.Attribute1.charAt(0) == '#' ? "hashTag" : null;
+                ea.event = Event.findById(eId);
+                EventActions.asyncSave(ea);
 
-            Talk talk = new Talk(uname, eId, msg);
-            EventActions ea = new EventActions();
-            ea.ActionType = "Message";
-            ea.Attribute1 = msg;
-            ea.user = User.findByEmail(uname);
-            ea.TimeOfEventAction = DateTime.now();
-            ea.Attribute2 = ea.Attribute1.charAt(0) == '#' ? "hashTag" : null;
-            ea.event = Event.findById(eId);
-            EventActions.asyncSave(ea);
+                logger.info("UserWebSocket(" + eventId + "." + username + "):onReceive:AsyncSave");
 
-            logger.info("UserWebSocket(" + eventId + "." + username + "):onReceive:AsyncSave");
-
-            String instructorEmail = ea.event.instructor.email;
-            String channel = instructorEmail + ".event." + eventId;
-            logger.info("UserWebSocket(" + eventId + "." + username + "):onReceive:channel:" + channel);
+                String instructorEmail = ea.event.instructor.email;
+                String channel = instructorEmail + ".event." + eventId;
+                logger.info("UserWebSocket(" + eventId + "." + username + "):onReceive:channel:" + channel);
 
 
-            Jedis j = play.Play.application().plugin(RedisPlugin.class).jedisPool().getResource();
-            try {
+                Jedis j = play.Play.application().plugin(RedisPlugin.class).jedisPool().getResource();
+                try {
 
-                j.publish(channel, Json.stringify(Json.toJson(talk)));
-                logger.info("UserWebSocket(" + eventId + "." + username + "):onReceive:publish");
-            } finally {
-                play.Play.application().plugin(RedisPlugin.class).jedisPool().returnResource(j);
+                    j.publish(channel, Json.stringify(Json.toJson(talk)));
+                    logger.info("UserWebSocket(" + eventId + "." + username + "):onReceive:publish");
+                } finally {
+                    play.Play.application().plugin(RedisPlugin.class).jedisPool().returnResource(j);
+                }
             }
+            catch (Exception e) {
+                e.printStackTrace();
+
+            }
+
+
+
         }
 
 

@@ -71,37 +71,43 @@ public class InstructorWebSocket extends UntypedActor {
         logger.info("InstructorWebSocket(" + instructorEmail + "):onReceive:Entry");
         if (message instanceof JsonNode) {
 
-            logger.info("InstructorWebSocket(" + instructorEmail + "):onReceive:JsonNode");
-            JsonNode json = (JsonNode) message;
-            Long eId = Long.parseLong(json.get("eventid").asText());
-            logger.info("InstructorWebSocket(" + instructorEmail + "):onReceive:json:eventId:" + eId.toString());
-            String msg = json.get("text").asText();
-            logger.info("InstructorWebSocket(" + instructorEmail + "):onReceive:json:Message:" + msg);
+            try{
+                logger.info("InstructorWebSocket(" + instructorEmail + "):onReceive:JsonNode");
+                JsonNode json = (JsonNode) message;
+                Long eId = Long.parseLong(json.get("eventid").asText());
+                logger.info("InstructorWebSocket(" + instructorEmail + "):onReceive:json:eventId:" + eId.toString());
+                String msg = json.get("text").asText();
+                logger.info("InstructorWebSocket(" + instructorEmail + "):onReceive:json:Message:" + msg);
 
-            Talk talk = new Talk(instructorEmail, 1L, msg);
+                Talk talk = new Talk(instructorEmail, 1L, msg);
 
-            String channel = instructorEmail + ".event." + eId.toString();
+                String channel = instructorEmail + ".event." + eId.toString();
 
-            EventActions ea = new EventActions();
-            ea.ActionType = "InstructorMessage";
-            ea.Attribute1 = msg;
-            ea.user = User.findByEmail(instructorEmail);
-            ea.TimeOfEventAction = DateTime.now();
-            ea.event = Event.findById(eId);
-            EventActions.asyncSave(ea);
+                EventActions ea = new EventActions();
+                ea.ActionType = "InstructorMessage";
+                ea.Attribute1 = msg;
+                ea.user = User.findByEmail(instructorEmail);
+                ea.TimeOfEventAction = DateTime.now();
+                ea.event = Event.findById(eId);
+                EventActions.asyncSave(ea);
 
-            logger.info("InstructorWebSocket(" + instructorEmail + "):onReceive:AsyncSave");
+                logger.info("InstructorWebSocket(" + instructorEmail + "):onReceive:AsyncSave");
 
-            Jedis j = play.Play.application().plugin(RedisPlugin.class).jedisPool().getResource();
-            try {
-                //All messages are pushed through the pub/sub channel
+                Jedis j = play.Play.application().plugin(RedisPlugin.class).jedisPool().getResource();
+                try {
+                    //All messages are pushed through the pub/sub channel
 
-                j.publish(channel, Json.stringify(Json.toJson(talk)));
-                logger.info("InstructorWebSocket(" + instructorEmail + "):onReceive:channel:" + channel + ":publish");
+                    j.publish(channel, Json.stringify(Json.toJson(talk)));
+                    logger.info("InstructorWebSocket(" + instructorEmail + "):onReceive:channel:" + channel + ":publish");
 
-            } finally {
-                play.Play.application().plugin(RedisPlugin.class).jedisPool().returnResource(j);
+                } finally {
+                    play.Play.application().plugin(RedisPlugin.class).jedisPool().returnResource(j);
+                }
+            }catch(Exception e){
+                e.printStackTrace();
             }
+
+
 
 
         }
