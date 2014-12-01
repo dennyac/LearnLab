@@ -53,7 +53,7 @@ public class Event extends Model{
 
     //@Constraints.Required
     //@Formats.NonEmpty
-    public String endTime;
+    public DateTime endDateTime;
 
     @Constraints.Required
     @Formats.NonEmpty

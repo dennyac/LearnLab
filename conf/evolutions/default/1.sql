@@ -9,7 +9,7 @@ create table event (
   event_name                varchar(255),
   event_date_time           datetime,
   start_time                varchar(255),
-  end_time                  varchar(255),
+  end_date_time             datetime,
   description               TEXT,
   script_phase1             TEXT,
   script_phase2             TEXT,

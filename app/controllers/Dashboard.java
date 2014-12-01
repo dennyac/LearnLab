@@ -53,7 +53,7 @@ public class Dashboard extends Controller {
         }}
         catch (Exception e) {
             e.printStackTrace();
-            return ok(exceptionLandingPage.render("Something went wrong while we were trying to retrieve instructor`s dashboard"));
+            return ok(exceptionLandingPage.render("Something went wrong while we were trying to retrieve your dashboard"));
         }
     }
 
@@ -114,7 +114,7 @@ public class Dashboard extends Controller {
         return ok(createEventConfirmation.render((User.findByEmail(request().username())), Event.findEvent()));
     }
     private static void initEventStage(Dashboard.CreateEventForm createEventForm,User instructorUser) throws AppException,MalformedURLException,ParseException {
-        
+
             Event event = new Event();
 
             //need to add the instructor
@@ -128,12 +128,15 @@ public class Dashboard extends Controller {
             //Date date = new SimpleDateFormat("MM/dd/yyyy").parse(createEventForm.date);
             DateTimeFormatter formatter = DateTimeFormat.forPattern("MM/dd/yyyy HH:mmaa");
             event.eventDateTime = formatter.parseDateTime(createEventForm.date + " " + createEventForm.startTime);
-
+        //add durations for all the phases
+        event.phase1Duration = Integer.valueOf(createEventForm.phaseDuration);
+        event.phase2Duration = Integer.valueOf(createEventForm.phaseDuration);
+        event.phase3Duration = Integer.valueOf(createEventForm.phaseDuration);
             //Start and end time
             event.startTime = createEventForm.startTime;
 
             //Calculate end time using phase duration
-            //event.endTime=createEventForm.startTime+createEventForm.phaseDuration;
+            event.endDateTime=event.eventDateTime.plusMinutes(event.phase1Duration*3);
 
             //Event Description
             event.description = createEventForm.eventDescription;
@@ -189,10 +192,7 @@ public class Dashboard extends Controller {
             fq.save();
             event.Questions.add(fq);
 
-            //add durations for all the phases
-            event.phase1Duration = Integer.valueOf(createEventForm.phaseDuration);
-            event.phase2Duration = Integer.valueOf(createEventForm.phaseDuration);
-            event.phase3Duration = Integer.valueOf(createEventForm.phaseDuration);
+
 
             //event active status
             event.active = 0;

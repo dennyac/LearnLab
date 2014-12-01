@@ -15,13 +15,13 @@
         </encoder>
     </appender>
 
-    <logger name="play" level="INFO" />
+  <!--  <logger name="play" level="INFO" />
     <logger name="application" level="DEBUG" />
     <logger name="akka.ChatRoom" level="INFO" />
     <logger name="akka.Instructor" level="INFO" />
     <logger name="akka.UserWebSocket" level="INFO" />
     <logger name="akka.InstructorWebSocket" level="INFO" />
-    <logger name="akka.Robot" level="INFO" />
+    <logger name="akka.Robot" level="INFO" /> -->
     <logger name="akka.JobScheduler" level="INFO" />
 
 
