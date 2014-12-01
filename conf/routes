@@ -14,7 +14,7 @@ GET     /dashboard/getSummary/individualEventSummary           controllers.Dashb
 GET     /assets/javascripts/listUser.js                        controllers.Dashboard.listUserJs(divID:String)
 GET     /assets/javascripts/listEvent.js                       controllers.Dashboard.listEventJs(divID:String)
 
-GET    /dashboard/createEvent                  controllers.Dashboard.createEvent()
+POST    /dashboard/createEvent                  controllers.Dashboard.createEvent()
 
 POST    /dashboard/deleteEvent                  controllers.Dashboard.deleteEvent()
 POST    /dashboard/updateEvent                  controllers.Dashboard.updateEvent()

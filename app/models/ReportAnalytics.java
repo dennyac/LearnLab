@@ -90,9 +90,9 @@ public class ReportAnalytics {
             }
 
             // SET HASH TAG MESSAGES Inferences on the number of formal and informal messages
-            if (stat.noOfInformalMessages > stat.noOfInformalMessages) {
+            if (stat.noOfInformalMessages > stat.noOfHashTagMessgaes) {
                 this.setHashMsgs("The group chat had majority of informal messages that encouraged students to interact");
-            } else if (stat.noOfInformalMessages < stat.noOfInformalMessages) {
+            } else if (stat.noOfInformalMessages < stat.noOfHashTagMessgaes) {
                 this.setHashMsgs("The group chat had majority of formal messages ");
             } else {
                 this.setHashMsgs("The group chat had equal number of formal and informal messages ");

@@ -159,6 +159,7 @@ public class Dashboard extends Controller {
             event.participants = new ArrayList<User>();
 
             if (createEventForm.participants != null) {
+                System.out.println("length ************************"+ createEventForm.participants.size());
                 createEventForm.participants.removeAll(Collections.singleton(null));
                 for (String t : createEventForm.participants) {
                     System.out.println("participants are: " + t);
