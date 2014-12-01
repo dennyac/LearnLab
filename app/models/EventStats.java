@@ -2,6 +2,8 @@ package models;
 
 import javax.persistence.*;
 import javax.validation.Constraint;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import models.Event;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
@@ -24,7 +26,8 @@ public class EventStats extends Model {
     @Column(unique = true)
     public Long eventId;
 
-    @OneToOne(mappedBy = "eventStats", cascade=CascadeType.ALL)
+    @OneToOne(fetch=FetchType.LAZY, mappedBy = "eventStats", cascade=CascadeType.ALL) @JsonBackReference
+
     public Event getEvent() {
         return event;
     }
