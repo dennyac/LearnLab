@@ -41,15 +41,15 @@ star(rating,true) ++ star(5-rating,false)
                                 </tr>
                                 <tr>
                                     <td>Social Score</td>
-                                    <td>@rating(user.userStatsInformation.noOfIndividualInformalMessages)</td>
+                                    <td>@rating(user.userStatsInformation.noOfIndividualInformalMessages/5)</td>
                                 </tr>
                                 <tr>
                                     <td>Outgoing Score</td>
-                                    <td>@rating(user.userStatsInformation.noOfEventsParticipatedIn)</td>
+                                    <td>@rating(user.userStatsInformation.noOfEventsParticipatedIn/5)</td>
                                 </tr>
                                 <tr>
                                     <td>Helpful Score</td>
-                                    <td>@rating(user.userStatsInformation.upVotes)</td>
+                                    <td>@rating(user.userStatsInformation.upVotes/5)</td>
                                 </tr>
                                 <tr>
                                     <td>Aggregate Score</td>

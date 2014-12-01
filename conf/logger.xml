@@ -22,6 +22,8 @@
     <logger name="akka.UserWebSocket" level="INFO" />
     <logger name="akka.InstructorWebSocket" level="INFO" />
     <logger name="akka.Robot" level="INFO" />
+    <logger name="akka.JobScheduler" level="INFO" />
+
 
 
     <!-- Off these ones as they are annoying, and anyway we manage configuration ourself -->
