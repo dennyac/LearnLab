@@ -97,7 +97,7 @@ public class EventController extends Controller {
         eventSelected.update();
 
         //[TODO]Commented this out as it will be handled in the CRON JOB  [To be handled by Denny]
-        //EventStatsWrapper eventStatsWrapper = EventUtils.EventAggregator(Event.findById(Long.parseLong(f.eventId)), User.findById(f.userId));
+        EventStatsWrapper eventStatsWrapper = EventUtils.EventAggregator(Event.findById(Long.parseLong(f.eventId)), User.findById(f.userId));
         //;
         //return ok(eventResult.render((User.findByEmail(request().username())), Event.findEvent(),eventStatsWrapper));
         return ok(eventResult.render((User.findByEmail(request().username())), Event.findEvent()));
