@@ -19,6 +19,18 @@
     <legend class="fieldSetLegend"><h5><b>Student Statistics</b></h5></legend>
     <div class="row">
         <div class="form-group" id="tabid">
+            <table id="myTable" class="table table-striped">
+                <tr><td></td><td></td></tr>
+                <tr><td></td><td></td></tr>
+                <tr><td></td><td></td></tr>
+                <tr><td></td><td></td></tr>
+                <tr><td></td><td></td></tr>
+                <tr><td></td><td></td></tr>
+                <tr><td></td><td></td></tr>
+                <tr><td></td><td></td></tr>
+                <tbody>
+                </tbody>
+            </table>
         </div>
     </div>
 </fieldset>
@@ -50,12 +62,17 @@
                     type: 'GET',
                     data: { studentName: studentName } ,
                     success: function (response) {
-                        var messageArray = response.split('|');
-                        var arrayLength=messageArray.length;
-                        document.getElementById("tabid").innerHTML = " ";
-
-                        for(var i = 0;i<arrayLength;i++) {
-                         $("#tabid").append("<br>&nbsp &nbsp"+ messageArray[i] +"</br>");
+                         var messageArray = response.split('|');
+                         var arrayLength=messageArray.length;
+                         var table = document.getElementById("myTable");
+                         for (var i = 0; i< table.rows.length-1; i++) {
+                         var rowValues=messageArray[i].split(',');
+                         var row=table.rows[i];
+                         console.log(row);
+                         var firstCell  = row.cells[0];
+                         firstCell.innerHTML=rowValues[0];
+                         var secondCell  = row.cells[1];
+                         secondCell.innerHTML=rowValues[1];
                         }
                     },
                     error: function () {

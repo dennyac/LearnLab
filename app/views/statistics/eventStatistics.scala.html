@@ -72,11 +72,12 @@
                     <div class="row">
                         <div class="form-group" id="tabid">
                             <table id="myTable" class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th> Please find the statistics of the event below</th>
-                                </tr>
-                                </thead>
+                                <tr><td></td><td></td></tr>
+                                <tr><td></td><td></td></tr>
+                                <tr><td></td><td></td></tr>
+                                <tr><td></td><td></td></tr>
+                                <tr><td></td><td></td></tr>
+                                <tr><td></td><td></td></tr>
                                 <tbody>
                                 </tbody>
                             </table>
@@ -129,13 +130,15 @@
                     success: function (response) {
                         var messageArray = response.split('|');
                         var arrayLength=messageArray.length;
-
-                        for(var i = 0;i<arrayLength;i++) {
-                         var tableRef = document.getElementById('myTable').getElementsByTagName('tbody')[0];
-                         var newRow   = tableRef.insertRow(tableRef.rows.length);
-                         var newCell  = newRow.insertCell(0);
-                         var newText  = document.createTextNode(messageArray[i]);
-                         newCell.appendChild(newText);
+                        var table = document.getElementById("myTable");
+                        for (var i = 0; i< table.rows.length-1; i++) {
+                         var rowValues=messageArray[i].split(',');
+                         var row=table.rows[i];
+                         console.log(row);
+                         var firstCell  = row.cells[0];
+                         firstCell.innerHTML=rowValues[0];
+                         var secondCell  = row.cells[1];
+                         secondCell.innerHTML=rowValues[1];
                         }
                     },
                     error: function () {
@@ -211,7 +214,7 @@ function drawGroupBarGraph(){
         svg.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")")
-                .call(xAxis);
+                   .call(xAxis);
 
         svg.append("g")
                 .attr("class", "y axis")
