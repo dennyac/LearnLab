@@ -2,11 +2,11 @@
 
 # --- !Ups
 
-INSERT INTO users VALUES (1,'dennyac@gmail.com','Denny Abraham Cheriyan',NULL,'$2a$10$H8k5DE2U35YDwPK7ySmxVeDVi9mhagfpeeASc/9yVTkQewDLumoGe',NULL,1,0,'Hi! Denny this side');
-INSERT INTO users VALUES (3,'anil@gmail.com','Anil Kuncham',NULL,'$2a$10$4xRcGUh38ttLY7d/xG5E3eu15gdVu4wQET9CUkddLdb392UXQ2X3G',NULL,1,1,'Hello! My name is Anil. Nice to meet all of you!');
-INSERT INTO users VALUES (4,'supriya@gmail.com','Supriya Prabhakar',NULL,'$2a$10$27Yv35U9WfNEo9zJlnypkO74MFXmMGYcGuQfKEe0QBRpx6462VPMa',NULL,1,0,NULL);
-INSERT INTO users VALUES (5,'dhanya@gmail.com','Dhanyatha Manjunath',NULL,'$2a$10$Sxbz4ji.tpdZubgUobNJcuQmQVMys/..R5qryyTQsdYZkpgEm.7Lu',NULL,1,0,NULL);
-INSERT INTO users VALUES (6,'shruthi@gmail.com','Shruthi Ramamurthy',NULL,'$2a$10$V2J0vxfeG3JvaWiz4PY43ehLJ7bGnYveuK91wNE.55focLl1bX2JW',NULL,1,0,NULL);
+INSERT INTO users VALUES (1,'dennyac@gmail.com','Denny Abraham Cheriyan',NULL,'$2a$10$H8k5DE2U35YDwPK7ySmxVeDVi9mhagfpeeASc/9yVTkQewDLumoGe',NULL,'t','f','Hi! Denny this side');
+INSERT INTO users VALUES (3,'anil@gmail.com','Anil Kuncham',NULL,'$2a$10$4xRcGUh38ttLY7d/xG5E3eu15gdVu4wQET9CUkddLdb392UXQ2X3G',NULL,'t','t','Hello! My name is Anil. Nice to meet all of you!');
+INSERT INTO users VALUES (4,'supriya@gmail.com','Supriya Prabhakar',NULL,'$2a$10$27Yv35U9WfNEo9zJlnypkO74MFXmMGYcGuQfKEe0QBRpx6462VPMa',NULL,'t','f',NULL);
+INSERT INTO users VALUES (5,'dhanya@gmail.com','Dhanyatha Manjunath',NULL,'$2a$10$Sxbz4ji.tpdZubgUobNJcuQmQVMys/..R5qryyTQsdYZkpgEm.7Lu',NULL,'t','f',NULL);
+INSERT INTO users VALUES (6,'shruthi@gmail.com','Shruthi Ramamurthy',NULL,'$2a$10$V2J0vxfeG3JvaWiz4PY43ehLJ7bGnYveuK91wNE.55focLl1bX2JW',NULL,'t','f',NULL);
 
 
 INSERT INTO event VALUES (1,3,'DBNormalization','2014-11-11 22:38:53','startTime',NULL,'The event contains 3 stages. Stage 1: Answer the question that is being displayed. Stage 2: Collaborate with you event-mates and brainstorm about the answer options.Use Hashtags to anything that might be relevant. Stage 3: Having discussed, conclude the right answer and submit it. Give a short justification as to why you pick the answer. Also let us know who helped you better to arrive at the answer','This is the Phase 1 script','This is the Phase 2 script','This is the Phase 3 script','This is the Phase 4 script','#test1 #test2','20','20','20',0,NULL);
