@@ -53,7 +53,7 @@ public class Event extends Model{
 
     //@Constraints.Required
     //@Formats.NonEmpty
-    public String endTime;
+    public DateTime endDateTime;
 
     @Constraints.Required
     @Formats.NonEmpty
@@ -251,6 +251,13 @@ public class Event extends Model{
     {
         List<Event> completedEventList = find.where().eq("active",2).findList();
         return completedEventList;
+    }
+
+    public static List<Event> findAllEventsToBeAggregated()
+    {
+        List<Event> toBeAggregatedEventList = find.where().eq("active",4).findList();
+        System.out.println("####################COMING HERE****************");
+        return toBeAggregatedEventList;
     }
 
     public static List<Event> getAllEventsToActivate(){

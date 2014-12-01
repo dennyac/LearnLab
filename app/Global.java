@@ -26,8 +26,8 @@ public class Global extends GlobalSettings {
     private void scheduleJobs(){
         ActorRef jobScheduler = Akka.system().actorOf(Props.create(JobScheduler.class),"jobScheduler");
         Akka.system().scheduler().schedule(
-                Duration.create(20, SECONDS),
-                Duration.create(60, SECONDS),
+                Duration.create(5, SECONDS),
+                Duration.create(5, SECONDS),
                 jobScheduler,
                 "ComputeStats",
                 Akka.system().dispatcher(),

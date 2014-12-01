@@ -7,6 +7,7 @@
     @eventSidePane(event,hashTags)
 
 
+
     <div class="col-md-9">
         <div class="progress progress-striped">
             <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 20%" style="width: 40%">
@@ -15,6 +16,9 @@
             </div>
         </div>
     </div>
+
+
+
         <div class="col-md-6">
             <div class="well">
                 <ul class="answers">
@@ -27,22 +31,41 @@
                     <p>@question.questionString</p>
                 </ul>
             </div>
-            <div class="well">
-                <p>
-                <div id="onChat" class="row">
-                    <div class="span10" id="main">
-                        <div id="messages"></div>
-                        <textarea id="talk" size="35"></textarea>
-                        <form  method="POST" name="" action="@routes.EventController.eventStage3(event.eventId)">
-                            <div class="pull-right">
-                            <input type="submit" name="Submit" value= "Submit" class="btn btn-success">
-                            </div>
-                        </form>
+
+            <div class="chat">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-comment"></span> Collaborative Chat
+                </div>
+                <div class="panel-body">
+                    <ul class="chat">
+                            <div id="messages" style="overflow-y: scroll; height:125px;"></div>
+                    </ul>
+
+                </div>
+
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <input id="talk" class="form-control input-sm" placeholder="Type your message here..." type="text">
+                        <span class="input-group-btn">
+
+                            <button class="btn btn-warning btn-sm" id="btn-chat">
+                                Send</button>
+                        </span>
                     </div>
                 </div>
-                </p>
             </div>
+            </div>
+
+            <form  method="POST" name="" action="@routes.EventController.eventStage3(event.eventId)">
+                <div class="pull-right">
+                    <input type="submit" name="Submit" value= "Head to Stage 3" class="btn btn-lg btn-success">
+                </div>
+            </form>
+
         </div>
+
+
     <div class="col-md-3">
         <div class="well">
             <h4>Pinned Messages</h4>
@@ -52,7 +75,8 @@
             </ul>
         </div>
     </div>
-    </div>
+     </div>
+
    </div>
 
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -68,5 +92,6 @@
         $('input[name=Submit]').click()
     }
     setTimeout(phaseComplete,"@event.phase2Duration" * 60000);
+
 </script>
 }
