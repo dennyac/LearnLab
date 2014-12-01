@@ -38,7 +38,7 @@ public class JobScheduler extends UntypedActor {
             String msg = (String) message;
             if(msg.equals("ComputeStats")){
                 logger.info("JobScheduler: Received ComputeStats message");
-                List<Event> events = Event.findAllCompletedEvents();
+                List<Event> events = Event.findAllEventsToBeAggregated();
 
                 for(Event e: events) {
                     if (Event.isEventReadyForAggregation(e)) {

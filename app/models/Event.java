@@ -253,6 +253,12 @@ public class Event extends Model{
         return completedEventList;
     }
 
+    public static List<Event> findAllEventsToBeAggregated()
+    {
+        List<Event> toBeAggregatedEventList = find.where().eq("active",4).findList();
+        return toBeAggregatedEventList;
+    }
+
     public static List<Event> getAllEventsToActivate(){
         List<Event> eventsToActivateList = find.where().eq("active",0).findList();
         return eventsToActivateList;
