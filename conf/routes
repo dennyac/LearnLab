@@ -30,6 +30,10 @@ GET     /statistics/getEventStatistics                                     contr
 GET     /statistics/getStudentStatistics                                   controllers.Statistics.getStudentStatistics()
 GET     /statistics/getEventStatistics/individualEventStatistics           controllers.Statistics.generateIndividualEventStatistics(eventName: String)
 GET     /statistics/getStudentStatistics/individualStudentStatistics       controllers.Statistics.generateIndividualStudentStatistics(studentName: String)
+GET     /statistics/getEventMessageStats                                   controllers.Statistics.getEventMessageStatsPie(eventName: String)
+GET     /statistics/getEventMessageStatsBG                                 controllers.Statistics.getEventMessageStatsBG(eventName: String)
+
+
 
 #Student Home Page Specific
 GET     /leaderBoard                controllers.Application.leaderBoard(userId: Long)
