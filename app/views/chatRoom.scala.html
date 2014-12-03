@@ -6,10 +6,10 @@
     @eventSidePane(event,hashTags)
 
 
-
     <div class="col-md-9">
         <div class="progress progress-striped">
-            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 20%" style="width: 40%">
+            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
+                 style="width: 20%" style="width: 40%">
                 Stage 2
                 <span class="sr-only">bootstrap.min.css + bootstrap-theme.min.css (master branch</span>
             </div>
@@ -17,83 +17,76 @@
     </div>
 
 
-
-        <div class="col-md-6">
-            <div class="well">
-                <ul class="answers">
-                    <p>@event.scriptPhase2</p>
-                </ul>
-            </div>
-            <div class="well">
-                <ul class="answers">
-                    <h5><b>Question</b></h5>
-                    <p>@question.questionString</p>
-                </ul>
-            </div>
+    <div class="col-md-5">
+        <div class="well script-phase2">
+                <p>@event.scriptPhase2</p>
+                <p><b>Question: </b>@question.questionString</p>
+        </div>
 
 
-            <section class="module">
+        <section class="module">
 
-                <header class="top-bar">
+            <header class="top-bar">
 
-                    <div class="left">
-                        <span class="icon typicons-message"></span>
-                        <h1>Collaborative Chat</h1>
-                    </div>
+                <div class="left">
+                    <span class="icon typicons-message"></span>
 
-                </header>
+                    <h1>Collaborative Chat</h1>
+                </div>
 
-                <ol id="newchat" class="discussion">
+            </header>
 
-                </ol>
-                <div class="input-group">
-                    <input id="talk" class="form-control input-sm" placeholder="Type your message here..." type="text">
+            <ol id="newchat" class="discussion">
+
+            </ol>
+            <div class="input-group">
+                <input id="talk" class="form-control input-sm" placeholder="Type your message here..." type="text">
                         <span class="input-group-btn">
 
                             <button class="btn  btn-sm" id="btn-chat">
-                                Send</button>
+                                Send
+                            </button>
                         </span>
-                </div>
-            </section>
+            </div>
+        </section>
 
 
+        <form method="POST" name="" action="@routes.EventController.eventStage3(event.eventId)">
+            <div class="pull-right">
+                <input type="submit" name="Submit" value="Head to Stage 3" class="btn btn-lg btn-success">
+            </div>
+        </form>
+
+    </div>
 
 
+    <div class="col-md-4">
+        <div class="panel panel-info pinned">
+            <div class="panel-heading">
+                <h3 class="panel-title">Pinned Messages</h3>
+            </div>
+            <div class="panel-body">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"></div>
+            </div>
 
-            <form  method="POST" name="" action="@routes.EventController.eventStage3(event.eventId)">
-                <div class="pull-right">
-                    <input type="submit" name="Submit" value= "Head to Stage 3" class="btn btn-lg btn-success">
-                </div>
-            </form>
-
-        </div>
-
-
-    <div class="col-md-3">
-        <div class="well">
-            <h4>Pinned Messages</h4>
-            <div class="span4">
-
-            <ul id="members">
-            </ul>
         </div>
     </div>
-     </div>
 
-   </div>
 
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
 
 
 </div>
+
+
 <script type="text/javascript" charset="utf-8" src="@routes.Chat.chatRoomJs(user.email,event.eventId)"></script>
 <script>
 
     console.log("@event.phase2Duration" * 60000);
-    var phaseComplete = function() {
+    var phaseComplete = function () {
         $('input[name=Submit]').click()
     }
-    setTimeout(phaseComplete,"@event.phase2Duration" * 60000);
+    setTimeout(phaseComplete, "@event.phase2Duration" * 60000);
 
 </script>
 }

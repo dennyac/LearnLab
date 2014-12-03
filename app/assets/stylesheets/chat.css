@@ -1,7 +1,6 @@
 .module {
-    width: 550px;
-    height: 350px;
-    margin: 20px auto;
+    margin-top: 2px;
+    margin-bottom: 10px;
     position: relative;
     overflow: hidden;
 }
@@ -140,4 +139,19 @@
     to {
         opacity: 0.5;
     }
+}
+
+.pinned .panel-body {
+    padding: 10px;
+}
+
+.pinned .panel-heading {
+    padding: 5px 10px;
+}
+.pinned .list-group-item {
+    padding: 5px 10px;
+}
+
+.script-phase2 {
+    margin-bottom: 2px;
 }
