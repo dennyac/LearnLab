@@ -1,7 +1,6 @@
 @(user: User, event: Event, hashTags: List[String], question: Question)
 
 @mainStudent(user) {
-
 <div id="wrapper">
 
     @eventSidePane(event,hashTags)
@@ -32,30 +31,34 @@
                 </ul>
             </div>
 
-            <div class="chat">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <span class="glyphicon glyphicon-comment"></span> Collaborative Chat
-                </div>
-                <div class="panel-body">
-                    <ul class="chat">
-                            <div id="messages" style="overflow-y: scroll; height:140px;"></div>
-                    </ul>
 
-                </div>
+            <section class="module">
 
-                <div class="panel-footer">
-                    <div class="input-group">
-                        <input id="talk" class="form-control input-sm" placeholder="Type your message here..." type="text">
+                <header class="top-bar">
+
+                    <div class="left">
+                        <span class="icon typicons-message"></span>
+                        <h1>Collaborative Chat</h1>
+                    </div>
+
+                </header>
+
+                <ol id="newchat" class="discussion">
+
+                </ol>
+                <div class="input-group">
+                    <input id="talk" class="form-control input-sm" placeholder="Type your message here..." type="text">
                         <span class="input-group-btn">
 
-                            <button class="btn btn-warning btn-sm" id="btn-chat">
+                            <button class="btn  btn-sm" id="btn-chat">
                                 Send</button>
                         </span>
-                    </div>
                 </div>
-            </div>
-            </div>
+            </section>
+
+
+
+
 
             <form  method="POST" name="" action="@routes.EventController.eventStage3(event.eventId)">
                 <div class="pull-right">
@@ -83,7 +86,6 @@
 
 
 </div>
-
 <script type="text/javascript" charset="utf-8" src="@routes.Chat.chatRoomJs(user.email,event.eventId)"></script>
 <script>
 

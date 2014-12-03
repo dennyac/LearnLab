@@ -18,6 +18,8 @@ $(function() {
             console.log('Dummy message received to keep the websocket alive.')
         }
         else {
+
+
             // Handle errors
             if(data.error) {
                 alert("helo");
@@ -29,49 +31,28 @@ $(function() {
                 $("#onChat").show()
             }
 
-            // Create the message element
-//            var $object1 = $('.message.me');
-//            var $object2 = $('.message.Sparky');
-//            console.log($object1.length)
-//            console.log($object2.length)
-//            if(data.user == 'Sparky') {
-//                //Sparky speaks for the first time!!
-//                if(!$object2.length == 0){
-//                    console.log("Sparky speaks for the first time")
-//                    var el = $('<div class="message"><span></span><p></p></div>')
-//                    $("span", el).text(data.user)
-//                    $("p", el).text(data.message)
-//                    $(el).addClass(data.kind)
-//                    if(data.user == '@username') $(el).addClass('me')
-//                    $('#messages').append(el)
-//                }
-//                else if(!$object1.length < 2){
-//                    var el = $('<div class="message"><span></span><p></p></div>')
-//                    $("span", el).text(data.user)
-//                    $("p", el).text(data.message)
-//                    $(el).addClass(data.kind)
-//                    if(data.user == '@username') $(el).addClass('me')
-//                    $('#messages').append(el)
-//                }
-//            }
-//            else {
+
+                var imgUrl = 'http://www.gravatar.com/avatar/' + CryptoJS.MD5(data.user == "Sparky"? 'sparky.learnlab@@gmail.com':data.user) + '?d=mm'
+                var chatMsg = $('<li ><div class="avatar"><img /></div><div class="messages"><p></p><time></time></div></li>');
+                $('img',chatMsg).attr('src',imgUrl)
+                $('p',chatMsg).text(data.message)
+                $('time',chatMsg).text(data.user)
                 if(data.user == "Sparky"){
-                var el = $('<div class="message" style="color:#FF0000"><span></span><p><i></i></p></div>');
+                    $(chatMsg).addClass('sparky')
                 }
                 else if(data.user == '@username'){
-                var el = $('<div class="message" style="color:#3D993D"><span></span><p><i></i></p></div>');
+                    $(chatMsg).addClass('self')
                 }
                 else{
-                var el = $('<div class="message" style="color:#0000FF"><span></span><p><i></i></p></div>');
+                    $(chatMsg).addClass('other')
                 }
-                //var el = $('<div class="message" style="color:#0000FF"><span></span><p><i></i></p></div>')
-                $("span", el).text(data.user)
-                $("i", el).text(data.message)
-                $(el).addClass(data.kind)
-                if(data.user == '@username') $(el).addClass('me')
-                $('#messages').prepend(el)
-//            }
+                $('#newchat').append(chatMsg)
+                var chatScroll = $("#newchat");
+                chatScroll.scrollTop(chatScroll.prop('scrollHeight'))
 
+
+
+            //Pinned Post logic
             if(data.message.match(/(^|\s)(#[a-z\d-]+)/ig) != null){
                 var hashtag = data.message.match(/(^|\s)(#[a-z\d-]+)/ig)[0].substr(1)
                 console.log('Matched Hashtag')
@@ -95,15 +76,6 @@ $(function() {
                 $(li).text(data.message)
                 $("#ul" + hashtag).append(li);
             }
-
-
-            // Update the members list
-//        $("#members").html('')
-//        $(data.members).each(function() {
-//            var li = document.createElement('li');
-//            li.textContent = this;
-//            $("#members").append(li);
-//        })
         }
 
 
@@ -119,6 +91,8 @@ $(function() {
     }
 
     $("#talk").keypress(handleReturnKey)
+
+    $('#btn-chat').click(function(){sendMessage()})
 
     chatSocket.onmessage = receiveEvent
 
