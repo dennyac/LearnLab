@@ -84,9 +84,10 @@ $(function() {
                 console.log('Matched Hashtag')
                 var $eventPosts = $('#accordion' + data.eventId);
                 if(!$eventPosts.length){
-                    var evnt = $('<div class="col-md-4"><div class="panel-group" role="tablist" aria-multiselectable="true"></div></div>')
+                    var evnt = $('<div class="col-md-6"><div class="panel panel-info pinned"><div class="panel-heading"><h3 class="panel-title"></h3></div><div class="panel-body"><div class="panel-group" role="tablist" aria-multiselectable="true"></div></div></div></div>')
                     $('.panel-group',evnt).attr('id','accordion' + data.eventId)
-                    $('.pinned').append(evnt)
+                    $('h3',evnt).text("Event " + data.eventId)
+                    $('.pinnedpost').append(evnt)
                 }
                 var $hashGroup = $('#h' +data.eventId+ hashtag);
                 if(!$hashGroup.length) {
