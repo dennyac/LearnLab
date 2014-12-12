@@ -2,8 +2,26 @@
 
 @mainInstructor(user) {
 <style>
+    .pinned-group{
+        margin-top: 2px;
+        padding-top: 0px;
+        margin-bottom: 10px;
+        position: relative;
+        overflow: hidden;
+    }
+    .input-group {
+        padding-top: 20px;
+        position: relative;
+        display: table;
+        border-collapse: separate;
+    }
     .pinnedpost {
         margin-top: 20px;
+        list-style: none;
+        bottom: 0px;
+        height: 300px;
+        overflow-y: scroll;
+        padding: 0 0 50px 0;
     }
     .pinned .panel-body {
         padding: 10px;
@@ -62,7 +80,6 @@
 
     </style>
 <div class="col-md-9">
-<div class="tabbale">
     <ul class="nav nav-tabs" role="tablist" id="myTab">
         <li role="presentation"><a href="#home" role="tab" data-toggle="tab">Feeds</a></li>
         <li role="presentation"><a href="#profile" role="tab" data-toggle="tab">Feed graphs</a></li>
@@ -71,31 +88,19 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="home">
+            <section class="pinned-group"></section>
             <div class="pinnedpost row" id="id1">
-
-
-
-
-
-
-
-
             </div>
-            <div id="onChat" class="row">
                 <div class="span5" id="main">
-                    <div id="messages" style="height:400px">
-                    </div>
-                    <textarea cols="60" id="talk"></textarea>
+                    <div class="input-group">
+                        <input id="talk" type="text" class="form-control">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle event-id" data-toggle="dropdown" aria-expanded="false">Select Event<span class="caret"></span></button>
+                            <ul class="dropdown-menu dropdown-menu-right event-items" role="menu">
+                            </ul>
+                        </div><!-- /btn-group -->
+                    </div><!-- /input-group -->
                 </div>
-                <!--<div class="row">-->
-                    <!--<textarea cols="60" id="talk"></textarea>-->
-                <!--</div>-->
-                <!--<div class="row">-->
-                    <select class="form-control" id="eventSelect" style="width:150px">
-                    </select>
-
-                <!--</div>-->
-            </div>
 
         </div>
         <div role="tabpanel" class="tab-pane" id="profile">
@@ -108,7 +113,6 @@
 
     </div>
  </div>
-</div>
 <script src="@routes.Assets.at("javascripts/d3.v3.js")" type="text/javascript"></script>
 <script type="text/javascript" charset="utf-8" src="@routes.Chat.instructorJs(user.email)"></script>
 

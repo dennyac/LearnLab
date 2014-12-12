@@ -3,6 +3,7 @@ var uname = '@username';
 var graphJsonData = '@graphInput';
 var barData = jQuery.parseJSON(graphJsonData);
 var scriptHashTags = [];
+var tempe;
 @for(hash <- hashesList){
     scriptHashTags.push('@hash');
 }
@@ -43,17 +44,39 @@ $(function() {
 //
 //                $('option',opt).attr('id',data[i].eventId)
 //                $('option', opt).text(data[i].eventName)
-                $('#eventSelect').append('<option id="'+data[i].eventId+'">'+ data[i].eventName + '</option>');
+                $('.event-items').append('<li id="'+data[i].eventId+'"><a>'+ data[i].eventName + '</a></li>');
+
             }
 
-        } //Put a failure function as well...
+        } //Put a failure function as well...Place a "no ongoing events message"
+    });
+
+    $( document.body ).on( 'click', '.event-items li', function( event ) {
+
+        var $target = $( event.currentTarget );
+
+        tempe = $target;
+
+        $target.closest( '.input-group-btn' )
+            .find( '[type="button"]' ).attr('id', $target[0].id )
+
+        $target.closest( '.input-group-btn' )
+            .find( '[type="buttons"]' ).text( $target.text() )
+            .end()
+            .children( '.dropdown-toggle' ).dropdown( 'toggle' );
+
+        return false;
+
     });
 
     var sendMessage = function() {
-        var e = document.getElementById("eventSelect");
-        var strUser = e.options[e.selectedIndex].id;
+//        var e = document.getElementById(".dropdown-menu");
+       // var strUser = $('.event-id').id;
+        var eventId = $('.event-id');
+
+
         chatSocket.send(JSON.stringify(
-            {text: $("#talk").val(), eventid: strUser}
+            {text: $("#talk").val(), eventid: eventId[0].id}
         ))
         $("#talk").val('')
     }
