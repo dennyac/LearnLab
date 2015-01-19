@@ -1,6 +1,8 @@
-# LearnLab ( http://learnlab.herokuapp.com/ )
+# LearnLab 
 
 LearnLab is an online learning platform where students can take timed assessments, learn and collaborate as a group. Instructors can monitor student/group performance in real-time and provide feedback.
+
+####Application Link - http://learnlab.herokuapp.com/
 
 ##Installation
 
@@ -10,18 +12,18 @@ LearnLab is an online learning platform where students can take timed assessment
 * MySQL/PostgreSQL (Optional)
 
 ###Steps to run locally
-1. Clone the repository 
+* Clone the repository 
 ```sh
 $ git clone https://github.com/dennyac/LearnLab.git
 $ cd LearnLab
 ```
-2. Make necessary changes in conf/application.conf for the database connection and Redis url. Enable the in-memory database connection, if you do not wish to choose MySQL/PostgreSQL.
-3. Ensure Redis server is running
-4. Issue the command
+* Make necessary changes in conf/application.conf for the database connection and Redis url. Enable the in-memory database connection, if you do not wish to choose MySQL/PostgreSQL.
+* Ensure Redis server is running
+* Issue the command
 ```sh
 $ activator run
 ```
-5. Open the application in a browser - http://localhost:9000
+* Open the application in a browser - http://localhost:9000
 
 ##Deployment Instructions
 
@@ -31,19 +33,19 @@ $ activator run
 
 ###Steps to Deploy on Heroku
 Navigate to the directory that contains the git repository, and run the following commands
-1. To create the application
+* To create the application
 ```sh
 $ heroku create
 ```
-2. To add Redis addon for Publish/Subscribe messaging which is required for chat
+* To add Redis addon for Publish/Subscribe messaging which is required for chat
 ```sh
 $ heroku addons:add rediscloud
 ```
-3. To deploy the application
+* To deploy the application
 ```sh
 $ git push heroku master
 ```
-4. To open the application in a browser
+* To open the application in a browser
 ```sh
 $ heroku open
 ```
